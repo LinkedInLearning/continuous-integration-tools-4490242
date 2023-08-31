@@ -102,12 +102,18 @@ Resources:
           !Sub |
             #!/bin/bash -xe
             exec > >(tee /var/log/user-data.log) 2>&1
-            set
+
             yum update -y aws-cfn-bootstrap
-            /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --region ${AWS::Region} --resource Server --configsets application_installation
             
+            /opt/aws/bin/cfn-init -v \
+              --stack ${AWS::StackName} \
+              --region ${AWS::Region} \
+              --resource Server \
+              --configsets application_installation
+
             docker volume create --name teamcity_data
             docker volume create --name teamcity_logs
+            
             docker run --detach \
                 --name teamcity-server \
                 --volume teamcity_data:/data/teamcity_server/datadir \
@@ -115,9 +121,15 @@ Resources:
                 --publish 80:8111 \
                 jetbrains/teamcity-server
             
-            /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --region ${AWS::Region} --resource Server
- 
+            /opt/aws/bin/cfn-signal -e $? \
+              --stack ${AWS::StackName} \
+              --region ${AWS::Region} \
+              --resource Server
+
 Outputs:
   URL:
     Value: !Sub 'http://${Server.PublicDnsName}/'
     Description: Application URL
+  INTIAL_AUTHENTICATION:
+    Value: 'sudo docker logs jenkins'
+    Description: Connect to the server and run this command to get the initial admin password

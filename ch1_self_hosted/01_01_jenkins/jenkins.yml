@@ -102,21 +102,33 @@ Resources:
           !Sub |
             #!/bin/bash -xe
             exec > >(tee /var/log/user-data.log) 2>&1
-            set
+
             yum update -y aws-cfn-bootstrap
-            /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --region ${AWS::Region} --resource Server --configsets application_installation
+            
+            /opt/aws/bin/cfn-init -v \
+              --stack ${AWS::StackName} \
+              --region ${AWS::Region} \
+              --resource Server \
+              --configsets application_installation
             
             docker volume create jenkins_home
-            docker run --detach \
-                --name jenkins \
-                --volume jenkins_home:/var/jenkins_home  \
-                --publish 80:8080 \
-                --publish 50000:50000 \
-                jenkins/jenkins:lts
             
-            /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --region ${AWS::Region} --resource Server
+            docker run --detach \
+              --name jenkins \
+              --volume jenkins_home:/var/jenkins_home  \
+              --publish 80:8080 \
+              --publish 50000:50000 \
+              jenkins/jenkins:lts
+            
+            /opt/aws/bin/cfn-signal -e $? \
+              --stack ${AWS::StackName} \
+              --region ${AWS::Region} \
+              --resource Server
  
 Outputs:
   URL:
     Value: !Sub 'http://${Server.PublicDnsName}/'
     Description: Application URL
+  INTIAL_AUTHENTICATION:
+    Value: 'sudo docker logs jenkins'
+    Description: Connect to the server and run this command to get the initial admin password
