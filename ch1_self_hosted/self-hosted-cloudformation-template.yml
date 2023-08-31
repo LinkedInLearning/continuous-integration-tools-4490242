@@ -16,7 +16,6 @@ Parameters:
     Description: Select the EC2 instance type to use for the server
     Default: t3.2xlarge
     AllowedValues:
-      - t3.small
       - t3.medium
       - t3.large
       - t3.xlarge
