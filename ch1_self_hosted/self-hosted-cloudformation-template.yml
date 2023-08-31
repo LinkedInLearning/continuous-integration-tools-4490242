@@ -27,13 +27,14 @@ Mappings:
     jenkins:
       VolumeCommands: "docker volume create --name jenkins_home"
       RunCommands: |
-        docker run --detach \
+        docker run --detach --restart=on-failure --user root \
           --name jenkins \
           --volume jenkins_home:/var/jenkins_home \
           --publish 80:8080 --publish 50000:50000 \
           jenkins/jenkins:lts
       Instructions: |
-        After the instance launches, you can access Jenkins at http://<instance_public_ip>/.
+        After the stack indicates 'CREATE_COMPLETE', connect to the instance using session manager. Then run the following command to get the initial admin password: 'sudo docker logs jenkins'. Then open the Jenkins UI in a new tab using the ApplicationURL output. Enter the password when prompted.
+
     teamcity:
       VolumeCommands: "docker volume create --name teamcity_data && docker volume create --name teamcity_logs"
       RunCommands: |
@@ -43,7 +44,8 @@ Mappings:
           --publish 80:8111 \
           jetbrains/teamcity-server
       Instructions: |
-        After the instance launches, you can access TeamCity at http://<instance_public_ip>/.
+        After the stack indicates 'CREATE_COMPLETE', open the TeamCity UI in a new tab using the ApplicationURL output. Follow the instructions to set up the server. If needed,  connect to the instance using session manager and run the following command to get the super user password: 'sudo docker logs teamcity-server'.
+
     bamboo:
       VolumeCommands: "docker volume create --name bamboo_home"
       RunCommands: |
@@ -53,8 +55,7 @@ Mappings:
           --publish 80:8085 --publish 54663:54663 \
           atlassian/bamboo
       Instructions: |
-        After the instance launches, you can access Bamboo at http://<instance_public_ip>/.
-
+        After the stack indicates 'CREATE_COMPLETE', open the Bamboo UI in a new tab using the ApplicationURL output. Follow the instructions to set up the server. If needed,  connect to the instance using session managet to view the installation logs: 'sudo docker logs bamboo'.
 
 Resources:
   Role:
@@ -181,6 +182,7 @@ Outputs:
   ApplicationURL:
     Value: !Sub 'http://${Server.PublicDnsName}/'
     Description: Open this URL in a new tab to access the application
+  
   Instructions:
     Description: Use these additional instructions for setting up the application
     Value: !FindInMap [ApplicationDockerCommands, !Ref ApplicationType, Instructions]
