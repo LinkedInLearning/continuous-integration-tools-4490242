@@ -102,20 +102,29 @@ Resources:
           !Sub |
             #!/bin/bash -xe
             exec > >(tee /var/log/user-data.log) 2>&1
-            set
+            
             yum update -y aws-cfn-bootstrap
-            /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --region ${AWS::Region} --resource Server --configsets application_installation
-            
+
+            /opt/aws/bin/cfn-init -v \
+              --stack ${AWS::StackName} \
+              --region ${AWS::Region} \
+              --resource Server \
+              --configsets application_installation
+
             docker volume create --name bamboo_home
-            docker run --detach \
-                --name bamboo \
-                --volume bamboo_home:/var/atlassian/application-data/bamboo \              
-                --publish 80:8085 \
-                --publish 54663:54663 \
-                atlassian/bamboo
             
-            /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --region ${AWS::Region} --resource Server
- 
+            docker run --detach \
+              --name bamboo \
+              --volume bamboo_home:/var/atlassian/application-data/bamboo \
+              --publish 80:8085 \
+              --publish 54663:54663 \
+              atlassian/bamboo
+
+            /opt/aws/bin/cfn-signal -e $? \
+              --stack ${AWS::StackName} \
+              --region ${AWS::Region} \
+              --resource Server
+
 Outputs:
   URL:
     Value: !Sub 'http://${Server.PublicDnsName}/'
