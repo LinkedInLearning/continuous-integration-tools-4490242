@@ -27,7 +27,7 @@ Mappings:
     jenkins:
       VolumeCommands: "docker volume create --name jenkins_home"
       RunCommands: |
-        docker run --detach --restart=on-failure --user root \
+        docker run --detach --restart=on-failure --user=root --net=host \
           --name jenkins \
           --volume jenkins_home:/var/jenkins_home \
           --publish 80:8080 --publish 50000:50000 \
@@ -38,7 +38,7 @@ Mappings:
     teamcity:
       VolumeCommands: "docker volume create --name teamcity_data && docker volume create --name teamcity_logs"
       RunCommands: |
-        docker run --detach \
+        docker run --detach --restart=on-failure --user=root --net=host \
           --name teamcity-server \
           --volume teamcity_data:/data/teamcity_server/datadir --volume teamcity_logs:/opt/teamcity/logs \
           --publish 80:8111 \
@@ -49,7 +49,7 @@ Mappings:
     bamboo:
       VolumeCommands: "docker volume create --name bamboo_home"
       RunCommands: |
-        docker run --detach \
+        docker run --detach --restart=on-failure --user=root --net=host \
           --name bamboo \
           --volume bamboo_home:/var/atlassian/application-data/bamboo \
           --publish 80:8085 --publish 54663:54663 \
@@ -179,10 +179,14 @@ Resources:
             RunCommands: !FindInMap [ApplicationDockerCommands, !Ref ApplicationType, RunCommands]
  
 Outputs:
+  ForReasearchPurposesOnly:
+    Description: This configuration is for research purposes only
+    Value: This template and the resources it deploys are for research purposes only. Neither the template nor the resources are intended for production use.
+  
   ApplicationURL:
     Value: !Sub 'http://${Server.PublicDnsName}/'
     Description: Open this URL in a new tab to access the application
   
   Instructions:
-    Description: Use these additional instructions for setting up the application
+    Description: Use these additional instructions to set up the application
     Value: !FindInMap [ApplicationDockerCommands, !Ref ApplicationType, Instructions]
