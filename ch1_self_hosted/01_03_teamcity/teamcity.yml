@@ -1,5 +1,30 @@
 Description: Deploys an EC2 instance running TeamCity Server as a Docker container
 
+Parameters:
+  DockerCommands:
+    Type: String
+    Description: Docker commands to create volumes and start the container
+    Default: |
+      docker volume create --name teamcity_data && docker volume create --name teamcity_logs &&
+      docker run --detach \
+          --name teamcity-server \
+          --volume teamcity_data:/data/teamcity_server/datadir \
+          --volume teamcity_logs:/opt/teamcity/logs \
+          --publish 80:8111 \
+          jetbrains/teamcity-server
+
+  InstanceType:
+    Type: String
+    Description: The size to use for the EC2 instance
+    Default: t3.2xlarge
+    AllowedValues:
+      - t3.small
+      - t3.medium
+      - t3.large
+      - t3.xlarge
+      - t3.2xlarge
+    ConstraintDescription: Must be a valid EC2 instance type.
+
 Resources:
   Role:
     Type: AWS::IAM::Role
@@ -29,7 +54,7 @@ Resources:
           IpProtocol: tcp
           FromPort: 80
           ToPort: 80
-        
+
   Server:
     Type: AWS::EC2::Instance
 
@@ -45,6 +70,19 @@ Resources:
             - install_apps
         install_cfn:
           files:
+            /etc/systemd/system/ci.service:
+              content: |
+                [Unit]
+                Description=ci
+                [Service]
+                ExecStart=/usr/bin/docker start teamcity-server
+                Restart=on-failure
+                [Install]
+                WantedBy=multi-user.target
+              mode: '000400'
+              owner: root
+              group: root            
+
             /etc/cfn/cfn-hup.conf:
               content: !Sub |
                 [main]
@@ -88,7 +126,7 @@ Resources:
                 ensureRunning: 'true'
 
     Properties:
-      InstanceType: t3.large
+      InstanceType: !Ref InstanceType
       ImageId: "{{resolve:ssm:/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-ebs}}"
       IamInstanceProfile: !Ref Profile
       SecurityGroups:
@@ -110,26 +148,23 @@ Resources:
               --region ${AWS::Region} \
               --resource Server \
               --configsets application_installation
+            
+            ${DockerCommands}
 
-            docker volume create --name teamcity_data
-            docker volume create --name teamcity_logs
-            
-            docker run --detach \
-                --name teamcity-server \
-                --volume teamcity_data:/data/teamcity_server/datadir \
-                --volume teamcity_logs:/opt/teamcity/logs \
-                --publish 80:8111 \
-                jetbrains/teamcity-server
-            
+            systemctl daemon-reload
+            systemctl enable ci.service
+
             /opt/aws/bin/cfn-signal -e $? \
               --stack ${AWS::StackName} \
               --region ${AWS::Region} \
               --resource Server
 
+  ElasticIP:
+    Type: AWS::EC2::EIP
+    Properties:
+      InstanceId: !Ref Server
+
 Outputs:
   URL:
     Value: !Sub 'http://${Server.PublicDnsName}/'
     Description: Application URL
-  INTIAL_AUTHENTICATION:
-    Value: 'sudo docker logs jenkins'
-    Description: Connect to the server and run this command to get the initial admin password

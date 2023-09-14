@@ -11,9 +11,7 @@ Parameters:
         --name jenkins \
         --volume jenkins_home:/var/jenkins_home \
         --publish 80:8080 \
-        --publish 50000:50000 jenkins/jenkins:lts &&
-
-      echo "Waiting for Jenkins to start..."
+        jenkins/jenkins:lts
 
   InstanceType:
     Type: String
@@ -72,6 +70,19 @@ Resources:
             - install_apps
         install_cfn:
           files:
+            /etc/systemd/system/ci.service:
+              content: |
+                [Unit]
+                Description=ci
+                [Service]
+                ExecStart=/usr/bin/docker start jenkins
+                Restart=on-failure
+                [Install]
+                WantedBy=multi-user.target
+              mode: '000400'
+              owner: root
+              group: root            
+
             /etc/cfn/cfn-hup.conf:
               content: !Sub |
                 [main]
@@ -138,8 +149,11 @@ Resources:
               --resource Server \
               --configsets application_installation
             
-              ${DockerCommands}
+            ${DockerCommands}
             
+            systemctl daemon-reload
+            systemctl enable ci.service
+
             /opt/aws/bin/cfn-signal -e $? \
               --stack ${AWS::StackName} \
               --region ${AWS::Region} \

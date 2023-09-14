@@ -9,11 +9,9 @@ Parameters:
       
       docker run --detach \
         --name bamboo \
-        --volume bamboo_home:/var/atlassian/application-data/bamboo\
+        --volume bamboo_home:/var/atlassian/application-data/bamboo \
         --publish 80:8085 \
-        --publish 54663:54663 atlassian/bamboo &&
-
-      echo "Waiting for Bamboo to start..."
+        --publish 54663:54663 atlassian/bamboo 
 
   InstanceType:
     Type: String
@@ -72,6 +70,19 @@ Resources:
             - install_apps
         install_cfn:
           files:
+            /etc/systemd/system/ci.service:
+              content: |
+                [Unit]
+                Description=ci
+                [Service]
+                ExecStart=/usr/bin/docker start bamboo
+                Restart=on-failure
+                [Install]
+                WantedBy=multi-user.target
+              mode: '000400'
+              owner: root
+              group: root            
+
             /etc/cfn/cfn-hup.conf:
               content: !Sub |
                 [main]
@@ -138,8 +149,11 @@ Resources:
               --resource Server \
               --configsets application_installation
             
-              ${DockerCommands}
-            
+            ${DockerCommands}
+
+            systemctl daemon-reload
+            systemctl enable ci.service
+
             /opt/aws/bin/cfn-signal -e $? \
               --stack ${AWS::StackName} \
               --region ${AWS::Region} \

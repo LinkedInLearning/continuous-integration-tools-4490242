@@ -47,9 +47,22 @@ To configure the Jenkins server, you must connect to the server and retreive the
 1. Go back to the CloudFormation browser tab and select the "Outputs" tab for the stack.  Open the link next to the "URL" key, preferably in a new browser tab.
 2. On the "Unlock Jenkins" page, under "Administrator Password", paste the value that was retreived from the EC2 instance for the initial admin password.  Select **Continue**.
 3. On the "Customize Jenkins" page, select **Install suggested plugins**.  Wait for the installation to complete.
-4. Create an admin account with a username, password, and email address.  *Note that the email address does not need to be valid but must have a name with `@` followed by a domain.*  Select **Next**.
+4. TODO: Replace this with the "proceed as admin" option.  On the "create an admin account" page, create an admin account with a username, password, and email address.  *Note that the email address does not need to be valid but must have a name with `@` followed by a domain.*  Select **Next**.
 5. On the "Instance Configuration" page, keep the value for "Jenkins URL" and select **Save and Finish**.
 6. On the "Jenkins is ready!" page, select **Start using Jenkins**.
 
 ### 4. Create the pipeline
 ### 5. Run the pipeline
+
+
+TODO: Update the jenkins container with zip, python, venv, and aws-cli
+        # https://docs.aws.amazon.com/cli/v1/userguide/install-linux.html
+        docker exec -it -u root jenkins apt update -y
+        docker exec -it -u root jenkins apt install -y zip python3 python3.11-venv
+        docker exec -it -u root jenkins curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+        docker exec -it -u root jenkins unzip awscli-bundle.zip
+        docker exec -it -u root jenkins /usr/bin/python3 awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+        docker exec -it -u root jenkins aws --version
+
+TODO: Don't forget: docker exec -it -u root jenkins bash
+

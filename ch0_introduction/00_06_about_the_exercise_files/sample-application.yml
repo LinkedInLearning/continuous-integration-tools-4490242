@@ -14,7 +14,7 @@ Description: >
     3) URLs for the staging and production environments.
     4) AccessKeyId and SecretAccessKey for the service account.
 
-  Be sure to protect the credentilas that are created and 
+  Be sure to protect the credentials that are created and 
   delete this stack when you are finished with the course.
 
 Resources:
@@ -214,12 +214,12 @@ Outputs:
     Value:
       Fn::GetAtt: LambdaUrlProduction.FunctionUrl
   
-  AccessKeyId:
+  ServiceAccountAccessKeyId:
     Description: The AccessKeyId for the service account. Please keep this value secure.
     Value: 
       !Ref Keys
   
-  SecretAccessKey:
+  ServiceAccountSecretAccessKey:
     Description: The SecretAccessKey for the service account. Please keep this value secure.
     Value: 
       !GetAtt Keys.SecretAccessKey
