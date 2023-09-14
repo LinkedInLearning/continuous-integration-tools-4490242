@@ -24,7 +24,7 @@
 1. Accept the defaults under "Parameters" and select **Next**.
 1. On the "Configure stack options" screen, keep all options as the default.  Scroll to the bottom of the page and select **Next**.
 1.  On the "Review" screen, scroll to the bottom of the page and select the **checkbox** next to "I acknowledge that AWS CloudFormation might create IAM resources with custom names".  Select **Submit**.
-1. Review the "Events" tab on the stack homepage until *CREATE_COMPLETE* is reported under the "Status" column for the Logical ID that matches your stack name.
+1. Review the "Events" tab on the stack homepage until *CREATE_COMPLETE* is reported under the "Status" column for the Logical ID that matches your stack name. *Note that it may take 5 to 10 minutes for the stack to report CREATE_COMPLETE*.
 1.  On the stack homepage, select the "Outputs" column.  Make a note of the output key, value, and description for:
     - AdminPassword
     - URL

@@ -1,18 +1,6 @@
 Description: Deploys an EC2 instance running Bamboo Data Center as a Docker container
 
 Parameters:
-  DockerCommands:
-    Type: String
-    Description: Docker commands to create volumes and start the container
-    Default: |
-      docker volume create --name bamboo_home &&
-      
-      docker run --detach \
-        --name bamboo \
-        --volume bamboo_home:/var/atlassian/application-data/bamboo \
-        --publish 80:8085 \
-        --publish 54663:54663 atlassian/bamboo 
-
   InstanceType:
     Type: String
     Description: The size to use for the EC2 instance
@@ -149,10 +137,23 @@ Resources:
               --resource Server \
               --configsets application_installation
             
-            ${DockerCommands}
-
-            systemctl daemon-reload
-            systemctl enable ci.service
+            docker volume create --name bamboo_home
+            
+            docker run --detach \
+              --name bamboo \
+              --volume bamboo_home:/var/atlassian/application-data/bamboo \
+              --publish 80:8085 \
+              --publish 54663:54663 atlassian/bamboo 
+                  systemctl daemon-reload
+                  systemctl enable ci.service
+        
+            # https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+            docker exec --user=root bamboo apt update -y
+            docker exec --user=root bamboo apt install -y zip python3 python3-venv python3-pip
+            docker exec --user=root bamboo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            docker exec --user=root bamboo unzip awscliv2.zip
+            docker exec --user=root bamboo ./aws/install
+            docker exec --user=root bamboo /usr/bin/python3 --version && /usr/bin/pip3 --version && /usr/local/bin/aws --version
 
             /opt/aws/bin/cfn-signal -e $? \
               --stack ${AWS::StackName} \

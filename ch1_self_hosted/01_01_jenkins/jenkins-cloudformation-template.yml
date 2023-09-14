@@ -1,18 +1,6 @@
 Description: Deploys an EC2 instance running Jenkins CI Server as a Docker container
 
 Parameters:
-  DockerCommands:
-    Type: String
-    Description: Docker commands to create volumes and start the container
-    Default: |
-      docker volume create jenkins_home &&
-      
-      docker run --detach \
-        --name jenkins \
-        --volume jenkins_home:/var/jenkins_home \
-        --publish 80:8080 \
-        jenkins/jenkins:lts
-
   InstanceType:
     Type: String
     Description: The size to use for the EC2 instance
@@ -149,10 +137,24 @@ Resources:
               --resource Server \
               --configsets application_installation
             
-            ${DockerCommands}
+            docker volume create jenkins_home &&
             
+            docker run --detach \
+              --name jenkins \
+              --volume jenkins_home:/var/jenkins_home \
+              --publish 80:8080 \
+              jenkins/jenkins:lts
+
             systemctl daemon-reload
             systemctl enable ci.service
+        
+            # https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+            docker exec --user=root jenkins apt update -y
+            docker exec --user=root jenkins apt install -y zip python3 python3-venv python3-pip
+            docker exec --user=root jenkins curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            docker exec --user=root jenkins unzip awscliv2.zip
+            docker exec --user=root jenkins ./aws/install
+            docker exec --user=root jenkins /usr/bin/python3 --version && /usr/bin/pip3 --version && /usr/local/bin/aws --version
 
             /opt/aws/bin/cfn-signal -e $? \
               --stack ${AWS::StackName} \
