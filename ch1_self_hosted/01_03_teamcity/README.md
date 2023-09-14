@@ -34,8 +34,9 @@
 
 TODO: Increase the size of the disk for the server.
 TODO: Add an agent to the cloudformation template.
-TODO: Install the tools (zip, python, aws cli) on the agent
-TODO: Connect the agent in the server configuration
+TODO: Update the other cloudformation templates to increase the size of the default volume.
+TODO: Install the tools (zip, python, aws cli) on the agent.
+TODO: Connect the agent in the server configuration.
 
 ### 4. Create the pipeline
 ### 5. Run the pipeline
