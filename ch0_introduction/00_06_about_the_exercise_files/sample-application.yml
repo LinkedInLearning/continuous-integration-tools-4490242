@@ -196,27 +196,35 @@ Resources:
       UserName: !Ref User
 
 Outputs:
-  UrlStaging:
+  StagingFunctionName:
+    Description: The name of the Lambda function for the staging environment
+    Value: !Sub ${AWS::StackName}-staging
+
+  StagingURL:
     Description: The URL for the staging environment
     Value:
       Fn::GetAtt: LambdaUrlStaging.FunctionUrl
-  
-  UrlProduction:
+
+  ProductionFunctionName:
+    Description: The name of the Lambda function for the production environment
+    Value: !Sub ${AWS::StackName}-production
+
+  ProductionURL:
     Description: The URL for the production environment
     Value:
       Fn::GetAtt: LambdaUrlProduction.FunctionUrl
   
-  ServiceAccountAccessKeyId:
+  AccessKeyId:
     Description: The AccessKeyId for the service account. Please keep this value secure.
     Value: 
       !Ref Keys
   
-  ServiceAccountAccessKey:
+  SecretAccessKey:
     Description: The SecretAccessKey for the service account. Please keep this value secure.
     Value: 
       !GetAtt Keys.SecretAccessKey
   
-  DeploymentRegion:
+  Region:
     Description: The region where the stack is deployed.
     Value: 
       !Sub ${AWS::Region}

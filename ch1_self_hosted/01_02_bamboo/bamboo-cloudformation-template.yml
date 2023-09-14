@@ -1,4 +1,31 @@
-Description: Deploys an EC2 instance running Bamboo Server as a Docker container
+Description: Deploys an EC2 instance running Bamboo Data Center as a Docker container
+
+Parameters:
+  DockerCommands:
+    Type: String
+    Description: Docker commands to create volumes and start the container
+    Default: |
+      docker volume create --name bamboo_home &&
+      
+      docker run --detach \
+        --name bamboo \
+        --volume bamboo_home:/var/atlassian/application-data/bamboo\
+        --publish 80:8085 \
+        --publish 54663:54663 atlassian/bamboo &&
+
+      echo "Waiting for Bamboo to start..."
+
+  InstanceType:
+    Type: String
+    Description: The size to use for the EC2 instance
+    Default: t3.2xlarge
+    AllowedValues:
+      - t3.small
+      - t3.medium
+      - t3.large
+      - t3.xlarge
+      - t3.2xlarge
+    ConstraintDescription: Must be a valid EC2 instance type.
 
 Resources:
   Role:
@@ -88,7 +115,7 @@ Resources:
                 ensureRunning: 'true'
 
     Properties:
-      InstanceType: t3.large
+      InstanceType: !Ref InstanceType
       ImageId: "{{resolve:ssm:/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-ebs}}"
       IamInstanceProfile: !Ref Profile
       SecurityGroups:
@@ -102,28 +129,26 @@ Resources:
           !Sub |
             #!/bin/bash -xe
             exec > >(tee /var/log/user-data.log) 2>&1
-            
-            yum update -y aws-cfn-bootstrap
 
+            yum update -y aws-cfn-bootstrap
+            
             /opt/aws/bin/cfn-init -v \
               --stack ${AWS::StackName} \
               --region ${AWS::Region} \
               --resource Server \
               --configsets application_installation
-
-            docker volume create --name bamboo_home
             
-            docker run --detach \
-              --name bamboo \
-              --volume bamboo_home:/var/atlassian/application-data/bamboo \
-              --publish 80:8085 \
-              --publish 54663:54663 \
-              atlassian/bamboo
-
+              ${DockerCommands}
+            
             /opt/aws/bin/cfn-signal -e $? \
               --stack ${AWS::StackName} \
               --region ${AWS::Region} \
               --resource Server
+
+  ElasticIP:
+    Type: AWS::EC2::EIP
+    Properties:
+      InstanceId: !Ref Server
 
 Outputs:
   URL:

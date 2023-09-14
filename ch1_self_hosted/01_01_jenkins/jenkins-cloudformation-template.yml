@@ -144,7 +144,12 @@ Resources:
               --stack ${AWS::StackName} \
               --region ${AWS::Region} \
               --resource Server
- 
+
+  ElasticIP:
+    Type: AWS::EC2::EIP
+    Properties:
+      InstanceId: !Ref Server
+
 Outputs:
   URL:
     Value: !Sub 'http://${Server.PublicDnsName}/'
