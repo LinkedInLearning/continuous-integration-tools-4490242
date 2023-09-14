@@ -1,4 +1,4 @@
-Description: Deploys an EC2 instance running Jenkins CI Server as a Docker container
+Description: An EC2 instance running Jenkins CI Server as a Docker container
 
 Parameters:
   InstanceType:
@@ -154,7 +154,7 @@ Resources:
             docker exec --user=root jenkins curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             docker exec --user=root jenkins unzip awscliv2.zip
             docker exec --user=root jenkins ./aws/install
-            docker exec --user=root jenkins /usr/bin/python3 --version && /usr/bin/pip3 --version && /usr/local/bin/aws --version
+            docker exec --user=root jenkins python3 --version && pip3 --version && aws --version
 
             /opt/aws/bin/cfn-signal -e $? \
               --stack ${AWS::StackName} \

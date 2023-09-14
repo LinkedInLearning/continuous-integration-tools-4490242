@@ -1,6 +1,12 @@
 # 01_02 Bamboo
 [Bamboo](https://www.atlassian.com/software/bamboo) is a self-hosted, continuous integration and delivery tool developed by Atlassian, the makers of popular software including Jira and Confluence among others.
 
+## Reccommended Reading
+- [Understanding the Bamboo CI Server](https://confluence.atlassian.com/bamboo/understanding-the-bamboo-ci-server-289277285.html)
+- [Configuring plans](https://confluence.atlassian.com/bamboo/configuring-plans-289276853.html)
+- [Configuring tasks](https://confluence.atlassian.com/bamboo/configuring-tasks-289277036.html)
+- [Configuring jobs](https://confluence.atlassian.com/bamboo/creating-a-plan-289276868.html)
+
 ## Prequisites
 1. A [GitHub account](https://github.com/join) is required to host the code for the sample application.
 1. An [Atlassian account](https://id.atlassian.com/signup) is required to request a license for the demo server.
@@ -41,13 +47,21 @@ To configure the Bamboo server, you need to create and enter an evalutation lice
 8. On the "Import data" page, confirm that "Create a new Bamboo home" is selected and select **Continue**.  Stand by for the database to be configured.
 9. On the "Create admin" page, enter the details for your admin account and select **Finish**.  Stand by for the installation to complete.
 
-#### 3.2 Disable the embedded database check
-This step prevents Bamboo from creating notificaitons about the server running with an embedded database.
+#### 3.2 Disable notifications
+This step prevents Bamboo from creating notificaitons about the server running with an embedded database or agents running on the primary server.
 
 1. Once the installation is complete, select the cog on the top, far right of the page.  Select **Overview**.
 2. Scroll to the bottom of that page and select **Troubleshooting and support tools** from the menu on the left.
-3. Under "Problems detected", expand **Supported Platforms -> Embedded database**.
-4. Under "Configure check", select the toggle next to "Enable this check" so that the toggle moves to the left (disabled) position.
+3. On the far right under "Notifications", select the dropdown menu and select "Don't show any notifications".
+
+#### 3.3 Disable sign-ups
+This step prevents others from creating accounts on your Bamboo server without your permission.
+
+1. Once the installation is complete, select the cog on the top, far right of the page.  Select **Overview**.
+2. From the menu on the left, select **Security Settings**.
+3. On the bottom of the "Security and permission" page, select **Edit**.
+4. Under "Change global security and permission properties", remove the selection next to "Enable signup?".
+5. At the bottom of the page, Select **Save**.
 
 #### 3.3 Add a local agent
 1. Select the cog on the top, far right of the page.  Select **Agents**.

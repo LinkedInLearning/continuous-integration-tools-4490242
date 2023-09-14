@@ -1,4 +1,4 @@
-Description: Deploys an EC2 instance running TeamCity Server as a Docker container
+Description: An EC2 instance running TeamCity Server as a Docker container
 
 Parameters:
   InstanceType:
@@ -117,6 +117,13 @@ Resources:
       InstanceType: !Ref InstanceType
       ImageId: "{{resolve:ssm:/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-ebs}}"
       IamInstanceProfile: !Ref Profile
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeType: gp2
+            VolumeSize: '100'
+            DeleteOnTermination: 'true'
+            Encrypted: 'true'
       SecurityGroups:
         - !Ref SecurityGroup
       Tags:
@@ -155,7 +162,7 @@ Resources:
             docker exec --user=root teamcity-server curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             docker exec --user=root teamcity-server unzip awscliv2.zip
             docker exec --user=root teamcity-server ./aws/install
-            docker exec --user=root teamcity-server /usr/bin/python3 --version && /usr/bin/pip3 --version && /usr/local/bin/aws --version
+            docker exec --user=root teamcity-server python3 --version && pip3 --version && aws --version
 
             /opt/aws/bin/cfn-signal -e $? \
               --stack ${AWS::StackName} \

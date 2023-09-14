@@ -1,4 +1,4 @@
-Description: Deploys an EC2 instance running Bamboo Data Center as a Docker container
+Description: An EC2 instance running Bamboo Data Center as a Docker container
 
 Parameters:
   InstanceType:
@@ -153,7 +153,7 @@ Resources:
             docker exec --user=root bamboo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             docker exec --user=root bamboo unzip awscliv2.zip
             docker exec --user=root bamboo ./aws/install
-            docker exec --user=root bamboo /usr/bin/python3 --version && /usr/bin/pip3 --version && /usr/local/bin/aws --version
+            docker exec --user=root bamboo python3 --version && pip3 --version && aws --version
 
             /opt/aws/bin/cfn-signal -e $? \
               --stack ${AWS::StackName} \
