@@ -1,0 +1,41 @@
+# 00_06 About the Exercise Files
+
+Exercise files are available to help you following along with this course.  Use the exercise files to create the resources used in the course demonstrations.
+
+The directory structure follows the course structure, with directories for each chapter and section.
+
+## Prequisites
+1. A [GitHub account](https://github.com/join) is needed to host the code for the sample application.
+2. An [Amazon Web Services account](https://aws.amazon.com/free) is needed to deploy and host the sample application.
+
+## Deploying the Sample Application
+A sample application is included to use as a deployment target. The goal is to model the experimental pipeline with each CI tool and deploy updates to the sample application.
+
+Use the provided [CloudFormation template](./sample-application.yml) and the following instructions to manually deploy the sample application in AWS.
+
+### 1. Get the exercise files in place on your local system
+1. Open the GitHub repo for this course and download the exercise files by selecting **Code -> Local -> Download ZIP**.  
+2. Open the ZIP file and confirm the contents of the file are accessible.
+
+### 2. Deploy the Sample Application
+1. Log into your AWS account.  Select the search bar at the top of the page and enter **CloudFormation**.
+1. On the CloudFormation homepage, select **Create stack**.
+1. Under "Prerequisite - Prepare template", confirm that "Template is ready" is selected.
+1. Under "Specify template", select **Upload a template file**.  Select **Chose file**.  Use the file browser to navigate to the location where you opened the ZIP file.  Navigate to **ch0_introduction/00_06_about_the_exercise_files** and select **sample-application.yml**.  Select **Open**. Select **Next**.
+1. Enter a name for the stack under "Stack name". *Note that the name should only include letters (A-Z and a-z), numbers (0-9), and dashes (-)*.  Select **Next**.
+1. On the "Configure stack options" screen, keep all options as the default.  Scroll to the bottom of the screen and select **Next**.
+1.  On the "Review" screen, scroll to the bottom of the page and select the **checkbox** next to "I acknowledge that AWS CloudFormation might create IAM resources with custom names".  Select **Submit**.
+1. Review the "Events" tab on the stack homepage until *CREATE_COMPLETE* is reported under the "Status" column.
+
+### 3. Review the Deployed Sample Application and Lambda Functions
+1.  On the stack homepage, select the "Outputs" column.  Make a note of the output key, value, and description for:
+
+        - DeploymentRegion
+        - ServiceAccountAccessKey
+        - ServiceAccountAccessKeyId
+        - UrlProduction
+        - UrlStaging
+
+    These values will be needed to configure the experiement pipeline for each CI tool.
+1.  Select the URL next to **UrlProduction** and  **UrlStaging** to view the deployed websites. *Open each link in a new tab*.
+1.  Select the "Resources" tab on the stack homepage.  Under "Logical ID", locate **LambdaFunctionProduction** and **LambdaFunctionStaging**.  Select the link next to each resource in the "Physical ID" column.

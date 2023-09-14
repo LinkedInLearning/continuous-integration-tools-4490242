@@ -1,0 +1,222 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: >
+  This CloudFormation template creates the following resources for a sample application:
+    1) Lambda function for the staging environment.
+    2) Lambda function for the production environment.
+    3) IAM group with the managed policy AWSLambda_FullAccess attached.
+    4) IAM user as a member of the group to be used as a service account.
+    5) IAM access key for the service account
+  
+  The following outputs are created for your reference:
+    1) Region where the stack is deployed.
+    2) Account ID where the stack is deployed.
+    3) URLs for the staging and production environments.
+    4) AccessKeyId and SecretAccessKey for the service account.
+
+  Be sure to protect the credentilas that are created and 
+  delete this stack when you are finished with the course.
+
+Resources:
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${AWS::StackName}-LambdaExecutionRole
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: LambdaExecutionPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: "*"
+
+  LambdaFunctionStaging:
+    Type: AWS::Lambda::Function
+    Properties:
+      Description: The 'staging' environment for the sample application.
+      FunctionName: !Sub ${AWS::StackName}-staging
+      Runtime: python3.10
+      Handler: index.handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          ENVIRONMENT: STAGING
+      Code:
+        ZipFile: |
+          def handler(event, context):
+              import os
+              environment = os.environ['ENVIRONMENT']
+              html_response = f"""
+              <!DOCTYPE html>
+              <html>
+              <head>
+                  <title>Welcome - {environment}</title>
+                  <style>
+                      body {{
+                          font-family: Arial, sans-serif;
+                          line-height: 1.6;
+                          max-width: 800px;
+                          margin: 0 auto;
+                      }}
+                      h1, h2 {{
+                          color: #333;
+                          border-bottom: 1px solid #ccc;
+                      }}
+                      p {{
+                          margin-bottom: 16px;
+                      }}
+                  </style>
+              </head>
+              <body>
+                  <h1>Welcome!</h1>
+                  <h2>This is the <bold>{environment}<bold> environment.</h2>
+                  <p>Get ready to learn more about CI/CD and several amazing tools that simplify testing, building, and deploying software.</p>
+                  <p>This welcome page is just the beginning.  Take the next step by deploying the code for the applicaiton.</p>
+              </body>
+              </html>
+              """
+              return {
+                  'statusCode': 200,
+                  'headers': {
+                      'Content-Type': 'text/html',
+                  },
+                  'body': html_response
+              }
+
+
+  LambdaFunctionProduction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Description: The 'production' environment for the sample application.
+      FunctionName: !Sub ${AWS::StackName}-production
+      Runtime: python3.10
+      Handler: index.handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          ENVIRONMENT: PRODUCTION
+      Code:
+        ZipFile: |
+          def handler(event, context):
+              import os
+              environment = os.environ['ENVIRONMENT']
+              html_response = f"""
+              <!DOCTYPE html>
+              <html>
+              <head>
+                  <title>Welcome - {environment}</title>
+                  <style>
+                      body {{
+                          font-family: Arial, sans-serif;
+                          line-height: 1.6;
+                          max-width: 800px;
+                          margin: 0 auto;
+                      }}
+                      h1, h2 {{
+                          color: #333;
+                          border-bottom: 1px solid #ccc;
+                      }}
+                      p {{
+                          margin-bottom: 16px;
+                      }}
+                  </style>
+              </head>
+              <body>
+                  <h1>Welcome!</h1>
+                  <h2>This is the <bold>{environment}<bold> environment.</h2>
+                  <p>Get ready to learn more about CI/CD and several amazing tools that simplify testing, building, and deploying software.</p>
+                  <p>This welcome page is just the beginning.  Take the next step by deploying the code for the applicaiton.</p>
+              </body>
+              </html>
+              """
+              return {
+                  'statusCode': 200,
+                  'headers': {
+                      'Content-Type': 'text/html',
+                  },
+                  'body': html_response
+              }
+
+  LambdaUrlStaging:
+    Type: AWS::Lambda::Url
+    Properties:
+      TargetFunctionArn: !Ref LambdaFunctionStaging
+      AuthType: NONE
+
+  LambdaUrlPermissionStaging:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref LambdaFunctionStaging
+      Principal: "*"
+      Action: "lambda:InvokeFunctionUrl"
+      FunctionUrlAuthType: NONE
+
+  LambdaUrlProduction:
+    Type: AWS::Lambda::Url
+    Properties:
+      TargetFunctionArn: !Ref LambdaFunctionProduction
+      AuthType: NONE
+
+  LambdaUrlPermissionProdction:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref LambdaFunctionProduction
+      Principal: "*"
+      Action: "lambda:InvokeFunctionUrl"
+      FunctionUrlAuthType: NONE
+
+  Group:
+    Type: AWS::IAM::Group
+    Properties:
+      GroupName: !Sub ${AWS::StackName}-Group
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AWSLambda_FullAccess
+  
+  User:
+    Type: AWS::IAM::User
+    Properties:
+      UserName: !Sub ${AWS::StackName}-Service-Account
+      Groups:
+        - !Ref Group
+  
+  Keys:
+    Type: AWS::IAM::AccessKey
+    Properties:
+      UserName: !Ref User
+
+Outputs:
+  UrlStaging:
+    Description: The URL for the staging environment
+    Value:
+      Fn::GetAtt: LambdaUrlStaging.FunctionUrl
+  
+  UrlProduction:
+    Description: The URL for the production environment
+    Value:
+      Fn::GetAtt: LambdaUrlProduction.FunctionUrl
+  
+  ServiceAccountAccessKeyId:
+    Description: The AccessKeyId for the service account. Please keep this value secure.
+    Value: 
+      !Ref Keys
+  
+  ServiceAccountAccessKey:
+    Description: The SecretAccessKey for the service account. Please keep this value secure.
+    Value: 
+      !GetAtt Keys.SecretAccessKey
+  
+  DeploymentRegion:
+    Description: The region where the stack is deployed.
+    Value: 
+      !Sub ${AWS::Region}
