@@ -53,16 +53,3 @@ To configure the Jenkins server, you must connect to the server and retreive the
 
 ### 4. Create the pipeline
 ### 5. Run the pipeline
-
-
-TODO: Update the jenkins container with zip, python, venv, and aws-cli
-        # https://docs.aws.amazon.com/cli/v1/userguide/install-linux.html
-        docker exec -it -u root jenkins apt update -y
-        docker exec -it -u root jenkins apt install -y zip python3 python3.11-venv
-        docker exec -it -u root jenkins curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-        docker exec -it -u root jenkins unzip awscli-bundle.zip
-        docker exec -it -u root jenkins /usr/bin/python3 awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
-        docker exec -it -u root jenkins aws --version
-
-TODO: Don't forget: docker exec -it -u root jenkins bash
-
