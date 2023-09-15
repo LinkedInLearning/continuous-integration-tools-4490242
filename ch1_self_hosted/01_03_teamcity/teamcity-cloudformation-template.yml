@@ -58,12 +58,48 @@ Resources:
             - install_apps
         install_cfn:
           files:
+            /opt/teamcity/docker-compose.yml:
+              content: |
+                version: '3.1'
+
+                services:
+                  server:
+                    image: jetbrains/teamcity-server
+                    ports:
+                      - "80:8111"
+                    volumes:
+                      - teamcity_data:/data/teamcity_server/datadir
+                      - teamcity_logs:/opt/teamcity/logs
+
+                  agent-1:
+                    image: jetbrains/teamcity-agent
+                    privileged: true
+                    environment:
+                      - SERVER_URL=http://server:8111
+                      - AGENT_NAME="agent-1"
+
+                  agent-2:
+                    image: jetbrains/teamcity-agent
+                    privileged: true
+                    environment:
+                      - SERVER_URL=http://server:8111
+                      - AGENT_NAME="agent-2"
+
+                volumes:
+                  teamcity_data:
+                  teamcity_logs:
+              mode: '000400'
+              owner: root
+              group: root            
+
+
+
             /etc/systemd/system/ci.service:
               content: |
                 [Unit]
                 Description=ci
                 [Service]
-                ExecStart=/usr/bin/docker start teamcity-server
+                ExecStart=/usr/bin/docker compose -f /opt/teamcity/docker-compose.yml up -d
                 Restart=on-failure
                 [Install]
                 WantedBy=multi-user.target
@@ -143,26 +179,28 @@ Resources:
               --region ${AWS::Region} \
               --resource Server \
               --configsets application_installation
-            
-            docker volume create --name teamcity_data 
-            docker volume create --name teamcity_logs
-            
-            docker run --detach \
-                --name teamcity-server \
-                --volume teamcity_data:/data/teamcity_server/datadir \
-                --volume teamcity_logs:/opt/teamcity/logs \
-                --publish 80:8111 \
-                jetbrains/teamcity-server
-                  systemctl daemon-reload
-                  systemctl enable ci.service
-        
-            # https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
-            docker exec --user=root teamcity-server apt update -y
-            docker exec --user=root teamcity-server apt install -y zip python3 python3-venv python3-pip
-            docker exec --user=root teamcity-server curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            docker exec --user=root teamcity-server unzip awscliv2.zip
-            docker exec --user=root teamcity-server ./aws/install
-            docker exec --user=root teamcity-server python3 --version && pip3 --version && aws --version
+
+            systemctl daemon-reload
+            systemctl enable ci.service
+
+            # Install docker-compose
+            wget https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)
+            mv docker-compose-$(uname -s)-$(uname -m) /usr/libexec/docker/cli-plugins/docker-compose
+            chmod +x /usr/libexec/docker/cli-plugins/docker-compose
+
+            # Start TeamCity Server
+            docker compose -f /opt/teamcity/docker-compose.yml up -d
+
+            # Install AWS CLI
+            for agent in "teamcity-agent-2-1" "teamcity-agent-1-1"; do
+                docker exec -u root $agent apt update -y
+                docker exec -u root $agent apt install -y zip python3 python3-venv python3-pip
+                docker exec -u root $agent python3 --version
+                docker exec -u root $agent curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+                docker exec -u root $agent unzip awscliv2.zip
+                docker exec -u root $agent ./aws/install
+                docker exec -u root $agent python3 --version && pip3 --version && aws --version
+            done
 
             /opt/aws/bin/cfn-signal -e $? \
               --stack ${AWS::StackName} \

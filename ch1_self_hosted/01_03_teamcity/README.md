@@ -32,11 +32,5 @@
 3. On the "License Agreement" page, scroll to the bottom of the page, select the checkbox next to **Accept license agreement**.  Select **Continue**.
 4. On the "Create Administrator Account" page, select a username and password for your admin account and select **Create Account**.
 
-TODO: Increase the size of the disk for the server.
-TODO: Add an agent to the cloudformation template.
-TODO: Update the other cloudformation templates to increase the size of the default volume.
-TODO: Install the tools (zip, python, aws cli) on the agent.
-TODO: Connect the agent in the server configuration.
-
 ### 4. Create the pipeline
 ### 5. Run the pipeline
