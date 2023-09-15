@@ -23,7 +23,7 @@ hello:
 	@echo "  FUNCTION - the name of the existing lambda function to update."
 
 requirements:
-	pip install --update pip
+	pip install -U pip
 	pip install --requirement requirements.txt
 
 lint:
