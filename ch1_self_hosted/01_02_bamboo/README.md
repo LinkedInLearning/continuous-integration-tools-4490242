@@ -8,20 +8,15 @@
 - [Configuring jobs](https://confluence.atlassian.com/bamboo/creating-a-plan-289276868.html)
 
 ## Prequisites
+Having the following items in place before starting this lab will help you have a smooth experience.
+
 1. A [GitHub account](https://github.com/join) is required to host the code for the sample application.
 1. An [Atlassian account](https://id.atlassian.com/signup) is required to request a license for the demo server.
 2. An [Amazon Web Services account](https://aws.amazon.com/free) is needed to deploy and host the Bamboo server and the sample application used for the deployment target.
 3. The sample application should be in place before starting.  See [00_06 About the Exercise Files](../../ch0_introduction/00_06_about_the_exercise_files/README.md) for steps to deploy the sample application.
 
-## Implement the Experimental Pipeline
-### 1. Create a GitHub repo for the sample application code
-1. Create a new GitHub repo.
-1. From ther repo home page, select **Add file -> Upload files**.
-1. Select **choose your files** and browse to the exercise files for this lesson on your local system.
-1. Select all of the files and then select **Open**.
-1. After the files have been uploaded, enter a commit message and select **Commit changes**.
- 
-### 2. Deploy the Bamboo server
+## Deploy the Bamboo server
+### 1. Create an AWS CloudFormation Stack using the provided template
 1. Log into your AWS account.  Select the search bar at the top of the page and enter **CloudFormation**.
 1. On the CloudFormation homepage, select **Create stack**.  If the button includes a dropdown, select **With new resources (standard)**.
 1. Under "Prerequisite - Prepare template", confirm that "Template is ready" is selected.
@@ -33,10 +28,10 @@
 1. Review the "Events" tab on the stack homepage until *CREATE_COMPLETE* is reported under the "Status" column for the Logical ID that matches your stack name. *Note that it may take 5 to 10 minutes for the stack to report CREATE_COMPLETE*.
 1.  On the stack homepage, select the "Outputs" column.  Open the value for the key "URL" in a new tab.
 
-### 3. Configure the Bamboo server
+### 2. Configure the Bamboo server
 To configure the Bamboo server, you need to create and enter an evalutation license, disable the embedded database check, and add a local agent.
 
-#### 3.1 Create and enter an evaluation license
+#### 2.1 Create and enter an evaluation license
 1. On the "Welcome to Bamboo Data Center", select **Generate a Bamboo Data Center license**. *Note that the text for this link is very small and located under the "License key" form.
 2. If needed, log into your Atlassian account when prompted.
 3. On the "New Trial License" page, confirm the product is "Bamboo" and the license type is "Bamboo (Data Center)".  Enter a value for "Organization" and select **Generate License**.
@@ -47,14 +42,14 @@ To configure the Bamboo server, you need to create and enter an evalutation lice
 8. On the "Import data" page, confirm that "Create a new Bamboo home" is selected and select **Continue**.  Stand by for the database to be configured.
 9. On the "Create admin" page, enter the details for your admin account and select **Finish**.  Stand by for the installation to complete.
 
-#### 3.2 Disable notifications
+#### 2.2 Disable notifications
 This step prevents Bamboo from creating notificaitons about the server running with an embedded database or agents running on the primary server.
 
 1. Once the installation is complete, select the cog on the top, far right of the page.  Select **Overview**.
 2. Scroll to the bottom of that page and select **Troubleshooting and support tools** from the menu on the left.
 3. On the far right under "Notifications", select the dropdown menu and select "Don't show any notifications".
 
-#### 3.3 Disable sign-ups
+#### 2.3 Disable sign-ups
 This step prevents others from creating accounts on your Bamboo server without your permission.
 
 1. Once the installation is complete, select the cog on the top, far right of the page.  Select **Overview**.
@@ -63,13 +58,20 @@ This step prevents others from creating accounts on your Bamboo server without y
 4. Under "Change global security and permission properties", remove the selection next to "Enable signup?".
 5. At the bottom of the page, Select **Save**.
 
-#### 3.3 Add a local agent
+#### 2.4 Add a local agent
 1. Select the cog on the top, far right of the page.  Select **Agents**.
 2. Select **Add local agent**.
 3. Enter a name and description for the agent, perhaps `agent1`.
 4. In the top menu bar of the page, select **My Bamboo**.
 
-### 4. Create the pipeline
-### 5. Run the pipeline
-
+## Implement the Experimental Pipeline
+### 1. Create a GitHub repo for the sample application code
+1. Create a new GitHub repo.
+1. From ther repo home page, select **Add file -> Upload files**.
+1. Select **choose your files** and browse to the exercise files for this lesson on your local system.
+1. Select all of the files and then select **Open**.
+1. After the files have been uploaded, enter a commit message and select **Commit changes**.
+ 
+### 2. Create the pipeline
+### 3. Run the pipeline
 
