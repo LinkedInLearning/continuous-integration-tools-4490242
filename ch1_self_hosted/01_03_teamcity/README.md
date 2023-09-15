@@ -31,6 +31,10 @@
 2. On the "Database connection setup" page, next to "Select the database type", select **Internal (HSQLDB)**.  *Note that this option selects an embedded database which is for evaluation purposes and is not intended for production use*.  Select **Proceed**.
 3. On the "License Agreement" page, scroll to the bottom of the page, select the checkbox next to **Accept license agreement**.  Select **Continue**.
 4. On the "Create Administrator Account" page, select a username and password for your admin account and select **Create Account**.
+5. At the top left of the TeamCity home page, select **Agents**.
+6. In the menu on the left under "Overivew", select **Unathorized** to expose the two agents that were deployed with the server.
+7. Select **agent-1**.  On the configuration page for agent-1, select **Authorize**.  Enter a comment for the authorization (perhaps, "Adding a new agent") and select **Authorize**.
+8. Report the authorization steps for "agent-2".
 
 ### 4. Create the pipeline
 ### 5. Run the pipeline
