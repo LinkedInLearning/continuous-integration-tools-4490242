@@ -61,13 +61,13 @@ Default Job:
     required: true
   artifact-subscriptions: []
 variables:
-  AWS_ACCESS_KEY_ID: AKIARVBZZG7X6C4CQZST
-  AWS_DEFAULT_REGION: us-east-2
-  AWS_SECRET_ACCESS_KEY: BAMSCRT@0@0@JGwmR+5MrdkYhTJJrmh35+RaM6vhbeYLgqhC1buBNuWBcMw40luHRKBPurJV0Pc5
-  PRODUCTION_FUNCTION_NAME: sample-application-production
-  PRODUCTION_URL: https://x2kwlkaff4pjobsjjtgl4ssdce0ceiof.lambda-url.us-east-2.on.aws/
-  STAGING_FUNCTION_NAME: sample-application-staging
-  STAGING_URL: https://nphukndnle4gm37v3bffyhdvri0dvzaz.lambda-url.us-east-2.on.aws/
+  AWS_ACCESS_KEY_ID: UPDATE_THIS_VALUE
+  AWS_DEFAULT_REGION: UPDATE_THIS_VALUE
+  AWS_SECRET_ACCESS_KEY: UPDATE_THIS_VALUE
+  PRODUCTION_FUNCTION_NAME: UPDATE_THIS_VALUE
+  PRODUCTION_URL: UPDATE_THIS_VALUE
+  STAGING_FUNCTION_NAME: UPDATE_THIS_VALUE
+  STAGING_URL: UPDATE_THIS_VALUE
 repositories:
 - repo:
     scope: global
@@ -87,4 +87,3 @@ dependencies:
   plans: []
 other:
   concurrent-build-plugin: system-default
-  

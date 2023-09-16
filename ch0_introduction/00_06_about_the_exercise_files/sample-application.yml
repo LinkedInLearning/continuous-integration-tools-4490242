@@ -214,17 +214,17 @@ Outputs:
     Value:
       Fn::GetAtt: LambdaUrlProduction.FunctionUrl
   
-  ServiceAccountAccessKeyId:
-    Description: The AccessKeyId for the service account. Please keep this value secure.
+  AwsAccessKeyId:
+    Description: The AWS_ACCESS_KEY_ID for the service account. Please keep this value secure.
     Value: 
       !Ref Keys
   
-  ServiceAccountSecretAccessKey:
-    Description: The SecretAccessKey for the service account. Please keep this value secure.
+  AwsSecretAccessKey:
+    Description: The AWS_SECRET_ACCESS_KEY for the service account. Please keep this value secure.
     Value: 
       !GetAtt Keys.SecretAccessKey
   
-  Region:
-    Description: The region where the stack is deployed.
+  AwsDefaultRegion:
+    Description: The AWS_DEFAULT_REGION where the stack is deployed.
     Value: 
       !Sub ${AWS::Region}

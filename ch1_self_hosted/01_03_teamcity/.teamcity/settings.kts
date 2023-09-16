@@ -50,19 +50,18 @@ object Build : BuildType({
     maxRunningBuilds = 1
     publishArtifacts = PublishMode.SUCCESSFUL
 
-/*
-    // the params section is only included for reference
     // please configure the parameters manually in the TeamCity UI
+    // Select Project -> Edit Project -> Build (Under Build Configurations) -> Parameters
+    // Edit each parameter with the values for your deployments
     params {
-        password("env.AWS_SECRET_ACCESS_KEY", "reference", display = ParameterDisplay.HIDDEN, readOnly = true)
-        password("env.AWS_ACCESS_KEY_ID", "reference", display = ParameterDisplay.HIDDEN, readOnly = true)
-        param("env.AWS_DEFAULT_REGION", "us-east-2")
-        param("env.STAGING_FUNCTION_NAME", "sample-application-staging")
-        param("env.STAGING_URL", "https://reference.lambda-url.us-east-2.on.aws/")
-        param("env.PRODUCTION_FUNCTION_NAME", "sample-application-production")
-        param("env.PRODUCTION_URL", "https://reference.lambda-url.us-east-2.on.aws/")
+        password("env.AWS_SECRET_ACCESS_KEY", "reference", display = ParameterDisplay.HIDDEN)
+        password("env.AWS_ACCESS_KEY_ID", "reference", display = ParameterDisplay.HIDDEN)
+        param("env.AWS_DEFAULT_REGION", "UPDATE_THIS_VALUE")
+        param("env.STAGING_FUNCTION_NAME", "UPDATE_THIS_VALUE")
+        param("env.STAGING_URL", "UPDATE_THIS_VALUE")
+        param("env.PRODUCTION_FUNCTION_NAME", "UPDATE_THIS_VALUE")
+        param("env.PRODUCTION_URL", "UPDATE_THIS_VALUE")
     }
-*/
 
     steps {
         script {

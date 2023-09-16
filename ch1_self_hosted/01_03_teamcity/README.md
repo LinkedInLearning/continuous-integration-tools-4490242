@@ -47,5 +47,8 @@ Because this course covers multiple tools, a dedicated repo is need for each too
 1. After the files have been uploaded, enter a commit message and select **Commit changes**.
 
 ### 2. Create the pipeline
+- import repo
+- attach VCS root
+- update parameters
 
 ### 3. Run the pipeline
