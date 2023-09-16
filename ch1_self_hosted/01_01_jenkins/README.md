@@ -65,7 +65,7 @@ Before starting these steps, open the Output tab of the Clouformation stack for 
 Because this course covers multiple tools, a dedicated repo is need for each tool to prevent unexpected deployments to the sample-application.
 
 #### 1.1 Create a repo and upload the exercise files for this lesson
-1. Create a new GitHub repo.
+1. Create a new GitHub repo. Give the repo a name and description.  Please select **Public** for the repo visibility to simplify access.  Select the option to add a README file and select **Python** when adding a `.gitignore` file.
 2. From ther repo home page, select **Add file -> Upload files**.
 3. Select **choose your files** and browse to the exercise files for this lesson on your local system.
 4. Select all of the files and then select **Open**.
@@ -113,7 +113,7 @@ Because this course covers multiple tools, a dedicated repo is need for each too
 
 ### 3. Run the pipeline
 1. From the "Experimental Pipeline" home page, select **Build Now**.
-2. Allow the build to complete.  
+2. Allow the build to complete.
 3. If any errors are encountered, hover over the stage where the error was encoutered and select **Logs**.  Review the errors and make corrections as needed.  Consider reviewing the configuration steps for the credentials and the pipeline project.  If you are not able to resolve the errors, please post a question on LinkinedIn Learning in the course Q&A section.
 4. Open the URLs for the sample application's staging and production environments.  For both environments, confirm that the deployment platform is "Jenkins" and the build number matches the last successful build number.
 

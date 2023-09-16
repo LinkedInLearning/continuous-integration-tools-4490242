@@ -18,7 +18,7 @@ Having the following items in place before starting this lab will help you have 
 1. On the CloudFormation homepage, select **Create stack**.  If the button includes a dropdown, select **With new resources (standard)**.
 1. Under "Prerequisite - Prepare template", confirm that "Template is ready" is selected.
 1. Under "Specify template", select **Upload a template file**.  Select **Chose file**.  Browse to the exercise files for this lesson on your local system.  Select [`teamcity-cloudformation-template.yml`](./teamcity-cloudformation-template.yml).  Select **Open**. Select **Next**.
-1. Enter a name for the stack under "Stack name"; `teamcity` is a good choice. *Note that the name should only include letters (A-Z and a-z), numbers (0-9), and dashes (-)*.  
+1. Enter a name for the stack under "Stack name"; `teamcity` is a good choice. *Note that the name should only include letters (A-Z and a-z), numbers (0-9), and dashes (-)*.
 1. Accept the defaults under "Parameters" and select **Next**.
 1. On the "Configure stack options" screen, keep all options as the default.  Scroll to the bottom of the page and select **Next**.
 1.  On the "Review" screen, scroll to the bottom of the page and select the **checkbox** next to "I acknowledge that AWS CloudFormation might create IAM resources with custom names".  Select **Submit**.
@@ -48,7 +48,7 @@ Before starting these steps, open the Output tab of the Clouformation stack for 
 Because this course covers multiple tools, a dedicated repo is need for each tool to prevent unexpected deployments to the sample-application.
 
 TODO: Update this and other readmes to specify creating a PUBLIC repo.
-1. Create a new GitHub repo.
+1. Create a new GitHub repo. Give the repo a name and description.  Please select **Public** for the repo visibility to simplify access.  Select the option to add a README file and select **Python** when adding a `.gitignore` file.
 1. From ther repo home page, select **Add file -> Upload files**.
 1. Select **choose your files** and browse to the exercise files for this lesson on your local system.
 1. Select all of the files and then select **Open**.
@@ -76,7 +76,7 @@ TODO: Update this and other readmes to specify creating a PUBLIC repo.
 ### 3. Run the pipeline
 1. At the top right of the page, select **Run**.
 2. Select **Go to build configuration page** to see the build in progress.
-3. Allow the build to complete.  
+3. Allow the build to complete.
 4. If any errors are encountered, review the logs for errors and make corrections as needed.  Consider reviewing the configuration steps for the tasks and the values for the variables.  If you are not able to resolve the errors, please post a question on LinkinedIn Learning in the course Q&A section.
 5. Open the URLs for the sample application's staging and production environments.  For both environments, confirm that the deployment platform is "TeamCity" and the build number matches the last successful build number.
 
@@ -102,7 +102,7 @@ TeamCity allows you to connect to the agents where your jobs will run.  This all
 4. Change directories to one of the work sub-directories and activate the Python virtual environment.  Then, run the project script.
 
         cd /opt/buildagent/work/<your_directory_name here>
-        python3 index_test.py 
+        python3 index_test.py
         python3 index.py
 
 5. End the session by closing the tab.
