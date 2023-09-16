@@ -57,7 +57,7 @@ test:
 	python -m unittest -v index_test
 
 build:
-	zip lambda.zip index.py data.json
+	zip lambda.zip index.py data.json template.html
 
 deploy:
 	aws sts get-caller-identity
