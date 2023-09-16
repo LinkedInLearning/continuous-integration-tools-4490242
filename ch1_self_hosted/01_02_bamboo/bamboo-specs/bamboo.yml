@@ -53,6 +53,12 @@ Default Job:
       executable: Make
       argument: testdeployment URL=${bamboo.PRODUCTION_URL}
       description: Test Production
+  artifacts:
+  - name: Zip File
+    location: .
+    pattern: '**/*.zip'
+    shared: true
+    required: true
   artifact-subscriptions: []
 variables:
   AWS_ACCESS_KEY_ID: AKIARVBZZG7X6C4CQZST
@@ -81,3 +87,4 @@ dependencies:
   plans: []
 other:
   concurrent-build-plugin: system-default
+  
