@@ -53,17 +53,68 @@ To configure the Jenkins server, you must connect to the server and retreive the
 6. On the "Jenkins is ready!" page, select **Start using Jenkins**.
 
 ## Implement the Experimental Pipeline
+To implement the experimental pipeline in Jenkins, you will need to create a GitHub repo, add the exercise files, and modify the files for your project.
+
+Then you'll add the service account credentials to Jenkins.  Next, you'll create the project that implements the pipeline.
+
+And finally, you'll trigger the pipeline to deploy the sample applicaiton.
+
+Before starting these steps, open the Output tab of the Clouformation stack for the sameple application.  You'll be referencing values displayed on that tab.
+
 ### 1. Create a GitHub repo for the sample application code
 Because this course covers multiple tools, a dedicated repo is need for each tool to prevent unexpected deployments to the sample-application.
 
+#### 1.1 Create a repo and upload the exercise files for this lesson
 1. Create a new GitHub repo.
 2. From ther repo home page, select **Add file -> Upload files**.
 3. Select **choose your files** and browse to the exercise files for this lesson on your local system.
 4. Select all of the files and then select **Open**.
 5. After the files have been uploaded, enter a commit message and select **Commit changes**.
 
-### 2. Create the pipeline
-- add the AWS credentials for the service account
-- create a project using the github repo
+#### 1.2 Update the files for your project
+1. From the root of your GitHub repo, select `Jenkinsfile`.
+2. Select the pencil icon to edit the file.
+3. Find all occurrences of `UPDATE_THIS_VALUE` in the file and replace the text with the correct value for your project. All information can be found on the **Outputs** tab for the sample application stack in the CloudFormation console. Specfically, you'll need to update the following lines under `environment` and commit the updated file:
+
+        environment {
+            ...
+            AWS_DEFAULT_REGION        = 'UPDATE_THIS_VALUE'
+            STAGING_FUNCTION_NAME     = 'UPDATE_THIS_VALUE'
+            STAGING_URL               = 'UPDATE_THIS_VALUE'
+            PRODUCTION_FUNCTION_NAME  = 'UPDATE_THIS_VALUE'
+            PRODUCTION_URL            = 'UPDATE_THIS_VALUE'
+        }
+
+
+### 2. Configure credentials and create the pipeline project
+
+#### 2.1 Configure credentials
+1. Log into your Jenkins server.  Select **Manage Jenkins -> Credentials -> System *(under "Stores scoped to Jenkins")* -> Global credentials (unrestricted) -> Add Credentials**
+2. Under "Kind", select **Secret text**.
+3. Under "Secret", enter the value for `AwsAccessKeyId`.
+4. Under "ID", enter **AWS_ACCESS_KEY_ID**.
+5. Select **Create**.
+6. Select **Add Credentials**.
+7. Under "Kind", select **Secret text**.
+3. Under "Secret", enter the value for `AwsSecretAccessKey`.
+4. Under "ID", enter **AWS_SECRET_ACCESS_KEY**.
+5. Select **Create**.
+
+#### 2.1 Create the pipeline project
+1. Select **Dashboard -> +New Item**.
+2. Under "Enter an item name", enter **Experimental Pipeline**.
+3. Select **Pipeline** and then select **OK**.
+4. Scroll down to the "Pipeline" section on the configuration papge.  Under "Definition", select **Pipeline script from SCM**.
+5. Under "SCM", select **Git**.
+6. Under "Repositories -> Repository URL", enter the URL for your GitHub repo.  Find this value from the home page of your repo by selecting **Code -> HTTPS** and then selecting the stacked squares icon to copy the URL to your system's clipboard.
+7. Under "Branches to build -> Branch Specifier", change "master" to **main**.
+8. Confirm that under "Script Path", the value is `Jenkinsfile`.
+9. Select **Save**.
 
 ### 3. Run the pipeline
+1. From the "Experimental Pipeline" home page, select **Build Now**.
+2. Allow the build to complete.  
+3. If any errors are encountered, hover over the stage where the error was encoutered and select **Logs**.  Review the errors and make corrections as needed.  Consider reviewing the configuration steps for the credentials and the pipeline project.  If you are not able to resolve the errors, please post a question on LinkinedIn Learning in the course Q&A section.
+4. Open the URLs for the sample application's staging and production environments.  For both environments, confirm that the deployment platform is "Jenkins" and the build number matches the last successful build number.
+
+[[Next: 01_02 Bamboo](../01_02_bamboo/README.md)]
