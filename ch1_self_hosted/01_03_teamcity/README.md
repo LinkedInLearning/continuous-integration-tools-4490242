@@ -104,3 +104,7 @@ TeamCity allows you to connect to the agents where your jobs will run.  This all
         cd /opt/buildagent/work/<your_directory_name here>
         python3 index_test.py 
         python3 index.py
+
+5. End the session by closing the tab.
+
+

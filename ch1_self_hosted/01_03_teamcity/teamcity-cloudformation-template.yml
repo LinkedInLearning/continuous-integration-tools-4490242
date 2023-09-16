@@ -76,14 +76,14 @@ Resources:
                     privileged: true
                     environment:
                       - SERVER_URL=http://server:8111
-                      - AGENT_NAME="agent-1"
+                      - AGENT_NAME=agent-1
 
                   agent-2:
                     image: jetbrains/teamcity-agent
                     privileged: true
                     environment:
                       - SERVER_URL=http://server:8111
-                      - AGENT_NAME="agent-2"
+                      - AGENT_NAME=agent-2
 
                 volumes:
                   teamcity_data:
