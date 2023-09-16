@@ -23,8 +23,8 @@ class TestHandler(unittest.TestCase):
         self.assertIn(f"The Sample Application - {self.mock_env}", response["body"])
 
     def test_get_all_data(self):
-        with open("data.json", "r") as f:
-            data = json.load(f)
+        with open("data.json", mode="r", encoding="utf-8") as data_file:
+            data = json.load(data_file)
 
         event = {"rawPath": "/data"}
         response = handler(event, None)
