@@ -27,7 +27,7 @@ hello:
 	@echo "  make deploy FUNCTION=sample-application-staging"
 	@echo
 	@echo "Optional deploy variables are:"
-	@echo "  ENVIRONMENT   - the inteded environment for the deployment (default: undefined)"
+	@echo "  ENVIRONMENT   - the intended environment for the deployment (default: undefined)"
 	@echo "  VERSION       - the version of the code being deployed (default: undefined)"
 	@echo "  PLATFORM      - the platform being used for the deployment (default: undefined)"
 	@echo "  BUILD_NUMBER  - the build number assigned by the deployment platform (default: undefined)"
