@@ -69,6 +69,14 @@ This step prevents others from creating accounts on your Bamboo server without y
 4. In the top menu bar of the page, select **My Bamboo**.
 
 ## Implement the Experimental Pipeline
+To implement the experimental pipeline in Bamboo, you will need to create a GitHub repo and add the exercise files.
+
+Then you'll create a project and build plan in the Bamboo web interface. You'll add tasks to the build plan and create variables to hold the service account credentials and values for the staging and production environments.
+
+And finally, you'll trigger the pipeline to deploy the sample applicaiton.
+
+Before starting these steps, open the Output tab of the Clouformation stack for the sameple application. You'll be referencing values displayed on that tab.
+
 ### 1. Create a GitHub repo for the sample application code
 Because this course covers multiple tools, a dedicated repo is need for each tool to prevent unexpected deployments to the sample-application.
 
@@ -78,6 +86,48 @@ Because this course covers multiple tools, a dedicated repo is need for each too
 1. Select all of the files and then select **Open**.
 1. After the files have been uploaded, enter a commit message and select **Commit changes**.
  
-### 2. Create the pipeline
+### 2. Setup the pipeline
+#### 2.1 Create a project and build plan
+1. From the home page of the Bamboo server, select **Create -> Create project**.
+2. For "Project Name", enter **Experimental Pipeline**.  Select the checkbox next to "Allow all users to view this project".  Then, select **Save**.
+3. On the "Experimental Pipeline" project page, select **Create plan**.
+4. Next to "Plan name", enter **Build**.  Select the checkbox next to "Plan access".  Then, select **Create**.
+5. For the page "Link repository to this build plan", select **Link new repository -> Select repository host -> Git**. *Note: Using the GitHub repository host requires a bit more configuration including the creation of a Personal Access Token which is beyond the scope of this course.  If you choose to use the GitHub connection method, see this document on [managing your personal access tokens for GitHub](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)*.
+6. Next to "Display name", enter a name for the repo.
+7. Next to "Repository URL", enter the URL for your GitHub repo.  Find this value from the home page of your repo by selecting **Code -> HTTPS** and then selecting the stacked squares icon to copy the URL to your system's clipboard.
+8. Next to "Branch", enter **main**.  Select **Test connection**.  Select **Save and continue**.
+
+#### 2.2 Add tasks to the build plan
+Each Bamboo plan contains jobs. Jobs contain tasks.  In this step you'll be creating 7 tasks with each task representing a stage in the experimental pipeline.
+
+Because the creation for each task is very similar, the steps below will cover the creation of the first task and then list the details needed for any following tasks.
+
+1.  On the "Configure Job" page, select **Add task**.
+2.  In the search field for the "Tasks types" dialog, enter "Script".  Select **Script**.
+3.  For the "Task description", enter **Requirements**.  Confirm "Interpreter" is set to `Shell` and "Script location" is set to `Inline`.
+4.  In the "Script body" field, enter:
+
+        python3 -m venv local
+        . ./local/bin/activate
+        make requirements
+
+5. Select **Save**.
+
+Use the following table to create the remaining task for each stage of the pipeline after.  Start each task creation by selecting **Add task**.
+
+| Task Type | Task Description  | Script Body / Command                                          | Argument (entered as one line, seperated by spaces)                                                                                                                        | Environment Variables (entered as one line, seperated by spaces)                                                                                    |
+|-----------|-------------------|----------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| Script    | Check-Lint-Test   | python3 -m venv local . ./local/bin/activate make requirements |                                                                                                                                                                            |                                                                                                                                                     |
+| Command   | Build             | make                                                           | clean build                                                                                                                                                                |                                                                                                                                                     |
+| Command   | Deploy Staging    | make                                                           | deploy ENVIRONMENT="Staging" PLATFORM="Bamboo" FUNCTION=${bamboo.STAGING_FUNCTION_NAME} VERSION=${bamboo.planRepository.revision} BUILD_NUMBER=${bamboo.buildNumber}       | AWS_ACCESS_KEY_ID=${bamboo.AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${bamboo.AWS_SECRET_ACCESS_KEY} AWS_DEFAULT_REGION=${bamboo.AWS_DEFAULT_REGION} |
+| Command   | Test Staging      | make                                                           | testdeployment URL=${bamboo.STAGING_URL}                                                                                                                                   |                                                                                                                                                     |
+| Command   | Deploy Production | make                                                           | deploy ENVIRONMENT="Production" PLATFORM="Bamboo" FUNCTION=${bamboo.PRODUCTION_FUNCTION_NAME} VERSION=${bamboo.planRepository.revision} BUILD_NUMBER=${bamboo.buildNumber} | AWS_ACCESS_KEY_ID=${bamboo.AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${bamboo.AWS_SECRET_ACCESS_KEY} AWS_DEFAULT_REGION=${bamboo.AWS_DEFAULT_REGION} |
+| Command   | Test Staging      | make                                                           | testdeployment URL=${bamboo.PRODUCTION_URL}                                                                                                                                |                                                                                                                                                     |
+|           |                   |                                                                |                                                                                                                                                                            |                                                                                                                                                     |
+|           |                   |                                                                |                                                                                                                                                                            |                                                                                                                                                     |
+
+
+#### 2.2 Add a VCS connection and create variables
+
 ### 3. Run the pipeline
 
