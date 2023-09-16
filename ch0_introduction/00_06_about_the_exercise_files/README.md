@@ -30,9 +30,9 @@ Use the provided [CloudFormation template](./sample-application.yml) and the fol
 ### 3. Review the Deployed Sample Application and Lambda Functions
 1.  On the stack homepage, select the "Outputs" column.  Make a note of the output key, value, and description for:
 
-    - Region
-    - AccessKeyId
-    - SecretAccessKey
+    - AwsAccessKeyId
+    - AwsDefaultRegion
+    - AwsSecretAccessKey
     - ProductionFunctionName
     - ProductionURL
     - StagingFunctionName
@@ -40,6 +40,6 @@ Use the provided [CloudFormation template](./sample-application.yml) and the fol
 
     These values will be needed to configure the experimental pipeline for each CI tool.
 
-1.  Select the URL next to **UrlProduction** and  **UrlStaging** to view the deployed websites. *Open each link in a new tab*.
+2.  To view the environments for the sample applicaiton, select the URL next to **ProductionURL** and  **StagingURL**. *Open each link in a new tab*.
 
-1.  Select the "Resources" tab on the stack homepage.  Under "Logical ID", locate **LambdaFunctionProduction** and **LambdaFunctionStaging**.  Select the link next to each resource in the "Physical ID" column.
+3.  To view the lambda functions for the sample application, select the "Resources" tab on the stack homepage.  Under "Logical ID", locate **LambdaFunctionProduction** and **LambdaFunctionStaging**.  Select the link next to each resource in the "Physical ID" column.
