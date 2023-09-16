@@ -38,6 +38,8 @@ Having the following items in place before starting this lab will help you have 
 ## Implement the Experimental Pipeline
 
 ### 1. Create a GitHub repo for the sample application code
+Because this course covers multiple tools, a dedicated repo is need for each tool to prevent unexpected deployments to the sample-application.
+
 1. Create a new GitHub repo.
 1. From ther repo home page, select **Add file -> Upload files**.
 1. Select **choose your files** and browse to the exercise files for this lesson on your local system.
