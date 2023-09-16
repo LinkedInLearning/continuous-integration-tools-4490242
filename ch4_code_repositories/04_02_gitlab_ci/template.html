@@ -3,79 +3,79 @@
     <head>
         <title>The Sample Application - {environment}</title>
         <style>
-body {{
-        font-family: Arial, sans-serif;
-        line-height: 1.6;
-        max-width: 800px;
-        margin: 0 auto;
-}}
+            body {{
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                max-width: 800px;
+                margin: 0 auto;
+            }}
 
             h1, h2 {{
-                    color: #333;
-                    border-bottom: 1px solid #ccc;
+                color: #333;
+                border-bottom: 1px solid #ccc;
             }}
 
-        p {{
+            p {{
                 margin-bottom: 16px;
-        }}
+            }}
 
-    button {{
-            background-color: green;
-            color: white;
-            font-weight: bold;
-            padding: 10px 20px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-    }}
+            button {{
+                background-color: green;
+                color: white;
+                font-weight: bold;
+                padding: 10px 20px;
+                font-size: 16px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }}
 
-table {{
-        width: 50%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-}}
+            table {{
+                width: 50%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }}
 
             td, th {{
-                    padding: 10px;
-                    border: 1px solid #ccc;
-                    text-align: left;
+                padding: 10px;
+                border: 1px solid #ccc;
+                text-align: left;
             }}
 
-        th {{
+            th {{
                 background-color: #f2f2f2;
                 font-weight: bold;
-        }}
+            }}
 
-    td:first-child, th:first-child {{
-            font-weight: bold;
-            background-color: #26A69A ;
-    }}
+            td:first-child, th:first-child {{
+                font-weight: bold;
+                background-color: #26A69A ;
+            }}
 
-td b {{
-        font-weight: normal;
-}}
+            td b {{
+                font-weight: normal;
+            }}
         </style>
     </head>
     <body>
         <h1>The Sample Application</h1>
         <table>
-            <tr>
-                <td>Environment:</td>
-                <td><b>{environment}</b></td>
-            </tr>
-            <tr>
-                <td>Version:</td>
-                <td><b>{version}</b></td>
-            </tr>
-            <tr>
-                <td>Platform:</td>
-                <td><b>{platform}</b></td>
-            </tr>
-            <tr>
-                <td>Build Number</td>
-                <td><b>{build_number}</b></td>
-            </tr>
+          <tr>
+            <td>Environment:</td>
+            <td><b>{environment}</b></td>
+          </tr>
+          <tr>
+            <td>Version:</td>
+            <td><b>{version}</b></td>
+          </tr>
+          <tr>
+            <td>Platform:</td>
+            <td><b>{platform}</b></td>
+          </tr>
+          <tr>
+            <td>Build Number</td>
+            <td><b>{build_number}</b></td>
+          </tr>
         </table>
 
         <h2>GET /</h2>

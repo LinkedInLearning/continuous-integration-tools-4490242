@@ -47,8 +47,9 @@ check:
 	aws --version
 
 lint:
-	pylint --exit-zero --disable=R,C $(CODE)
-	flake8 --exit-zero $(CODE)
+	pylint --exit-zero --errors-only --disable=C0301 --disable=C0326 --disable=R,C $(CODE)
+	flake8 --exit-zero --ignore=E501,E231 $(CODE)
+
 
 black:
 	black --diff $(CODE)
