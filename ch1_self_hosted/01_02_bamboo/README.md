@@ -115,19 +115,47 @@ Because the creation for each task is very similar, the steps below will cover t
 
 Use the following table to create the remaining task for each stage of the pipeline after.  Start each task creation by selecting **Add task**.
 
-| Task Type | Task Description  | Script Body / Command                                          | Argument (entered as one line, seperated by spaces)                                                                                                                        | Environment Variables (entered as one line, seperated by spaces)                                                                                    |
-|-----------|-------------------|----------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
-| Script    | Check-Lint-Test   | python3 -m venv local . ./local/bin/activate make requirements |                                                                                                                                                                            |                                                                                                                                                     |
-| Command   | Build             | make                                                           | clean build                                                                                                                                                                |                                                                                                                                                     |
-| Command   | Deploy Staging    | make                                                           | deploy ENVIRONMENT="Staging" PLATFORM="Bamboo" FUNCTION=${bamboo.STAGING_FUNCTION_NAME} VERSION=${bamboo.planRepository.revision} BUILD_NUMBER=${bamboo.buildNumber}       | AWS_ACCESS_KEY_ID=${bamboo.AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${bamboo.AWS_SECRET_ACCESS_KEY} AWS_DEFAULT_REGION=${bamboo.AWS_DEFAULT_REGION} |
-| Command   | Test Staging      | make                                                           | testdeployment URL=${bamboo.STAGING_URL}                                                                                                                                   |                                                                                                                                                     |
-| Command   | Deploy Production | make                                                           | deploy ENVIRONMENT="Production" PLATFORM="Bamboo" FUNCTION=${bamboo.PRODUCTION_FUNCTION_NAME} VERSION=${bamboo.planRepository.revision} BUILD_NUMBER=${bamboo.buildNumber} | AWS_ACCESS_KEY_ID=${bamboo.AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${bamboo.AWS_SECRET_ACCESS_KEY} AWS_DEFAULT_REGION=${bamboo.AWS_DEFAULT_REGION} |
-| Command   | Test Staging      | make                                                           | testdeployment URL=${bamboo.PRODUCTION_URL}                                                                                                                                |                                                                                                                                                     |
-|           |                   |                                                                |                                                                                                                                                                            |                                                                                                                                                     |
-|           |                   |                                                                |                                                                                                                                                                            |                                                                                                                                                     |
+For the first "Command" task type, you'll need to add a configuration for the `make` command.  Under "executable", select **Add new executable**.  For the "Label", enter **Make**.  For the "Path", enter **`/usr/bin/make`**.
 
+| Task Type | Task Description  | Script Body / Command                                                  | Argument (entered as one line, seperated by spaces)                                                                                                                                   | Environment Variables (entered as one line, seperated by spaces)                                                                                               |
+|:-----------|:-------------------|:------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Script    | Check-Lint-Test   | <pre>. ./local/bin/activate</br>make check lint test</pre> |                                                                                                                                                                                       |                                                                                                                                                                |
+| Command   | Build             | <pre>make</pre>                                                        | <pre>clean build</pre>                                                                                                                                                                |                                                                                                                                                                |
+| Command   | Deploy Staging    | <pre>make</pre>                                                      | <pre>deploy ENVIRONMENT="Staging" PLATFORM="Bamboo" FUNCTION=${bamboo.STAGING_FUNCTION_NAME} VERSION=${bamboo.planRepository.revision} BUILD_NUMBER=${bamboo.buildNumber} </pre>     | <pre>AWS_ACCESS_KEY_ID=${bamboo.AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${bamboo.AWS_SECRET_ACCESS_KEY} AWS_DEFAULT_REGION=${bamboo.AWS_DEFAULT_REGION}</pre> |
+| Command   | Test Staging      | <pre>make</pre>                                                      | <pre>testdeployment URL=${bamboo.STAGING_URL} </pre>                                                                                                                                 |                                                                                                                                                                |
+| Command   | Deploy Production | <pre>make</pre>                                                      | <pre>deploy ENVIRONMENT="Production" PLATFORM="Bamboo" FUNCTION=${bamboo.PRODUCTION_FUNCTION_NAME} VERSION=${bamboo.planRepository.revision} BUILD_NUMBER=${bamboo.buildNumber}</pre> | <pre>AWS_ACCESS_KEY_ID=${bamboo.AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${bamboo.AWS_SECRET_ACCESS_KEY} AWS_DEFAULT_REGION=${bamboo.AWS_DEFAULT_REGION}</pre> |
+| Command   | Test Production      | <pre>make</pre>                                                      | <pre>testdeployment URL=${bamboo.PRODUCTION_URL}</pre>                                                                                                                                |                                                                                                                                                                |
 
-#### 2.2 Add a VCS connection and create variables
+After all 7 pipeline stages are in place (for a total of 8, including the "Source Code Checkout"), your configuration should apprear as follows:
+
+![Bamboo Plan Tasks Configuration](./Bamboo-Plan-Tasks-SCR-20230916-mare.png)
+
+Select **Save and continue**.
+
+#### 2.2 Create variables for project parameters
+1. On the "Plan configuration" page, select **Variables**.
+2. Under "Variable name" and "Value" enter the names and values for each of the following project parameters:
+
+   - AWS_ACCESS_KEY_ID
+   - AWS_DEFAULT_REGION
+   - AWS_SECRET_ACCESS_KEY
+   - PRODUCTION_FUNCTION_NAME
+   - PRODUCTION_URL
+   - STAGING_FUNCTION_NAME
+   - STAGING_URL
+
+   *Note: Take care when copying values from the "Outputs" tab of the Cloudformation console as the values may contain tabs at the very end of the text.*
+
+   After all 7 parameters are in place, your configuration should apprear as follows:
+
+![Bamboo Plan Variables](Bamboo-Plan-Variables-SCR-20230916-mezc.png)
+
+3. On the far right of the page, select **Actions -> Enable plan**.
 
 ### 3. Run the pipeline
+1. On the far right of the page, select **Run -> Run plan**.
+2. Allow the build to complete.  
+3. If any errors are encountered, review the logs for errors and make corrections as needed.  Consider reviewing the configuration steps for the tasks and the values for the variables.  If you are not able to resolve the errors, please post a question on LinkinedIn Learning in the course Q&A section.
+4. Open the URLs for the sample application's staging and production environments.  For both environments, confirm that the deployment platform is "Bamboo" and the build number matches the last successful build number.
 
+[[Next: 01_03 TeamCity](../01_03_teamcity/README.md)]
