@@ -1,0 +1,83 @@
+---
+version: 2
+plan:
+  project-key: EP
+  key: BUIL
+  name: Build
+stages:
+- Default Stage:
+    manual: false
+    final: false
+    jobs:
+    - Default Job
+Default Job:
+  key: JOB1
+  tasks:
+  - checkout:
+      force-clean-build: false
+      description: Checkout Default Repository
+  - script:
+      interpreter: SHELL
+      scripts:
+      - |-
+        python3 -m venv local
+        . ./local/bin/activate
+        make requirements
+      description: Requirements
+  - script:
+      interpreter: SHELL
+      scripts:
+      - |-
+        . ./local/bin/activate
+        make check lint test
+      description: Check-Lint-Test
+  - command:
+      executable: Make
+      argument: clean build
+      description: Build
+  - command:
+      executable: Make
+      argument: deploy ENVIRONMENT="Staging" PLATFORM="Bamboo" FUNCTION=${bamboo.STAGING_FUNCTION_NAME} VERSION=${bamboo.planRepository.revision} BUILD_NUMBER=${bamboo.buildNumber}
+      envrionment: AWS_ACCESS_KEY_ID=${bamboo.AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${bamboo.AWS_SECRET_ACCESS_KEY} AWS_DEFAULT_REGION=${bamboo.AWS_DEFAULT_REGION}
+      description: Deploy Staging
+  - command:
+      executable: Make
+      argument: testdeployment URL=${bamboo.STAGING_URL}
+      description: Test Staging
+  - command:
+      executable: Make
+      argument: deploy ENVIRONMENT="Production" PLATFORM="Bamboo" FUNCTION=${bamboo.PRODUCTION_FUNCTION_NAME} VERSION=${bamboo.planRepository.revision} BUILD_NUMBER=${bamboo.buildNumber}
+      envrionment: AWS_ACCESS_KEY_ID=${bamboo.AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${bamboo.AWS_SECRET_ACCESS_KEY} AWS_DEFAULT_REGION=${bamboo.AWS_DEFAULT_REGION}
+      description: Deploy Production
+  - command:
+      executable: Make
+      argument: testdeployment URL=${bamboo.PRODUCTION_URL}
+      description: Test Production
+  artifact-subscriptions: []
+variables:
+  AWS_ACCESS_KEY_ID: AKIARVBZZG7X6C4CQZST
+  AWS_DEFAULT_REGION: us-east-2
+  AWS_SECRET_ACCESS_KEY: BAMSCRT@0@0@JGwmR+5MrdkYhTJJrmh35+RaM6vhbeYLgqhC1buBNuWBcMw40luHRKBPurJV0Pc5
+  PRODUCTION_FUNCTION_NAME: sample-application-production
+  PRODUCTION_URL: https://x2kwlkaff4pjobsjjtgl4ssdce0ceiof.lambda-url.us-east-2.on.aws/
+  STAGING_FUNCTION_NAME: sample-application-staging
+  STAGING_URL: https://nphukndnle4gm37v3bffyhdvri0dvzaz.lambda-url.us-east-2.on.aws/
+repositories:
+- repo:
+    scope: global
+triggers:
+- polling:
+    period: '180'
+branches:
+  create: manually
+  delete: never
+  link-to-jira: true
+notifications: []
+labels: []
+dependencies:
+  require-all-stages-passing: false
+  enabled-for-branches: true
+  block-strategy: none
+  plans: []
+other:
+  concurrent-build-plugin: system-default

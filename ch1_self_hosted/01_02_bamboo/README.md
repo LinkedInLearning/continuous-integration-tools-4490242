@@ -6,6 +6,7 @@
 - [Configuring plans](https://confluence.atlassian.com/bamboo/configuring-plans-289276853.html)
 - [Configuring tasks](https://confluence.atlassian.com/bamboo/configuring-tasks-289277036.html)
 - [Configuring jobs](https://confluence.atlassian.com/bamboo/creating-a-plan-289276868.html)
+- [Bamboo Specs (Configuration as Code)](https://docs.atlassian.com/bamboo-specs-docs/8.1.12/)
 
 ## Prequisites
 Having the following items in place before starting this lab will help you have a smooth experience.
