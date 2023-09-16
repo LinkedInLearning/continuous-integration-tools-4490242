@@ -155,6 +155,10 @@ def handler(event, context):
             "Content-Type": "application/json",
         },
         "body": json.dumps(
-            {"message": f"item_id {item_id} not found", "event": event, "item_id": item_id}
+            {
+                "message": f"item_id {item_id} not found",
+                "event": event,
+                "item_id": item_id,
+            }
         ),
     }
