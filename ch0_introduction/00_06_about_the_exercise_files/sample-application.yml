@@ -52,6 +52,9 @@ Resources:
       Environment:
         Variables:
           ENVIRONMENT: STAGING
+          VERSION: 0
+          PLATFORM: CloudFormation
+          BUILD_NUMBER: 0
       Code:
         ZipFile: |
           def handler(event, context):
@@ -94,7 +97,6 @@ Resources:
                   'body': html_response
               }
 
-
   LambdaFunctionProduction:
     Type: AWS::Lambda::Function
     Properties:
@@ -106,6 +108,9 @@ Resources:
       Environment:
         Variables:
           ENVIRONMENT: PRODUCTION
+          VERSION: 0
+          PLATFORM: CloudFormation
+          BUILD_NUMBER: 0
       Code:
         ZipFile: |
           def handler(event, context):
