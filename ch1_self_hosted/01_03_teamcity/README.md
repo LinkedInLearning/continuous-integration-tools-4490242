@@ -1,7 +1,7 @@
 # 01_01 TeamCity
 [TeamCity Professional](https://www.jetbrains.com/teamcity/) is a self-hosted, build management and continuous integration server from JetBrains, the company behind popular software development tools and the Kotlin programming language.
 
-## Reccommended Reading
+## Reccommended Resources
 - [TeamCity On-Premises Documentation Home](https://www.jetbrains.com/help/teamcity/teamcity-documentation.html)
 - [Learn TeamCity](https://www.jetbrains.com/teamcity/learn/)
 
@@ -47,7 +47,6 @@ Before starting these steps, open the Output tab of the Clouformation stack for 
 ### 1. Create a GitHub repo for the sample application code
 Because this course covers multiple tools, a dedicated repo is need for each tool to prevent unexpected deployments to the sample-application.
 
-TODO: Update this and other readmes to specify creating a PUBLIC repo.
 1. Create a new GitHub repo. Give the repo a name and description.  Please select **Public** for the repo visibility to simplify access.  Select the option to add a README file and select **Python** when adding a `.gitignore` file.
 1. From ther repo home page, select **Add file -> Upload files**.
 1. Select **choose your files** and browse to the exercise files for this lesson on your local system.
