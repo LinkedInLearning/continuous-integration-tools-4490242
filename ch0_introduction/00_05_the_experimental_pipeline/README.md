@@ -8,7 +8,7 @@ The pipeline will have seven steps.  Each step must be successful for any follow
 
 1. Requirements: Install any tools or libraries needed to test, build, and deploy the application.
 
-2. Sanity Check: Lint the code and run integration tests.
+2. Check: Lint the code and run integration tests.
 
 3. Build: Package the code into a deployable artifact.
 
@@ -18,4 +18,4 @@ The pipeline will have seven steps.  Each step must be successful for any follow
 
 6. Deploy Production: Deploy the code to the production environment.
 
-7. Test Production: Test the production envirionment to confirm the application has been deployed successfully.
+7. Test Production: Test the production environment to confirm the application has been deployed successfully.
