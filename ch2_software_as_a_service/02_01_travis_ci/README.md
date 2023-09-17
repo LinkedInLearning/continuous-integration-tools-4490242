@@ -1,4 +1,6 @@
 # 02_01 Travis CI
+Travis CI is a continuous integration and deployment platform that automates software builds, tests, and deployments for projects hosted on GitHub. It helps developers maintain code quality and streamline collaboration by automatically triggering predefined actions upon code changes or pull requests.
+
 ## Reccommended Resources
 - [Travis CI Tutorial](https://docs.travis-ci.com/user/tutorial/)
 - [Core Concepts for Beginners](https://docs.travis-ci.com/user/for-beginners/)
@@ -27,6 +29,8 @@ Because this course covers multiple tools, a dedicated repo is need for each too
 
 ### 1. Set up your Travis CI account
 Follow the instructions provided by the [Travis CI Tutorial](https://docs.travis-ci.com/user/tutorial/) to set up your Travis CI account and connect it to GitHub.
+
+*Note: Historicly, Travis CI only supported repositories hosted in GitHub.  At the time this course was prepared, Travis CI includes Beta support for repositories hosted in Bitbucket, GitLab, and Assembla.  The content in this course is intended for repositories hosted in GitHub.*
 
 *Note:  This error may occur upon account creation: "You exceeded the number of users allowed for your plan. Please switch to a bigger plan".  In the instructor's experience, the error lasted for about 5-10 minutes and was resolved without intervention.  More details can be found on this post in the Travis CI community forum: [Exceeded user count - unlimited?](https://travis-ci.community/t/exceeded-user-count-unlimited/10484/16).*
 
@@ -60,8 +64,8 @@ Travis will automaticlly trigger a new build for every change in the repository.
 6. If any errors are encountered, review the logs and make corrections as needed.  Consider reviewing the configuration steps for the parameters.  If you are not able to resolve the errors, please post a question on LinkinedIn Learning in the course Q&A section.
 7. Open the URLs for the sample application's staging and production environments.  For both environments, confirm that the deployment platform is "Travis CI" and the build number matches the last successful build number.
 
-
-Python versions are old
+TODO: Mention Beta support for repos hosted in Bitbucket, GitLab, and Assembla
+TODO: Mention Python versions are old
 - [Specifying Python versions](https://docs.travis-ci.com/user/languages/python/#specifying-python-versions)
 - *"3.6"      # current default Python on Travis CI*
 - Might not be the best choice for cutting edge projects
