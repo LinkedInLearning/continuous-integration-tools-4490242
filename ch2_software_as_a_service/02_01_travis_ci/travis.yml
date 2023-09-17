@@ -1,0 +1,39 @@
+---
+# Specify the programming language to be used, in this case, Python.
+language: python
+
+# Define the Python version to be used for the build.
+python:
+  - "3.9"
+
+# Try to speed up builds with caching
+cache: pip
+
+# 'install' represent the 'Requirements' stage of the pipeline.
+install:
+  # Install required Python packages specified in the 'requirements.txt' file.
+  - pip install --quiet --upgrade --requirement requirements.txt
+  
+  # Install AWS CLI
+  - pip install --quiet --upgrade awscli
+
+# Each step in the 'script' represents the remaining stages of the pipeline.
+script:
+  
+  # Check: Run the 'check', 'lint', and 'test' targets defined in the Makefile.
+  - make check lint test
+  
+  # Build: Clean previous builds and initiate a new build.
+  - make clean build
+  
+  # Deploy Staging: Deploy to the staging environment using specified parameters.
+  - make deploy FUNCTION=${STAGING_FUNCTION_NAME} PLATFORM="Travis CI" VERSION=${TRAVIS_COMMIT} BUILD_NUMBER=${TRAVIS_BUILD_NUMBER}
+  
+  # Test Staging: Perform deployment testing for the staging environment.
+  - make testdeployment URL=${STAGING_URL} BUILD_NUMBER=${TRAVIS_BUILD_NUMBER}
+  
+  # Deploy Production: Deploy to the production environment using specified parameters.
+  - make deploy FUNCTION=${PRODUCTION_FUNCTION_NAME} PLATFORM="Travis CI" VERSION=${TRAVIS_COMMIT} BUILD_NUMBER=${TRAVIS_BUILD_NUMBER}
+  
+  # Test Production: Perform deployment testing for the production environment.
+  - make testdeployment URL=${PRODUCTION_URL} BUILD_NUMBER=${TRAVIS_BUILD_NUMBER}
