@@ -9,7 +9,7 @@ python:
 # Try to speed up builds with caching
 cache: pip
 
-# 'install' represent the 'Requirements' stage of the pipeline.
+# 'install' represents the 'Requirements' stage of the pipeline.
 install:
   # Install required Python packages specified in the 'requirements.txt' file.
   - pip install --quiet --upgrade --requirement requirements.txt

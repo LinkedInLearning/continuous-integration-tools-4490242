@@ -211,20 +211,20 @@ Resources:
 
 Outputs:
   StagingFunctionName:
-    Description: The name of the Lambda function for the staging environment
+    Description: The name of the Lambda function for the production environment. Use this value for the STAGING_FUNCTION_NAME parameter.
     Value: !Sub ${AWS::StackName}-staging
 
   StagingURL:
-    Description: The URL for the staging environment
+    Description: The URL for the staging environment. Use this value for the STAGING_URL parameter.
     Value:
       Fn::GetAtt: LambdaUrlStaging.FunctionUrl
 
   ProductionFunctionName:
-    Description: The name of the Lambda function for the production environment
+    Description: The name of the Lambda function for the production environment. Use this value for the PRODUCTION_FUNCTION_NAME parameter.
     Value: !Sub ${AWS::StackName}-production
 
   ProductionURL:
-    Description: The URL for the production environment
+    Description: The URL for the production environment. Use this value for the PRODUCTION_URL parameter.
     Value:
       Fn::GetAtt: LambdaUrlProduction.FunctionUrl
   

@@ -3,8 +3,15 @@ PLATFORM=undefined
 URL=undefined
 VERSION=undefined
 BUILD_NUMBER=undefined
-
 CODE=$(shell ls *.py)
+
+ifneq (,$(findstring -staging,$(FUNCTION)))
+	ENVIRONMENT = STAGING
+else ifneq (,$(findstring -production,$(FUNCTION)))
+	ENVIRONMENT = PRODUCTION
+else
+	ENVIRONMENT = undefined
+endif
 
 hello:
 	@echo "Here are the targets for this Makefile:"
@@ -66,7 +73,7 @@ deploy:
 
 	aws lambda update-function-configuration \
 		--function-name="$(FUNCTION)" \
-		--environment "Variables={PLATFORM=$(PLATFORM),VERSION=$(VERSION),BUILD_NUMBER=$(BUILD_NUMBER)}"
+		--environment "Variables={PLATFORM=$(PLATFORM),VERSION=$(VERSION),BUILD_NUMBER=$(BUILD_NUMBER),ENVIRONMENT=$(ENVIRONMENT)}"
 
 	aws lambda wait function-updated \
 		--function-name="$(FUNCTION)"
@@ -87,4 +94,3 @@ clean:
 all: clean lint black test build deploy
 
 .PHONY: test build deploy all clean
-
