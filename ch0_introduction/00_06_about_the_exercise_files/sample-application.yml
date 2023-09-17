@@ -176,24 +176,33 @@ Resources:
       Action: "lambda:InvokeFunctionUrl"
       FunctionUrlAuthType: NONE
 
-  Group:
-    Type: AWS::IAM::Group
-    Properties:
-      GroupName: !Sub ${AWS::StackName}-Group
-      ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/AWSLambda_FullAccess
-  
-  User:
+  ServiceAccount:
     Type: AWS::IAM::User
     Properties:
       UserName: !Sub ${AWS::StackName}-Service-Account
-      Groups:
-        - !Ref Group
-  
+
+  ServiceAccountIamUserPolicy:
+    Type: AWS::IAM::UserPolicy
+    Properties:
+      PolicyName: !Sub ${AWS::StackName}-ServiceAccountIamUserPolicy
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - lambda:InvokeFunction
+              - lambda:UpdateFunctionCode
+              - lambda:GetFunctionConfiguration
+              - lambda:UpdateFunctionConfiguration
+            Resource:
+              - !GetAtt LambdaFunctionProduction.Arn
+              - !GetAtt LambdaFunctionStaging.Arn
+      UserName: !Ref ServiceAccount
+
   Keys:
     Type: AWS::IAM::AccessKey
     Properties:
-      UserName: !Ref User
+      UserName: !Ref ServiceAccount
 
 Outputs:
   StagingFunctionName:
