@@ -39,7 +39,7 @@ After logging into your Travis CI account, open the [Github Apps Integraion page
 
 1. Select **Settings** cext to the repository you are configuring to work with Travis CI.
 2. Scroll down to the "Environment Variables" section.
-3. Use the values from the "Ouptuts" tab of the Cloudformation stack for the sample applicaiton.  Add the names and values for the following project parameters.  For AWS_DEFAULT_REGION, function names, and function URLS, select "DISPLAY VALUE IN BUILD LOG"".
+3. Using the values from the "Ouptuts" tab of the Cloudformation stack for the sample applicaiton,  add the names and values for the following project parameters as environment variables.  For AWS_DEFAULT_REGION, function names, and function URLS, select "DISPLAY VALUE IN BUILD LOG"".
 
    - AWS_ACCESS_KEY_ID
    - AWS_DEFAULT_REGION
@@ -64,11 +64,12 @@ Travis will automaticlly trigger a new build for every change in the repository.
 6. If any errors are encountered, review the logs and make corrections as needed.  Consider reviewing the configuration steps for the parameters.  If you are not able to resolve the errors, please post a question on LinkinedIn Learning in the course Q&A section.
 7. Open the URLs for the sample application's staging and production environments.  For both environments, confirm that the deployment platform is "Travis CI" and the build number matches the last successful build number.
 
-TODO: Mention Beta support for repos hosted in Bitbucket, GitLab, and Assembla
-TODO: Mention Python versions are old
-- [Specifying Python versions](https://docs.travis-ci.com/user/languages/python/#specifying-python-versions)
-- *"3.6"      # current default Python on Travis CI*
-- Might not be the best choice for cutting edge projects
+## TODO: Travis CI Mentions
+- Beta support for repos hosted in Bitbucket, GitLab, and Assembla
+- Python versions are old
+  - [Specifying Python versions](https://docs.travis-ci.com/user/languages/python/#specifying-python-versions)
+  - *"3.6"      # current default Python on Travis CI*
+  - Might not be the best choice for cutting edge projects
 
 
 TODO: Update the self hosted build configs to pass `VERSION=${GIT_SHA}` to the `testdeployment` target.
