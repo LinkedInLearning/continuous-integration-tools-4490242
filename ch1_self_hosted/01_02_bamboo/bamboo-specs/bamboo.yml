@@ -46,7 +46,7 @@ Default Job:
       description: Test Staging
   - command:
       executable: Make
-      argument: deploy PLATFORM="Bamboo" FUNCTION=${bamboo.PRODUCTION_FUNCTION_NAME} VERSION=${bamboo.planRepository.revision} BUILD_NUMBER=${bamboo.buildNumber}
+      argument: deploy  PLATFORM="Bamboo" FUNCTION=${bamboo.PRODUCTION_FUNCTION_NAME} VERSION=${bamboo.planRepository.revision} BUILD_NUMBER=${bamboo.buildNumber}
       envrionment: AWS_ACCESS_KEY_ID=${bamboo.AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${bamboo.AWS_SECRET_ACCESS_KEY} AWS_DEFAULT_REGION=${bamboo.AWS_DEFAULT_REGION}
       description: Deploy Production
   - command:
@@ -54,7 +54,7 @@ Default Job:
       argument: testdeployment URL=${bamboo.PRODUCTION_URL} VERSION=${bamboo.planRepository.revision}
       description: Test Production
   artifacts:
-  - name: Zip File
+  - name: lambda.zip
     location: .
     pattern: '**/*.zip'
     shared: true
@@ -87,3 +87,23 @@ dependencies:
   plans: []
 other:
   concurrent-build-plugin: system-default
+---
+version: 2
+plan:
+  key: EP-BUIL
+plan-permissions:
+- users:
+  - admin
+  permissions:
+  - view
+  - edit
+  - build
+  - clone
+  - admin
+  - view-configuration
+- roles:
+  - logged-in
+  - anonymous
+  permissions:
+  - view
+...
