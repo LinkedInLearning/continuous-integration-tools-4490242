@@ -37,21 +37,21 @@ Default Job:
       description: Build
   - command:
       executable: Make
-      argument: deploy ENVIRONMENT="Staging" PLATFORM="Bamboo" FUNCTION=${bamboo.STAGING_FUNCTION_NAME} VERSION=${bamboo.planRepository.revision} BUILD_NUMBER=${bamboo.buildNumber}
+      argument: deploy PLATFORM="Bamboo" FUNCTION=${bamboo.STAGING_FUNCTION_NAME} VERSION=${bamboo.planRepository.revision} BUILD_NUMBER=${bamboo.buildNumber}
       envrionment: AWS_ACCESS_KEY_ID=${bamboo.AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${bamboo.AWS_SECRET_ACCESS_KEY} AWS_DEFAULT_REGION=${bamboo.AWS_DEFAULT_REGION}
       description: Deploy Staging
   - command:
       executable: Make
-      argument: testdeployment URL=${bamboo.STAGING_URL}
+      argument: testdeployment URL=${bamboo.STAGING_URL} VERSION=${bamboo.planRepository.revision}
       description: Test Staging
   - command:
       executable: Make
-      argument: deploy ENVIRONMENT="Production" PLATFORM="Bamboo" FUNCTION=${bamboo.PRODUCTION_FUNCTION_NAME} VERSION=${bamboo.planRepository.revision} BUILD_NUMBER=${bamboo.buildNumber}
+      argument: deploy PLATFORM="Bamboo" FUNCTION=${bamboo.PRODUCTION_FUNCTION_NAME} VERSION=${bamboo.planRepository.revision} BUILD_NUMBER=${bamboo.buildNumber}
       envrionment: AWS_ACCESS_KEY_ID=${bamboo.AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${bamboo.AWS_SECRET_ACCESS_KEY} AWS_DEFAULT_REGION=${bamboo.AWS_DEFAULT_REGION}
       description: Deploy Production
   - command:
       executable: Make
-      argument: testdeployment URL=${bamboo.PRODUCTION_URL}
+      argument: testdeployment URL=${bamboo.PRODUCTION_URL} VERSION=${bamboo.planRepository.revision}
       description: Test Production
   artifacts:
   - name: Zip File

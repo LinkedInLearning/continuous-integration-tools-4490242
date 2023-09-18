@@ -31,8 +31,6 @@ version = "2023.05"
 
 project {
 
-    vcsRoot(HttpsGithubComConsole6500teamcityCiCdGitRefsHeadsMain)
-
     buildType(Build)
 
     features {
@@ -47,24 +45,22 @@ project {
 
 object Build : BuildType({
     name = "Build"
-
     enablePersonalBuilds = false
     artifactRules = "+:lambda.zip"
     maxRunningBuilds = 1
     publishArtifacts = PublishMode.SUCCESSFUL
 
+    // please configure the parameters manually in the TeamCity UI
+    // Select Project -> Edit Project -> Build (Under Build Configurations) -> Parameters
+    // Edit each parameter with the values for your deployments
     params {
-        param("env.PRODUCTION_URL", "https://x2kwlkaff4pjobsjjtgl4ssdce0ceiof.lambda-url.us-east-2.on.aws/")
-        param("env.STAGING_FUNCTION_NAME", "sample-application-staging")
-        password("env.AWS_SECRET_ACCESS_KEY", "zxx629b65f16af5fd36e7d99513393750879f34b2c3a8513227b4686d3ed0e0d6f2c4081c41e0319c24775d03cbe80d301b", display = ParameterDisplay.HIDDEN, readOnly = true)
-        password("env.AWS_ACCESS_KEY_ID", "zxx4d0e7d7c22921af9ea5cf855dc00d5344585f1e1d76bb021", display = ParameterDisplay.HIDDEN, readOnly = true)
-        param("env.AWS_DEFAULT_REGION", "us-east-2")
-        param("env.STAGING_URL", "https://nphukndnle4gm37v3bffyhdvri0dvzaz.lambda-url.us-east-2.on.aws/")
-        param("env.PRODUCTION_FUNCTION_NAME", "sample-application-production")
-    }
-
-    vcs {
-        root(HttpsGithubComConsole6500teamcityCiCdGitRefsHeadsMain)
+        password("env.AWS_SECRET_ACCESS_KEY", "reference", display = ParameterDisplay.HIDDEN)
+        password("env.AWS_ACCESS_KEY_ID", "reference", display = ParameterDisplay.HIDDEN)
+        param("env.AWS_DEFAULT_REGION", "UPDATE_THIS_VALUE")
+        param("env.STAGING_FUNCTION_NAME", "UPDATE_THIS_VALUE")
+        param("env.STAGING_URL", "UPDATE_THIS_VALUE")
+        param("env.PRODUCTION_FUNCTION_NAME", "UPDATE_THIS_VALUE")
+        param("env.PRODUCTION_URL", "UPDATE_THIS_VALUE")
     }
 
     steps {
@@ -91,7 +87,6 @@ object Build : BuildType({
             name = "Deploy Staging"
             scriptContent = """
                 make deploy \
-                	ENVIRONMENT="Staging" \
                 	PLATFORM="TeamCity" \
                     FUNCTION=${'$'}{STAGING_FUNCTION_NAME} \
                     VERSION=${'$'}{BUILD_VCS_NUMBER} \
@@ -100,13 +95,12 @@ object Build : BuildType({
         }
         script {
             name = "Test Staging"
-            scriptContent = "make testdeployment URL=${'$'}{STAGING_URL}"
+            scriptContent = "make testdeployment URL=${'$'}{STAGING_URL} VERSION=${'$'}{BUILD_VCS_NUMBER}"
         }
         script {
             name = "Deploy Production"
             scriptContent = """
                 make deploy \
-                	ENVIRONMENT="Production" \
                 	PLATFORM="TeamCity" \
                     FUNCTION=${'$'}{PRODUCTION_FUNCTION_NAME} \
                     VERSION=${'$'}{BUILD_VCS_NUMBER} \
@@ -115,24 +109,7 @@ object Build : BuildType({
         }
         script {
             name = "Test Production"
-            scriptContent = "make testdeployment URL=${'$'}{PRODUCTION_URL}"
+            scriptContent = "make testdeployment URL=${'$'}{PRODUCTION_URL} VERSION=${'$'}{BUILD_VCS_NUMBER}"
         }
     }
-
-    triggers {
-        vcs {
-        }
-    }
-
-    features {
-        perfmon {
-        }
-    }
-})
-
-object HttpsGithubComConsole6500teamcityCiCdGitRefsHeadsMain : GitVcsRoot({
-    name = "https://github.com/console6500/teamcity-ci-cd.git#refs/heads/main"
-    url = "https://github.com/console6500/teamcity-ci-cd.git"
-    branch = "refs/heads/main"
-    branchSpec = "refs/heads/*"
 })

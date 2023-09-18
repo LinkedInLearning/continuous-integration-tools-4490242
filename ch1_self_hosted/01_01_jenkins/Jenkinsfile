@@ -61,7 +61,6 @@ pipeline {
                 sh('''
                     #!/bin/bash
                     make deploy \
-                        ENVIRONMENT="Staging" \
                         PLATFORM="Jenkins" \
                         FUNCTION=${STAGING_FUNCTION_NAME} \
                         VERSION=${GIT_COMMIT} \
@@ -74,7 +73,7 @@ pipeline {
             steps {
                 sh('''
                     #!/bin/bash
-                    make testdeployment URL=${STAGING_URL}
+                    make testdeployment URL=${STAGING_URL} VERSION=${GIT_COMMIT}
                 ''')
             }
         }
@@ -84,7 +83,6 @@ pipeline {
                 sh('''
                     #!/bin/bash
                     make deploy \
-                        ENVIRONMENT="Production" \
                         PLATFORM="Jenkins" \
                         FUNCTION=${PRODUCTION_FUNCTION_NAME} \
                         VERSION=${GIT_COMMIT} \
@@ -97,7 +95,7 @@ pipeline {
             steps {
                 sh('''
                     #!/bin/bash
-                    make testdeployment URL=${PRODUCTION_URL}
+                    make testdeployment URL=${PRODUCTION_URL} VERSION=${GIT_COMMIT}
                 ''')
             }
         }
