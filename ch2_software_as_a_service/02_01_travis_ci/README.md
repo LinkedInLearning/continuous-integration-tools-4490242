@@ -74,4 +74,4 @@ Travis will automaticlly trigger a new build for every change in the repository.
 
 TODO: Update the self hosted build configs to pass `VERSION=${GIT_SHA}` to the `testdeployment` target.
 
-[[Next: 02_02 Codeship](../02_02_Codeship/README.md)]
+[[Next: 02_02 CircleCI](../02_02_circleci/README.md)]
