@@ -1,0 +1,66 @@
+steps:
+- name: 'gcr.io/cloud-builders/python'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    python3 -m venv local
+    source ./local/bin/activate
+    make requirements
+
+- name: 'gcr.io/cloud-builders/python'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    source ./local/bin/activate
+    make check lint
+
+- name: 'gcr.io/cloud-builders/python'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    source ./local/bin/activate
+    make test
+
+- name: 'gcr.io/cloud-builders/python'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    make build
+
+- name: 'gcr.io/cloud-builders/python'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    make deploy PLATFORM="Google Cloud Build" FUNCTION=$STAGING_FUNCTION_NAME VERSION=$COMMIT_SHA BUILD_NUMBER=$BUILD_ID
+
+- name: 'gcr.io/cloud-builders/python'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    make testdeployment URL=$STAGING_URL VERSION=$COMMIT_SHA
+
+- name: 'gcr.io/cloud-builders/python'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    make deploy PLATFORM="Google Cloud Build" FUNCTION=$PRODUCTION_FUNCTION_NAME VERSION=$COMMIT_SHA BUILD_NUMBER=$BUILD_ID
+
+- name: 'gcr.io/cloud-builders/python'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    make testdeployment URL=$PRODUCTION_URL VERSION=$COMMIT_SHA
+
+artifacts:
+  objects:
+    location: 'lambda.zip'
+    paths:
+    - 'lambda.zip'
