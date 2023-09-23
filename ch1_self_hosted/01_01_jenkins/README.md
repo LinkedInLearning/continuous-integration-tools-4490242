@@ -1,7 +1,7 @@
 # 01_01 Jenkins
 [Jenkins](https://www.jenkins.io/) is a self-hosted, open source automation server.
 
-## Reccommended Resources
+## Recommended Resources
 - [Jenkins User Documentation](https://www.jenkins.io/doc/)
 - [LinkedIn Learning: Learning Jenkins](https://www.linkedin.com/learning/learning-jenkins-14423877)
 - [LinkedIn Learning: Running Jenkins on AWS](https://www.linkedin.com/learning/running-jenkins-on-aws-8591136)

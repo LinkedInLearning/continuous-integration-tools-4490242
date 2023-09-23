@@ -1,7 +1,7 @@
 # 02_01 Travis CI
 Travis CI is a continuous integration and deployment platform that automates software builds, tests, and deployments for projects hosted on GitHub. It helps developers maintain code quality and streamline collaboration by automatically triggering predefined actions upon code changes or pull requests.
 
-## Reccommended Resources
+## Recommended Resources
 - [Travis CI Tutorial](https://docs.travis-ci.com/user/tutorial/)
 - [Core Concepts for Beginners](https://docs.travis-ci.com/user/for-beginners/)
 - [Language-specific Guides for Travis CI Configurations](https://docs.travis-ci.com/user/language-specific/)

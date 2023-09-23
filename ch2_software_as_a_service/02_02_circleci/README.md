@@ -1,6 +1,6 @@
 # 02_03 CircleCI
 
-## Reccommended Resources
+## Recommended Resources
 - [CircleCI Quickstart guide](https://circleci.com/docs/getting-started/)
 
 ## Prequisites

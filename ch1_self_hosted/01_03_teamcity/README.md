@@ -1,7 +1,7 @@
 # 01_01 TeamCity
 [TeamCity Professional](https://www.jetbrains.com/teamcity/) is a self-hosted, build management and continuous integration server from JetBrains, the company behind popular software development tools and the Kotlin programming language.
 
-## Reccommended Resources
+## Recommended Resources
 - [TeamCity On-Premises Documentation Home](https://www.jetbrains.com/help/teamcity/teamcity-documentation.html)
 - [Learn TeamCity](https://www.jetbrains.com/teamcity/learn/)
 

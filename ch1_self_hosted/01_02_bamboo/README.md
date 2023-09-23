@@ -1,7 +1,7 @@
 # 01_02 Bamboo
 [Bamboo](https://www.atlassian.com/software/bamboo) is a self-hosted, continuous integration and delivery tool developed by Atlassian, the makers of popular software including Jira and Confluence among others.
 
-## Reccommended Resources
+## Recommended Resources
 - [Bamboo Essential Training](https://www.linkedin.com/learning/bamboo-essential-training)
 - [Understanding the Bamboo CI Server](https://confluence.atlassian.com/bamboo/understanding-the-bamboo-ci-server-289277285.html)
 - [Using Bamboo](https://confluence.atlassian.com/bamboo0903/using-bamboo-1236445012.html)
