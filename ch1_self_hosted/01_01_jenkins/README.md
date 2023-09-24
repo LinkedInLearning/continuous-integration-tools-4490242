@@ -52,6 +52,8 @@ To configure the Jenkins server, you must connect to the server and retreive the
 5. On the "Instance Configuration" page, keep the value for "Jenkins URL" and select **Save and Finish**.
 6. On the "Jenkins is ready!" page, select **Start using Jenkins**.
 
+TODO: Add instructions for installing the Blue Ocean plugins
+
 ## Implement the Experimental Pipeline
 To implement the experimental pipeline in Jenkins, you will need to create a GitHub repo, add the exercise files, and modify the files for your project.
 

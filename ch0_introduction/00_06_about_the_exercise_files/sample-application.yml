@@ -181,28 +181,30 @@ Resources:
       Action: "lambda:InvokeFunctionUrl"
       FunctionUrlAuthType: NONE
 
+  LambdaPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties: 
+      Path: "/"
+      Description: "Policy to manage the Lambda functions for the sample application."
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Action:
+              - "lambda:InvokeFunction"
+              - "lambda:UpdateFunctionCode"
+              - "lambda:GetFunctionConfiguration"
+              - "lambda:UpdateFunctionConfiguration"
+            Resource:
+              - !GetAtt LambdaFunctionProduction.Arn
+              - !GetAtt LambdaFunctionStaging.Arn
+            Effect: "Allow"
+
   ServiceAccount:
     Type: AWS::IAM::User
     Properties:
       UserName: !Sub ${AWS::StackName}-Service-Account
-
-  ServiceAccountIamUserPolicy:
-    Type: AWS::IAM::UserPolicy
-    Properties:
-      PolicyName: !Sub ${AWS::StackName}-ServiceAccountIamUserPolicy
-      PolicyDocument:
-        Version: '2012-10-17'
-        Statement:
-          - Effect: Allow
-            Action:
-              - lambda:InvokeFunction
-              - lambda:UpdateFunctionCode
-              - lambda:GetFunctionConfiguration
-              - lambda:UpdateFunctionConfiguration
-            Resource:
-              - !GetAtt LambdaFunctionProduction.Arn
-              - !GetAtt LambdaFunctionStaging.Arn
-      UserName: !Ref ServiceAccount
+      ManagedPolicyArns:
+        - !Ref LambdaPolicy
 
   Keys:
     Type: AWS::IAM::AccessKey
