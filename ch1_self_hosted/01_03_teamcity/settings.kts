@@ -30,16 +30,8 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 version = "2023.05"
 
 project {
-
     buildType(Build)
-
     features {
-        githubIssues {
-            id = "PROJECT_EXT_2"
-            displayName = "console6500/teamcity-ci-cd"
-            repositoryURL = "https://github.com/console6500/teamcity-ci-cd"
-            param("tokenId", "")
-        }
     }
 }
 

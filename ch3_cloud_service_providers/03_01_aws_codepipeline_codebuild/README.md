@@ -7,3 +7,6 @@
 
 - attach the policy to the role created by codebuild
 
+- https://aws.amazon.com/codebuild/pricing/
+- https://aws.amazon.com/codebuild/pricing/
+
