@@ -5,7 +5,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 stages:
-- stage: BuildAndTest
+- stage: Check
   jobs:
   - job: BuildJob
     steps:
@@ -24,10 +24,6 @@ stages:
         source ./local/bin/activate
         make test
       displayName: 'Check:Test'
-
-    - script: |
-        make build
-      displayName: 'Build'
 
 - stage: DeployStaging
   jobs:
