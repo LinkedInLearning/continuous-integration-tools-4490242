@@ -4,53 +4,69 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-variables:
-  AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
-  AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
-  AWS_DEFAULT_REGION: '<your_AWS_region>'
-  STAGING_FUNCTION_NAME: '<your_staging_function_name>'
-  STAGING_URL: '<your_staging_url>'
-  PRODUCTION_FUNCTION_NAME: '<your_production_function_name>'
-  PRODUCTION_URL: '<your_production_url>'
+stages:
+- stage: BuildAndTest
+  jobs:
+  - job: BuildJob
+    steps:
+    - script: |
+        python3 -m venv local
+        source ./local/bin/activate
+        make requirements
+      displayName: 'Requirements'
 
-steps:
-- script: |
-    python3 -m venv local
-    source ./local/bin/activate
-    make requirements
-  displayName: 'Requirements'
+    - script: |
+        source ./local/bin/activate
+        make check lint
+      displayName: 'Check:Lint'
 
-- script: |
-    source ./local/bin/activate
-    make check lint
-  displayName: 'Check:Lint'
+    - script: |
+        source ./local/bin/activate
+        make test
+      displayName: 'Check:Test'
 
-- script: |
-    source ./local/bin/activate
-    make test
-  displayName: 'Check:Test'
+    - script: |
+        make build
+      displayName: 'Build'
 
-- script: |
-    make build
-  displayName: 'Build'
+- stage: DeployStaging
+  jobs:
+  - job: StagingDeployment
+    steps:
+    - checkout: self
 
-- script: |
-    make deploy PLATFORM="Azure DevOps" FUNCTION=$(STAGING_FUNCTION_NAME) VERSION=$(Build.SourceVersion) BUILD_NUMBER=$(Build.BuildNumber)
-  displayName: 'Deploy Staging'
+    - script: |
+        make build
+      displayName: 'Build'
 
-- script: |
-    make testdeployment URL=$(STAGING_URL) VERSION=$(Build.SourceVersion)
-  displayName: 'Test Staging'
+    - script: |
+        export AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID)
+        export AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)
+        export AWS_DEFAULT_REGION=$(AWS_DEFAULT_REGION)
+        make deploy PLATFORM="Azure DevOps" FUNCTION=$(STAGING_FUNCTION_NAME) VERSION=$(Build.SourceVersion) BUILD_NUMBER=$(Build.BuildNumber)
+      displayName: 'Deploy Staging'
 
-- script: |
-    make deploy PLATFORM="Azure DevOps" FUNCTION=$(PRODUCTION_FUNCTION_NAME) VERSION=$(Build.SourceVersion) BUILD_NUMBER=$(Build.BuildNumber)
-  displayName: 'Deploy Production'
+    - script: |
+        make testdeployment URL=$(STAGING_URL) VERSION=$(Build.SourceVersion)
+      displayName: 'Test Staging'
 
-- script: |
-    make testdeployment URL=$(PRODUCTION_URL) VERSION=$(Build.SourceVersion)
-  displayName: 'Test Production'
-  
-- task: PublishPipelineArtifact@1
-  inputs:
-    targetPath: 'lambda.zip'
-    artifact: 'lambda.zip'
+- stage: DeployProduction
+  jobs:
+  - job: ProductionDeployment
+    steps:
+    - checkout: self
+
+    - script: |
+        make build
+      displayName: 'Build'
+
+    - script: |
+        export AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID)
+        export AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)
+        export AWS_DEFAULT_REGION=$(AWS_DEFAULT_REGION)
+        make deploy PLATFORM="Azure DevOps" FUNCTION=$(PRODUCTION_FUNCTION_NAME) VERSION=$(Build.SourceVersion) BUILD_NUMBER=$(Build.BuildNumber)
+      displayName: 'Deploy Production'
+
+    - script: |
+        make testdeployment URL=$(PRODUCTION_URL) VERSION=$(Build.SourceVersion)
+      displayName: 'Test Production'
