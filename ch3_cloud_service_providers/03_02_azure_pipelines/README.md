@@ -1,3 +1,6 @@
+# resources
+- [Specify jobs in your pipeline](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/phases)
+
 
 - Create or log into your Azure DevOps account; https://learn.microsoft.com/en-us/azure/devops/user-guide/sign-up-invite-teammates?view=azure-devops
 - create a new project
@@ -22,8 +25,6 @@
     when all variables are in place select **Save**.
 - select **Save**
 - to update or remove variables in the future, select the pipeline, select **Edit** and then select **Variables**.
-- create environments
-- Select Pipelines -> Environments -> New Environment
-- Add Name and Description for "staging" environment.  Select "None" for resources.  select **Create**.  Repeat for "production" environment.
-- 
+- select **Run**
+
 

@@ -1,68 +1,139 @@
+# This pipeline triggers on commits to the 'main' branch.
 trigger:
 - main
 
+# Specifies that the pipeline will run on the latest Ubuntu virtual machine.
 pool:
   vmImage: 'ubuntu-latest'
 
+# Stages in the pipeline.
 stages:
-- stage: Check
-  jobs:
-  - job: BuildJob
-    steps:
-    - script: |
-        python3 -m venv local
-        source ./local/bin/activate
-        make requirements
-      displayName: 'Requirements'
 
-    - script: |
-        source ./local/bin/activate
-        make check lint
-      displayName: 'Check:Lint'
+  # This stage handles requirements, checks, linting, testing, and building.
+  - stage: Build
+    jobs:
+    
+      # This job handles setting up the Python environment, installing requirements, and running checks.
+      - job: ReqCheck
+        steps:
+        
+        # Setting up a Python virtual environment and installing requirements.
+        - script: |
+            python3 -m venv local
+            source ./local/bin/activate
+            make requirements
+          displayName: 'Requirements'
 
-    - script: |
-        source ./local/bin/activate
-        make test
-      displayName: 'Check:Test'
+        # Running basic checks on the code.
+        - script: |
+            source ./local/bin/activate
+            make check
+          displayName: 'Check'
 
-- stage: DeployStaging
-  jobs:
-  - job: StagingDeployment
-    steps:
-    - checkout: self
+        # Linting the code.
+        - script: |
+            source ./local/bin/activate
+            make lint
+          displayName: 'Lint'
 
-    - script: |
-        make build
-      displayName: 'Build'
+        # Running unit tests.
+        - script: |
+            source ./local/bin/activate
+            make test
+          displayName: 'Test'
 
-    - script: |
-        export AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID)
-        export AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)
-        export AWS_DEFAULT_REGION=$(AWS_DEFAULT_REGION)
-        make deploy PLATFORM="Azure DevOps" FUNCTION=$(STAGING_FUNCTION_NAME) VERSION=$(Build.SourceVersion) BUILD_NUMBER=$(Build.BuildNumber)
-      displayName: 'Deploy Staging'
+      # This job handles the building of the project.
+      - job: Build
+        # Ensures this job runs only after the ReqCheck job succeeds.
+        dependsOn: ReqCheck
+        condition: succeeded()
+        steps:
+        
+        # Checking out the repository.
+        - checkout: self
 
-    - script: |
-        make testdeployment URL=$(STAGING_URL) VERSION=$(Build.SourceVersion)
-      displayName: 'Test Staging'
+        # Building the project.
+        - script: |
+            make build
+          displayName: 'Build'
 
-- stage: DeployProduction
-  jobs:
-  - job: ProductionDeployment
-    steps:
-    - checkout: self
+        # Publishing the build artifacts.
+        - task: PublishBuildArtifacts@1
+          inputs:
+            pathtoPublish: '$(System.DefaultWorkingDirectory)'
+            artifactName: WebSite
 
-    - script: |
-        make build
-      displayName: 'Build'
+  # This stage handles the deployment to the Staging environment.
+  - stage: DeployStaging
+    jobs:
+    - job: StagingDeployment
+      steps:
+      
+      # We don't need the source code here, so no checkout is performed.
+      - checkout: none
 
-    - script: |
-        export AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID)
-        export AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)
-        export AWS_DEFAULT_REGION=$(AWS_DEFAULT_REGION)
-        make deploy PLATFORM="Azure DevOps" FUNCTION=$(PRODUCTION_FUNCTION_NAME) VERSION=$(Build.SourceVersion) BUILD_NUMBER=$(Build.BuildNumber)
-      displayName: 'Deploy Production'
+      # Downloading the previously built artifacts.
+      - task: DownloadBuildArtifacts@0
+        displayName: 'Download Build Artifacts'
+        inputs:
+          artifactName: WebSite
+          downloadPath: $(Pipeline.Workspace)
 
-    - script: |
-        make testdeployment URL=$(PRODUCTION_URL) VERSION=$(Build.SourceVersion)
-      displayName: 'Test Production'
+      # Deploying to the Staging environment.
+      - task: CmdLine@2
+        displayName: 'Deploy Staging'
+        inputs:
+
+          # deploy and test need to run from the directory containing the artifacts
+          # the artifacts include the project files and the zip created in the build step
+          workingDirectory: $(Pipeline.Workspace)/WebSite
+          script: |
+            export AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID)
+            export AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)
+            export AWS_DEFAULT_REGION=$(AWS_DEFAULT_REGION)
+            make deploy PLATFORM="Azure DevOps" FUNCTION=$(STAGING_FUNCTION_NAME) VERSION=$(Build.SourceVersion) BUILD_NUMBER=$(Build.BuildNumber)
+
+      # Testing the Staging deployment.
+      - task: CmdLine@2
+        displayName: 'Test Staging'
+        inputs:
+          workingDirectory: $(Pipeline.Workspace)/WebSite
+          script: |
+            make testdeployment URL=$(STAGING_URL) VERSION=$(Build.SourceVersion)
+
+  # This stage handles the deployment to the Production environment.
+  - stage: DeployProduction
+    jobs:
+    - job: ProductionDeployment
+      steps:
+      
+      # We don't need the source code here, so no checkout is performed.
+      - checkout: none
+
+      # Downloading the previously built artifacts.
+      - task: DownloadBuildArtifacts@0
+        displayName: 'Download Build Artifacts'
+        inputs:
+          artifactName: WebSite
+          downloadPath: $(Pipeline.Workspace)
+
+      # Deploying to the Production environment.
+      - task: CmdLine@2
+        displayName: 'Deploy Production'
+        inputs:
+          # deploy and test need to run from the directory containing the artifacts
+          # the artifacts include the project files and the zip created in the build step
+          workingDirectory: $(Pipeline.Workspace)/WebSite
+          script: |
+            export AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID)
+            export AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)
+            export AWS_DEFAULT_REGION=$(AWS_DEFAULT_REGION)
+            make deploy PLATFORM="Azure DevOps" FUNCTION=$(PRODUCTION_FUNCTION_NAME) VERSION=$(Build.SourceVersion) BUILD_NUMBER=$(Build.BuildNumber)
+
+      # Testing the Production deployment.
+      - task: CmdLine@2
+        displayName: 'Test Production'
+        inputs:
+          workingDirectory: $(Pipeline.Workspace)/WebSite
+          script: |
+            make testdeployment URL=$(PRODUCTION_URL) VERSION=$(Build.SourceVersion)

@@ -1,34 +1,42 @@
-
+# AWS CodeBuild specification version.
 version: 0.2
 
+# Define the shell and environment variables for the build.
 env:
   shell: bash
   variables:
     FUNCTION_NAME: 
-    URL:
+    URL: 
 
+# Define the different phases of the build lifecycle.
 phases:
+  
+  # Install necessary dependencies.
   install:
     commands:
       - python3 -m venv local
       - . ./local/bin/activate
       - make requirements
 
+  # Pre-build phase for code quality checks and testing.
   pre_build:
     commands:
       - . ./local/bin/activate
       - make check lint
       - make test
 
+  # Main build phase.
   build:
     commands:
       - make build
 
+  # Post-build phase, usually for deployments or further testing.
   post_build:
     commands:
       - make deploy PLATFORM="AWS CodeBuild" FUNCTION=$FUNCTION_NAME VERSION=$CODEBUILD_RESOLVED_SOURCE_VERSION BUILD_NUMBER=$CODEBUILD_BUILD_NUMBER
       - make testdeployment URL=$URL VERSION=$CODEBUILD_RESOLVED_SOURCE_VERSION
 
+# Specify build artifacts to be stored.
 artifacts:
   files:
     - 'lambda.zip'
