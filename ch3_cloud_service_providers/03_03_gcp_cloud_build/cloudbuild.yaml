@@ -1,66 +1,99 @@
 steps:
-- name: 'gcr.io/cloud-builders/python'
-  entrypoint: 'bash'
-  args:
-  - '-c'
-  - |
-    python3 -m venv local
-    source ./local/bin/activate
-    make requirements
+# Step 0: Create a virtual environment named 'local'
+- name: 'python'
+  args: ['/usr/local/bin/python', '-m', 'venv', 'local']
 
-- name: 'gcr.io/cloud-builders/python'
-  entrypoint: 'bash'
+# Step 1: Activate the virtual environment, install AWS CLI and then use 'make' to install the requirements
+- name: 'python'
+  entrypoint: '/usr/bin/bash'
   args:
   - '-c'
   - |
     source ./local/bin/activate
-    make check lint
+    pip install awscli
+    /usr/bin/make requirements
 
-- name: 'gcr.io/cloud-builders/python'
-  entrypoint: 'bash'
+# Step 2: install zip, check the environment, and lint the code
+- name: 'python'
+  entrypoint: '/usr/bin/bash'
+  args:
+  - '-c'
+  - |
+    apt update && apt install zip -qq
+    source ./local/bin/activate
+    /usr/bin/make check lint
+
+# Step 3: Run tests
+- name: 'python'
+  entrypoint: '/usr/bin/bash'
   args:
   - '-c'
   - |
     source ./local/bin/activate
-    make test
+    /usr/bin/make test
 
-- name: 'gcr.io/cloud-builders/python'
-  entrypoint: 'bash'
+# Step 4: Install zip, activate the virtual environment, and build the project
+- name: 'python'
+  entrypoint: '/usr/bin/bash'
   args:
   - '-c'
   - |
-    make build
+    apt update && apt install zip -qq
+    source ./local/bin/activate
+    /usr/bin/make build
 
-- name: 'gcr.io/cloud-builders/python'
-  entrypoint: 'bash'
+# Step 5: Deploy to staging using AWS CLI (AWS secrets are injected from Secret Manager)
+- name: 'python'
+  entrypoint: '/usr/bin/bash'
+  env: 
+  - 'AWS_DEFAULT_REGION=$_AWS_DEFAULT_REGION'
+  secretEnv: ['AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_KEY']
   args:
   - '-c'
   - |
-    make deploy PLATFORM="Google Cloud Build" FUNCTION=$STAGING_FUNCTION_NAME VERSION=$COMMIT_SHA BUILD_NUMBER=$BUILD_ID
+    source ./local/bin/activate
+    /usr/bin/make deploy PLATFORM="Google Cloud Build" FUNCTION=$_STAGING_FUNCTION_NAME VERSION=$COMMIT_SHA BUILD_NUMBER=$BUILD_ID
 
-- name: 'gcr.io/cloud-builders/python'
-  entrypoint: 'bash'
+# Step 6: Test the deployed function's staging environment
+- name: 'python'
+  entrypoint: '/usr/bin/bash'
   args:
   - '-c'
   - |
-    make testdeployment URL=$STAGING_URL VERSION=$COMMIT_SHA
+    /usr/bin/curl -s $_STAGING_URL | /usr/bin/grep $BUILD_ID
 
-- name: 'gcr.io/cloud-builders/python'
-  entrypoint: 'bash'
+# Step 7: Deploy to production using AWS CLI (AWS secrets are injected from Secret Manager)
+- name: 'python'
+  entrypoint: '/usr/bin/bash'
+  env: 
+  - 'AWS_DEFAULT_REGION=$_AWS_DEFAULT_REGION'
+  secretEnv: ['AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_KEY']
   args:
   - '-c'
   - |
-    make deploy PLATFORM="Google Cloud Build" FUNCTION=$PRODUCTION_FUNCTION_NAME VERSION=$COMMIT_SHA BUILD_NUMBER=$BUILD_ID
+    source ./local/bin/activate
+    /usr/bin/make deploy PLATFORM="Google Cloud Build" FUNCTION=$_PRODUCTION_FUNCTION_NAME VERSION=$COMMIT_SHA BUILD_NUMBER=$BUILD_ID
 
-- name: 'gcr.io/cloud-builders/python'
-  entrypoint: 'bash'
+# Step 8: Test the deployed function's production environment
+- name: 'python'
+  entrypoint: '/usr/bin/bash'
   args:
   - '-c'
   - |
-    make testdeployment URL=$PRODUCTION_URL VERSION=$COMMIT_SHA
+    /usr/bin/curl -s $_PRODUCTION_URL | /usr/bin/grep $BUILD_ID
 
-artifacts:
-  objects:
-    location: 'lambda.zip'
-    paths:
-    - 'lambda.zip'
+# Substitutions: default values for environment variables that can be overridden when triggering the build
+substitutions:
+  _AWS_DEFAULT_REGION: us-east-2
+  _STAGING_FUNCTION_NAME: ventura-4-staging    
+  _STAGING_URL: https://jv7qmmnbs3ogwhisxftrvrbxte0axvwu.lambda-url.us-east-2.on.aws/
+  _PRODUCTION_FUNCTION_NAME: ventura-4-production   
+  _PRODUCTION_URL: https://kca62rvlvf6erpzn4pcfdppbae0qgpqn.lambda-url.us-east-2.on.aws/
+
+# Secrets: Fetch AWS secrets from Google Cloud Secret Manager
+availableSecrets:
+  secretManager:
+  - versionName: projects/$PROJECT_ID/secrets/AWS_ACCESS_KEY_ID/versions/latest
+    env: 'AWS_ACCESS_KEY_ID'
+  - versionName: projects/$PROJECT_ID/secrets/AWS_SECRET_ACCESS_KEY/versions/latest
+    env: 'AWS_SECRET_ACCESS_KEY'
