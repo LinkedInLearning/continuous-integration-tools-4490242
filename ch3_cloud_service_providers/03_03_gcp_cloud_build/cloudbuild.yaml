@@ -52,7 +52,10 @@ steps:
   - '-c'
   - |
     source ./local/bin/activate
-    /usr/bin/make deploy PLATFORM="Google Cloud Build" FUNCTION=$_STAGING_FUNCTION_NAME VERSION=$COMMIT_SHA BUILD_NUMBER=$BUILD_ID
+    /usr/bin/make deploy PLATFORM="Google Cloud Build" \
+      FUNCTION=$_STAGING_FUNCTION_NAME \
+      VERSION=$COMMIT_SHA \
+      BUILD_NUMBER=$BUILD_ID
 
 # Step 6: Test the deployed function's staging environment
 - name: 'python'
@@ -72,7 +75,10 @@ steps:
   - '-c'
   - |
     source ./local/bin/activate
-    /usr/bin/make deploy PLATFORM="Google Cloud Build" FUNCTION=$_PRODUCTION_FUNCTION_NAME VERSION=$COMMIT_SHA BUILD_NUMBER=$BUILD_ID
+    /usr/bin/make deploy PLATFORM="Google Cloud Build" \
+      FUNCTION=$_PRODUCTION_FUNCTION_NAME \
+      VERSION=$COMMIT_SHA \
+      BUILD_NUMBER=$BUILD_ID
 
 # Step 8: Test the deployed function's production environment
 - name: 'python'
@@ -84,11 +90,11 @@ steps:
 
 # Substitutions: default values for environment variables that can be overridden when triggering the build
 substitutions:
-  _AWS_DEFAULT_REGION: us-east-2
-  _STAGING_FUNCTION_NAME: ventura-4-staging    
-  _STAGING_URL: https://jv7qmmnbs3ogwhisxftrvrbxte0axvwu.lambda-url.us-east-2.on.aws/
-  _PRODUCTION_FUNCTION_NAME: ventura-4-production   
-  _PRODUCTION_URL: https://kca62rvlvf6erpzn4pcfdppbae0qgpqn.lambda-url.us-east-2.on.aws/
+  _AWS_DEFAULT_REGION: UPDATE_THIS_VALUE
+  _STAGING_FUNCTION_NAME: UPDATE_THIS_VALUE    
+  _STAGING_URL: UPDATE_THIS_VALUE
+  _PRODUCTION_FUNCTION_NAME: UPDATE_THIS_VALUE   
+  _PRODUCTION_URL: UPDATE_THIS_VALUE
 
 # Secrets: Fetch AWS secrets from Google Cloud Secret Manager
 availableSecrets:

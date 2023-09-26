@@ -1,3 +1,4 @@
+# TODO: Move this file to an archive
 Description: Deploys an EC2 instance running a self-hosted Continuous Integration application as a Docker container
 
 Parameters:
