@@ -1,74 +1,116 @@
+# Use the Python 3.11 image as the base image for this pipeline.
 image: python:3.11
 
+# Define the stages of the pipeline in the order they should run.
 stages:
+  - requirements
   - check
   - test
   - build
   - staging
   - production
 
-variables:
-  AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
-  FUNCTION_NAME: $FUNCTION_NAME
-  URL: $URL
-
-before_script:
-  - python -m venv venv
-  - source venv/bin/activate
-
-.check_template: &check_template
-  before_script:
+# The requirements job sets up the Python virtual environment and installs necessary dependencies.
+Requirements:
+  stage: requirements
+  # Cache the virtual environment to speed up subsequent jobs.
+  cache:
+    key: venv
+    paths:
+      - venv
+  script:
     - python -m venv venv
-    - source venv/bin/activate
+    - venv/bin/pip install --upgrade --requirement requirements.txt
     - make requirements
 
+# The check job performs static code analysis and linting.
 Check:
   stage: check
+  needs: ["Requirements"]
+  cache:
+    policy: pull  
+    key: venv
+    paths:
+      - venv
+  # Setup necessary utilities for the job.
+  before_script:
+    - apt-get update -y
+    - apt-get install -qq zip
   script:
+    - source venv/bin/activate
     - make check
     - make lint
 
+# The test job runs the project's tests.
 Test:
   stage: test
+  needs: ["Check"]
+  cache:
+    policy: pull  
+    key: venv
+    paths:
+      - venv
   script:
+    - source venv/bin/activate
     - make test
-  dependencies:
-    - Check
 
+# The build job creates the deployable artifact.
 Build:
   stage: build
-  script:
-    - make build
-    - mkdir -p artifacts
-    - mv lambda.zip artifacts/
-  artifacts:
-    paths:
-      - artifacts/lambda.zip
-
-Staging:
-  stage: staging
+  needs: ["Test"]
   before_script:
     - apt-get update -y
-    - apt-get install -y zip awscli
-    - echo "$AWS_SECRET_ACCESS_KEY" | aws configure set aws_secret_access_key --profile default
-    - echo "$AWS_ACCESS_KEY_ID" | aws configure set aws_access_key_id --profile default
+    - apt-get install -qq zip
   script:
-    - unzip artifacts/lambda.zip
-    - make deploy PLATFORM="GitLab CI" FUNCTION="$FUNCTION_NAME" VERSION="$CI_COMMIT_SHA" BUILD_NUMBER="$CI_PIPELINE_ID"
-    - make testdeployment URL=$URL VERSION=$CI_COMMIT_SHA
+    - make build
+  # Store the lambda.zip as an artifact to be used in subsequent stages.
+  artifacts:
+    paths:
+      - ./lambda.zip
+
+# The staging job deploys the code to the staging environment.
+Staging:
+  stage: staging
+  environment: Staging
+  needs: ["Build"]
+  # Define environment variables for AWS and the function name.
+  variables:
+    AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+    AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+    FUNCTION: $FUNCTION_NAME
+  cache:
+    policy: pull  
+    key: venv
+    paths:
+      - venv
+  script:
+    - source venv/bin/activate
+    - make deploy PLATFORM="GitLab CI" FUNCTION=$FUNCTION VERSION=$CI_COMMIT_SHA BUILD_NUMBER=$CI_PIPELINE_ID
+    # Test the deployed code in the staging environment.
+    - make testdeployment URL=$CI_ENVIRONMENT_URL VERSION=$CI_COMMIT_SHA
   dependencies:
     - Build
 
+# The production job deploys the code to the production environment.
 Production:
   stage: production
-  before_script:
-    - apt-get update -y
-    - apt-get install -y zip awscli
-    - echo "$AWS_SECRET_ACCESS_KEY" | aws configure set aws_secret_access_key --profile default
-    - echo "$AWS_ACCESS_KEY_ID" | aws configure set aws_access_key_id --profile default
+  environment: Production
+  needs: ["Build","Staging"]
+  variables:
+    AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+    AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+    FUNCTION: $FUNCTION_NAME
+  cache:
+    policy: pull  
+    key: venv
+    paths:
+      - venv
   script:
-    - unzip artifacts/lambda.zip
-    - make deploy PLATFORM="GitLab CI" FUNCTION="$FUNCTION_NAME" VERSION="$CI_COMMIT_SHA" BUILD_NUMBER="$CI_PIPELINE_ID"
-    - make testdeployment URL=$URL VERSION=$CI_COMMIT_SHA
+    - source venv/bin/activate
+    - make deploy PLATFORM="GitLab CI" FUNCTION=$FUNCTION VERSION=$CI_COMMIT_SHA BUILD_NUMBER=$CI_PIPELINE_ID
+    # Test the deployed code in the production environment.
+    - make testdeployment URL=$CI_ENVIRONMENT_URL VERSION=$CI_COMMIT_SHA
   dependencies:
     - Build

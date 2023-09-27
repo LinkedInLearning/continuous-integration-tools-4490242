@@ -33,3 +33,6 @@
 - Add variable for AWS_DEFAULT_REGION.  uncheck "protect variable".
 - Add variable for AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID.  uncheck "protect variable". check "mask variable".
 - 
+
+- run the pipeline
+- 
