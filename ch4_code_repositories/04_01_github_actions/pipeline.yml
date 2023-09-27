@@ -1,0 +1,140 @@
+name: Experimental Pipeline
+
+# This workflow is triggered on every push and can also be manually dispatched.
+on:
+  push:
+  workflow_dispatch:
+
+# Ensures that only one instance of this workflow can run at a time.
+concurrency:
+  group: ${{ github.workflow }}
+
+jobs:
+  
+  # First job installs dependencies and checks the runner environment
+  Check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python environment with caching enabled for pip dependencies
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: Install the project requirements
+        run: make requirements
+     
+      - name: Check the environment
+        run: make check
+      
+      - name: Lint the code to ensure code quality
+        run: make lint
+    
+  # Test the code. This job is dependent on the 'Check' job.
+  Test:
+    needs: Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.1.0
+
+      - name: Set up Python environment with caching enabled for pip dependencies
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+    
+      - name: Run the tests defined in the project
+        run: make test
+
+  # Build the code. This job depends on the 'Test' job.
+  Build:
+    needs: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.1.0
+      
+      # Build the code and create a lambda.zip artifact
+      - name: Create the lambda.zip artifact
+        run: make build
+  
+      # Archive the lambda.zip file for future use in subsequent jobs
+      - name: Archive lambda.zip artifact
+        if: success()
+        uses: actions/upload-artifact@v3
+        with:
+          name: lambda-artifact
+          path: ./lambda.zip
+        
+  # Deploy to Staging environment. Depends on 'Build' job.
+  Staging:
+    environment: Staging
+    needs: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.1.0
+      
+      # Set up AWS credentials for deployments
+      # The credentials are retreived from the secrets defined in the project settings
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_DEFAULT_REGION }}
+      
+      # Download the lambda.zip artifact from the 'Build' job
+      - name: Retrieve lambda.zip
+        uses: actions/download-artifact@v3
+        with:
+          name: lambda-artifact
+      
+      # Deploy and test the Staging environment
+      # Variables will be read from the evironment definitions in the repo settings
+      - name: Deploy 
+        run: make deploy \
+              PLATFORM="GitHub Actions" \
+              FUNCTION="${{ vars.FUNCTION_NAME }}" \
+              VERSION="${GITHUB_SHA}" \
+              BUILD_NUMBER="${GITHUB_RUN_NUMBER}"
+
+      - name: Test 
+        run: make testdeployment URL=${{ vars.URL }} VERSION=${GITHUB_SHA}
+    
+  # Deploy to Production environment. Depends on 'Staging' job.
+  Production:
+    needs: Staging
+    environment: Production
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.0
+      
+      # Configure AWS credentials for Production deployment
+      # The credentials are retreived from the secrets defined in the project settings
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_DEFAULT_REGION }}
+      
+      # Retrieve the lambda.zip artifact for Production deployment
+      - name: Retrieve lambda.zip
+        uses: actions/download-artifact@v3
+        with:
+          name: lambda-artifact
+  
+      # Deploy and test the Production environment
+      # Variables will be read from the evironment definitions in the repo settings
+      - name: Deploy 
+        run: make deploy \
+              PLATFORM="GitHub Actions" \
+              FUNCTION="${{ vars.FUNCTION_NAME }}" \
+              VERSION="${GITHUB_SHA}" \
+              BUILD_NUMBER="${GITHUB_RUN_NUMBER}"
+  
+      - name: Test 
+        run: make testdeployment URL=${{ vars.URL }} VERSION=${GITHUB_SHA}
