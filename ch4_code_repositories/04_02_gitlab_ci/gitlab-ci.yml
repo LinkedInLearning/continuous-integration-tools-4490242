@@ -1,0 +1,74 @@
+image: python:3.11
+
+stages:
+  - check
+  - test
+  - build
+  - staging
+  - production
+
+variables:
+  AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+  FUNCTION_NAME: $FUNCTION_NAME
+  URL: $URL
+
+before_script:
+  - python -m venv venv
+  - source venv/bin/activate
+
+.check_template: &check_template
+  before_script:
+    - python -m venv venv
+    - source venv/bin/activate
+    - make requirements
+
+Check:
+  stage: check
+  script:
+    - make check
+    - make lint
+
+Test:
+  stage: test
+  script:
+    - make test
+  dependencies:
+    - Check
+
+Build:
+  stage: build
+  script:
+    - make build
+    - mkdir -p artifacts
+    - mv lambda.zip artifacts/
+  artifacts:
+    paths:
+      - artifacts/lambda.zip
+
+Staging:
+  stage: staging
+  before_script:
+    - apt-get update -y
+    - apt-get install -y zip awscli
+    - echo "$AWS_SECRET_ACCESS_KEY" | aws configure set aws_secret_access_key --profile default
+    - echo "$AWS_ACCESS_KEY_ID" | aws configure set aws_access_key_id --profile default
+  script:
+    - unzip artifacts/lambda.zip
+    - make deploy PLATFORM="GitLab CI" FUNCTION="$FUNCTION_NAME" VERSION="$CI_COMMIT_SHA" BUILD_NUMBER="$CI_PIPELINE_ID"
+    - make testdeployment URL=$URL VERSION=$CI_COMMIT_SHA
+  dependencies:
+    - Build
+
+Production:
+  stage: production
+  before_script:
+    - apt-get update -y
+    - apt-get install -y zip awscli
+    - echo "$AWS_SECRET_ACCESS_KEY" | aws configure set aws_secret_access_key --profile default
+    - echo "$AWS_ACCESS_KEY_ID" | aws configure set aws_access_key_id --profile default
+  script:
+    - unzip artifacts/lambda.zip
+    - make deploy PLATFORM="GitLab CI" FUNCTION="$FUNCTION_NAME" VERSION="$CI_COMMIT_SHA" BUILD_NUMBER="$CI_PIPELINE_ID"
+    - make testdeployment URL=$URL VERSION=$CI_COMMIT_SHA
+  dependencies:
+    - Build
