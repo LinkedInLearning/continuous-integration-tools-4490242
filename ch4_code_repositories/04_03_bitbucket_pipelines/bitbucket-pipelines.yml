@@ -1,0 +1,76 @@
+#  Template python-build
+
+#  This template allows you to validate your python code.
+#  The workflow allows running tests and code linting on the default branch.
+
+image: python
+
+pipelines:
+  default:
+
+    - step:
+        name: Requirements
+        caches:
+          - pip
+        script:
+          - make requirements
+
+    - parallel:
+      - step:
+          name: Check
+          caches:
+            - pip
+          script:
+            - apt-get update -y
+            - apt-get install -qq zip
+            - make requirements
+            - make check
+            - make lint
+
+      - step:
+          name: Test
+          caches:
+            - pip
+          script:
+            - make requirements
+            - make test
+
+    - step:
+        name: Build
+        script:
+          - apt-get update -y
+          - apt-get install -qq zip
+          - make build
+        artifacts:
+          - lambda.zip
+
+    - step:
+        name: Staging
+        deployment: staging
+        caches:
+          - pip
+        script:
+        - make requirements
+
+        - make deploy PLATFORM="Bitbucket Pipelines" \
+            FUNCTION=$STAGING_FUNCTION_NAME \
+            VERSION=$BITBUCKET_COMMIT \
+            BUILD_NUMBER=$BITBUCKET_BUILD_NUMBER
+
+        - make testdeployment URL=$STAGING_URL VERSION=$BITBUCKET_COMMIT
+
+    - step:
+        name: Production
+        deployment: production
+        caches:
+          - pip
+        script:
+        - make requirements
+
+        - make deploy PLATFORM="Bitbucket Pipelines" \
+            FUNCTION=$PRODUCTION_FUNCTION_NAME \
+            VERSION=$BITBUCKET_COMMIT \
+            BUILD_NUMBER=$BITBUCKET_BUILD_NUMBER
+
+        - make testdeployment URL=$PRODUCTION_URL VERSION=$BITBUCKET_COMMIT
+
