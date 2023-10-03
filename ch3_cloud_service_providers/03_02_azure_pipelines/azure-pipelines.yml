@@ -64,7 +64,7 @@ stages:
             artifactName: WebSite
 
   # This stage handles the deployment to the Staging environment.
-  - stage: DeployStaging
+  - stage: Staging
     jobs:
     - job: StagingDeployment
       steps:
@@ -102,7 +102,7 @@ stages:
             make testdeployment URL=$(STAGING_URL) VERSION=$(Build.SourceVersion)
 
   # This stage handles the deployment to the Production environment.
-  - stage: DeployProduction
+  - stage: Production
     jobs:
     - job: ProductionDeployment
       steps:
