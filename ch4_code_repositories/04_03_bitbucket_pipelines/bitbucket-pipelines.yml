@@ -1,13 +1,10 @@
-#  Template python-build
-
-#  This template allows you to validate your python code.
-#  The workflow allows running tests and code linting on the default branch.
-
+# Use the latest version of Python
 image: python
 
 pipelines:
   default:
 
+    # Step 1: Prepare the environment by installing all necessary dependencies.
     - step:
         name: Requirements
         caches:
@@ -15,7 +12,10 @@ pipelines:
         script:
           - make requirements
 
+    # Step 2: In parallel, conduct code checks and run tests to validate the code quality and functionality.
     - parallel:
+
+      # Sub-Step 1: Perform code checks and linting to ensure code quality.
       - step:
           name: Check
           caches:
@@ -27,6 +27,7 @@ pipelines:
             - make check
             - make lint
 
+      # Sub-Step 2: Execute tests to confirm that the code works as expected.
       - step:
           name: Test
           caches:
@@ -35,6 +36,7 @@ pipelines:
             - make requirements
             - make test
 
+    # Step 3: Build the application and generate a ZIP artifact for deployment.
     - step:
         name: Build
         script:
@@ -44,33 +46,30 @@ pipelines:
         artifacts:
           - lambda.zip
 
+    # Step 4: Deploy the application to the staging environment and validate the deployment.
     - step:
         name: Staging
         deployment: staging
         caches:
           - pip
         script:
-        - make requirements
+          - make requirements
+          - make deploy PLATFORM="Bitbucket Pipelines" \
+              FUNCTION=$STAGING_FUNCTION_NAME \
+              VERSION=$BITBUCKET_COMMIT \
+              BUILD_NUMBER=$BITBUCKET_BUILD_NUMBER
+          - make testdeployment URL=$STAGING_URL VERSION=$BITBUCKET_COMMIT
 
-        - make deploy PLATFORM="Bitbucket Pipelines" \
-            FUNCTION=$STAGING_FUNCTION_NAME \
-            VERSION=$BITBUCKET_COMMIT \
-            BUILD_NUMBER=$BITBUCKET_BUILD_NUMBER
-
-        - make testdeployment URL=$STAGING_URL VERSION=$BITBUCKET_COMMIT
-
+    # Step 5: If staging is successful, deploy the application to the production environment and validate the deployment.
     - step:
         name: Production
         deployment: production
         caches:
           - pip
         script:
-        - make requirements
-
-        - make deploy PLATFORM="Bitbucket Pipelines" \
-            FUNCTION=$PRODUCTION_FUNCTION_NAME \
-            VERSION=$BITBUCKET_COMMIT \
-            BUILD_NUMBER=$BITBUCKET_BUILD_NUMBER
-
-        - make testdeployment URL=$PRODUCTION_URL VERSION=$BITBUCKET_COMMIT
-
+          - make requirements
+          - make deploy PLATFORM="Bitbucket Pipelines" \
+              FUNCTION=$PRODUCTION_FUNCTION_NAME \
+              VERSION=$BITBUCKET_COMMIT \
+              BUILD_NUMBER=$BITBUCKET_BUILD_NUMBER
+          - make testdeployment URL=$PRODUCTION_URL VERSION=$BITBUCKET_COMMIT
