@@ -29,20 +29,17 @@ jobs:
     # CircleCI will report the results back to your VCS provider.
     steps:
       - checkout
-
       # This step takes care of the requirements
       - python/install-packages:
           pkg-manager: pip
-
       - run:
           name: install aws CLI
           command: pip install --quiet --upgrade awscli
-  
       - run:
           name: check
           command: make check lint test
   
-  deploy-test-staging:
+  build:  # New job for build
     docker:
       - image: cimg/python:3.10.2
     steps:
@@ -50,18 +47,27 @@ jobs:
       - run:
           name: install aws cli
           command: pip install --quiet --upgrade awscli
-
       - run:
           name: build
           command: make clean build
+      - persist_to_workspace:  # Persist the lambda.zip to workspace
+          root: .
+          paths:
+            - lambda.zip
 
-      - store_artifacts:
-          path: ./lambda.zip
-
+  deploy-test-staging:
+    docker:
+      - image: cimg/python:3.10.2
+    steps:
+      - checkout
+      - attach_workspace:  # Attach workspace to get the lambda.zip
+          at: .
+      - run:
+          name: install aws cli
+          command: pip install --quiet --upgrade awscli
       - run:
           name: deploy
           command: make deploy FUNCTION=${STAGING_FUNCTION_NAME} PLATFORM="CircleCI" VERSION=${CIRCLE_SHA1} BUILD_NUMBER=${CIRCLE_BUILD_NUM}
-
       - run:
           name: test
           command: make testdeployment URL=${STAGING_URL} VERSION=${CIRCLE_SHA1}
@@ -71,32 +77,31 @@ jobs:
       - image: cimg/python:3.10.2
     steps:
       - checkout
+      - attach_workspace:  # Attach workspace to get the lambda.zip
+          at: .
       - run:
           name: install aws cli
           command: pip install --quiet --upgrade awscli
-
-      - run:
-          name: build
-          command: make clean build
-
       - run:
           name: deploy
           command: make deploy FUNCTION=${PRODUCTION_FUNCTION_NAME} PLATFORM="CircleCI" VERSION=${CIRCLE_SHA1} BUILD_NUMBER=${CIRCLE_BUILD_NUM}
-
       - run:
           name: test
           command: make testdeployment URL=${PRODUCTION_URL} VERSION=${CIRCLE_SHA1}
 
+
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
-  experimental-pipeline: # This is the name of the workflow, feel free to change it to better match your workflow.
-    # Inside the workflow, you define the jobs you want to run.
+  experimental-pipeline:
     jobs:
       - integration
-      - deploy-test-staging:
+      - build:  
           requires:
             - integration
+      - deploy-test-staging:
+          requires:
+            - build
       - deploy-test-production:
           requires:
             - deploy-test-staging
