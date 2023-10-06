@@ -53,7 +53,7 @@ This step prevents Bamboo from creating notificaitons about the server running w
 2. Scroll to the bottom of that page and select **Troubleshooting and support tools** from the menu on the left.
 3. On the far right under "Notifications", select the dropdown menu and select "Don't show any notifications".
 
-#### 2.3 Disable sign-ups
+#### 2.3 Disable sign-ups and anonymous access
 This step prevents others from creating accounts on your Bamboo server without your permission.
 
 1. Once the installation is complete, select the cog on the top, far right of the page.  Select **Overview**.
@@ -61,6 +61,12 @@ This step prevents others from creating accounts on your Bamboo server without y
 3. On the bottom of the "Security and permission" page, select **Edit**.
 4. Under "Change global security and permission properties", remove the selection next to "Enable signup?".
 5. At the bottom of the page, Select **Save**.
+
+This step prevents anonymous users (anyone who is not logged in) from viewing content on your Bamboo server.
+
+1. Once the installation is complete, select the cog on the top, far right of the page.  Select **Overview**.
+2. From the menu on the left, select **Global Permissions**.
+3. Under "Other", remove the selection next to "Anonymous users" under "Access".
 
 #### 2.4 Add a local agent
 1. Select the cog on the top, far right of the page.  Select **Agents**.
