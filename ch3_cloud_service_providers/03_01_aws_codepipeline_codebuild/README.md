@@ -1,4 +1,6 @@
 TODO: UPDATE
+
+- at course DevOps for AWS
 - https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-env-vars.html
 
 - CodePipeline should use the Zip format, not the clone format
