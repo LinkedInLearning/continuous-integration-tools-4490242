@@ -1,3 +1,4 @@
+TODO: UPDATE
 
 ## refs
 -[Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/index.html)
@@ -5,7 +6,7 @@
 ## setup
 - create account as needed
 - create new project
-- upload files to project 
+- upload files to project
   - from side menu, select Code -> Repository
   - select Edit -> WebIDE
   - drag files into side bar of editor window
@@ -21,7 +22,7 @@
 ## environments
 - side menu, Operate -> Environments -> Create environment
 - For Production and Staging add name and URL
-- 
+-
 
 ## variables
 - side menu, settings -> CI/CD. Next to "Variables" select **Expand**.
@@ -32,7 +33,7 @@
 - note that GitLab CI/CD supports OpenID Connect (OIDC) to give your build and deployment jobs access to cloud credentials and services. [How do I configure OIDC for my cloud provider?](https://gitlab.com/help/ci/cloud_services/index#oidc-authorization-with-your-cloud-provider).  TODO: Add instructions later
 - Add variable for AWS_DEFAULT_REGION.  uncheck "protect variable".
 - Add variable for AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID.  uncheck "protect variable". check "mask variable".
-- 
+-
 
 - run the pipeline
-- 
+-

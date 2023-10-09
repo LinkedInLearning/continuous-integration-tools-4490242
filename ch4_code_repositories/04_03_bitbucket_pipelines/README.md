@@ -1,3 +1,4 @@
+TODO: UPDATE
 # reqs
 - [Bitbucket Pipelines configuration reference](https://support.atlassian.com/bitbucket-cloud/docs/bitbucket-pipelines-configuration-reference/)
 - [Set up and monitor Bitbucket Deployments](https://support.atlassian.com/bitbucket-cloud/docs/set-up-and-monitor-bitbucket-deployments/)
@@ -44,4 +45,4 @@
 - Toggle the switch next to "Enable Pipelines".
 - select "Repository variables"
 - Enter the name and value for each of the following project parameters.  For the AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY, select "Secured".
-- 
+-

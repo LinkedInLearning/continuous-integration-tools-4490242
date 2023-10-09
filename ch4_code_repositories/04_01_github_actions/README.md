@@ -1,3 +1,4 @@
+TODO: UPDATE
 
 ## refs
 - [Variables](https://docs.github.com/en/actions/learn-github-actions/variables)
@@ -17,9 +18,9 @@
 - Add name and values for AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID
 - select "variables" tab adn then "New repository variable"
 - enter AWS_DEFAULT_REGION for name and the correseponding value for your project
-- 
-- 
+-
+-
 - add the project parameters as environment variables and secrets
 - move the workflow file `pipeline.yml` to `./.github/workflows`
 - commit the file
-- 
+-

@@ -48,7 +48,7 @@ After logging into your Travis CI account, open the [Github Apps Integraion page
    - PRODUCTION_URL
    - STAGING_FUNCTION_NAME
    - STAGING_URL
-   
+
    After all 7 parameters are in place, your configuration should apprear as follows:
 
 ![Travis Environment Variables](Travis-Environment-Variables-SCR-20230916-shdl.png)
