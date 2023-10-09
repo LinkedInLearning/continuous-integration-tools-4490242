@@ -1,4 +1,8 @@
 TODO: UPDATE
+
+Check this out on LinkedIn Learning: https://www.linkedin.com/learning/azure-devops-for-beginners
+
+
 # resources
 - [Specify jobs in your pipeline](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/phases)
 - [Pricing for Azure DevOps](https://azure.microsoft.com/en-us/pricing/details/devops/azure-devops-services/)
