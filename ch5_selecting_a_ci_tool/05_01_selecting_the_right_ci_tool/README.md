@@ -17,8 +17,9 @@ Start by considering tools from four categories:
 - **Code Repositories:**
   - Simplifies collaboration by managing CI/CD and code on the same platform.
 
+## Selecting CI Tools for Individuals, Teams, and Enterprises
+![Selecting for Individuals, Teams, and Enterprises](./05_01_selecting_the_right_ci_tool.png)
 
-## Selecting for Individuals, Teams, and Enterprises
   - **Individual developers** may prefer SaaS or code repository tools for quick setup.
   - **Small teams** looking for scalability and project management capabilities may opt for code repository tools.
   - **Businesses and enterprises** have flexibility to choose from any tool category but may benefit from self-hosted and cloud service provider options for integration and security.
