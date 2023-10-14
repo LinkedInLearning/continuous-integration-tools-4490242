@@ -64,7 +64,7 @@ With your CircleCI account in place, set up a connection to the repo where the e
    - PRODUCTION_URL
    - STAGING_FUNCTION_NAME
    - STAGING_URL
-   
+
    After all 7 parameters are in place, your configuration should apprear as follows:
 
    ![CircleCI Environment Variables](./CircleCI-Environment-Variables-SCR-20230917-ngsd.png)
@@ -79,8 +79,9 @@ With your CircleCI account in place, set up a connection to the repo where the e
     ![CircleCI Build Numbers](./CircleCI-Build-Numbers-SCR-20230917-phnu.png)
 
 
-## TODO: CircleCI Mentions
-- Starter workflows
-- Very competitive pricing with generous limits
+## Random Information
+- [Starter workflows and sample configurations](https://circleci.com/docs/sample-config/)
 - [AWS CLI orb](https://circleci.com/developer/orbs/orb/circleci/aws-cli#usage-install_aws_cli)
-- error messages can be checked via AI ("no code or proprietary data shared")
+- TODOZ: Linkable reference is needed for 'Error messages can be checked via AI ("no code or proprietary data shared")'
+
+[[Next: 02_03 SaaS Tool Summary](../02_03_saas_tool_summary/README.md)]

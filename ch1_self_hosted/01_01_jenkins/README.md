@@ -52,7 +52,23 @@ To configure the Jenkins server, you must connect to the server and retreive the
 5. On the "Instance Configuration" page, keep the value for "Jenkins URL" and select **Save and Finish**.
 6. On the "Jenkins is ready!" page, select **Start using Jenkins**.
 
-TODO: Add instructions for installing the Blue Ocean plugins
+#### 2.3 Install the Blue Ocean Plugin
+We’ll be using the Blue Ocean plugin to enhance our pipeline experience.  
+
+Blue Ocean is actually a collection of plugins that enhances the Jenkins user interface, specifically for visualizing pipelines.
+
+![Jenkins-Install-Blue-Ocean-Plugin](Jenkins-Install-Blue-Ocean-Plugin-SCR-20231014-labg.png)
+
+1. From the homepage of your Jenkins server, select **Manage Jenkins**.
+2. Select **Plugins**.
+3. Select **Available plugins**.
+4. In the search field, type **Blue Ocean**.
+5. Select the checkbox next to **Blue Ocean** to select it.
+    
+6. Select the **Install** button to begin the installation process.
+7. Jenkins will download and install the plugins for the Blue Ocean experience. This may take a moment, depending on your internet connection and server performance.
+8. Once the installation is complete, select **Go back to the top page**.
+
 
 ## Implement the Experimental Pipeline
 To implement the experimental pipeline in Jenkins, you will need to create a GitHub repo, add the exercise files, and modify the files for your project.

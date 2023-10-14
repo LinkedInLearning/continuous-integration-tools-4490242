@@ -38,7 +38,7 @@ Having the following items in place before starting this lab will help you have 
 ## Implement the Experimental Pipeline
 To implement the experimental pipeline in TeamCity, you will need to create a GitHub repo and add the exercise files.
 
-Then you'll create the project that implements the pipeline.  After that, you'll attach a VCS root for the repo and update the project parameters.
+You'll start by creating the project that implements the pipeline.  After that, you'll update the project parameters.
 
 And finally, you'll trigger the pipeline to deploy the sample applicaiton.
 
@@ -47,31 +47,56 @@ Before starting these steps, open the Output tab of the Clouformation stack for 
 ### 1. Create a GitHub repo for the sample application code
 Because this course covers multiple tools, a dedicated repo is need for each tool to prevent unexpected deployments to the sample-application.
 
+#### 1.1 Create the repo
 1. Create a new GitHub repo. Give the repo a name and description.  Please select **Public** for the repo visibility to simplify access.  Select the option to add a README file and select **Python** when adding a `.gitignore` file.
 1. From ther repo home page, select **Add file -> Upload files**.
 1. Select **choose your files** and browse to the exercise files for this lesson on your local system.
 1. Select all of the files and then select **Open**.
 1. After the files have been uploaded, enter a commit message and select **Commit changes**.
-1. TODO: Add steps for creating a `.teamcity` directory and relocating `pom.xml` and `settings.kts`.
+1. Follow the instructions for relocating the `pom.xml` and `settings.kts` files.
+
+
+#### 1.2 Relocate the `pom.xml` and `settings.kts` files into `.teamcity`
+*NOTE: THIS IS A KEY STEP TO GET THE TEAMCITTY CONFIGURATION WORKING.*
+
+Before importing the repo into a TeamCity project, the configuration files -- [pom.xml](./pom.xml) and [settings.kts](./settings.kts) -- need to be located inside the repo in a hidden directory named `.teamcity`.
+
+Follow these steps to create the directory and get the files in place.
+
+1. From the root of your repo, select the file `pom.xml`.
+2. Begin editing the file by selecting the pencil icon on the top right of the file listing or by typing `e` on your keyboard.
+3. In the filename field, type `.teamcity/`.  This will create the `.teamcity` directory and place `pom.xml` inside the directory.  See the images below for clarification.
+
+    Before adding the `.teamcity` directory for `pom.xml`:
+    ![Before adding the `.teamcity` directory](./TeamCity-Pom-XML-before-SCR-20231014-kkib.png)
+
+    After adding the `.teamcity` directory for `pom.xml`:
+    ![After adding the `.teamcity` directory](./TeamCity-Pom-XML-after-SCR-20231014-kkpo.png)
+
+4. Select **Commit changes...**.  On the dialog that appears, select **Commit changes**.
+5. Browse back to the root of the repo and repeat the process for `settings.kts`.
+
+    Before adding the `.teamcity` directory for `settings.kts`:
+    ![Before adding the `.teamcity` directory](./TeamCity-Settings-Kts-before-SCR-20231014-klup.png)
+
+    After adding the `.teamcity` directory for `settings.kts`:
+    ![After adding the `.teamcity` directory](./TeamCity-Settings-Kts-after-SCR-20231014-klxh.png)
+
 
 ### 2. Setup the pipeline
-#### 2.1 Create the project, build configuration, and parameters
-1. From the home page of your TeamCity server, select **New project...**.
-2. Confirm "From a repository URL" is selected.  Next to "Repository URL:" enter the URL for your GitHub Repo. Find this value from the home page of your repo by selecting **Code -> HTTPS** and then selecting the stacked squares icon to copy the URL to your system's clipboard. Select **Proceed**.
-3. On the "Create Project From URL" page, confirm that "Import settings from .teamcity/settings.kts" is selected.  For "Project name:" enter **Experimental Pipeline**.  Select **Proceed**.
-4. On the "Experimental Pipeline" configuration page, under "Build Configurations", select **Build**.
-5. From the menu on the left-hand side of the page, select **Parameters**.
-6. For each of the values under "Environment Variables (env.)", select **Edit** and update the parameter with the corresponding value for your project.  *Note: Take care when copying values from the "Outputs" tab of the Cloudformation console as the values may contain tabs at the very end of the text.*
+1. From the home page of your TeamCity server, select **Create project...**.
+2. Confirm "From a repository URL" is selected.  Next to "Repository URL:" enter the URL for your GitHub Repo. Find this value from the home page of your repo by selecting **Code -> HTTPS** and then selecting the stacked squares icon to copy the URL to your system's clipboard. Paste that value in as the repo URL. Select **Proceed**.
+3. On the "Create Project From URL" page, select **Import settings from .teamcity/settings.kts and enable synchronization with the VCS repository"**.
+4. For "Project name:" enter **Experimental Pipeline**.  Select **Proceed**.
+5. On the "Experimental Pipeline" configuration page, under "Build Configurations", select **Build**.
+6. From the menu on the left-hand side of the page, select **Parameters**.
+7. For each of the values under "Environment Variables (env.)", select **Edit** and update the parameter with the corresponding value for your project.  *Note: Take care when copying values from the "Outputs" tab of the Cloudformation console as the values may contain tabs at the very end of the text.*
 
     After all 7 parameters are in place, your configuration should apprear as follows:
 
     ![TeamCity Build Parameters](./TeamCity-Build-Parameters-SCR-20230916-naii.png)
 
-#### 2.2 Configure version control settings
-1. From the "Build" configuration page of the "Experimental Pipeline" project, select **Version Control Settings**.
-2. Select **Attach VCS root**.
-3. Next to "Attach existing VCS root:", select the link for your GitHub repo under "Experimental Pipeline VCS roots".
-
+TODOZ: Double check the installation for `make` on the agent
 ### 3. Run the pipeline
 1. At the top right of the page, select **Run**.
 2. Select **Go to build configuration page** to see the build in progress.
