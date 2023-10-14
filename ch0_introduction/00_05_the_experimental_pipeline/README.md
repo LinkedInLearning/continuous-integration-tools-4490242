@@ -2,7 +2,7 @@
 As we explore CICD tools, it's helpful to have a sample pipeline to work with. We'll be configuring a pipeline that builds, tests, and deploys a web application. Our application is a Python script that serves JSON data over a simple API.
 
 ## Pipeline Stages
-The pipeline will have seven stages.  Each stage must be successful for any following stages to be initiated.
+The pipeline will have seven stages.  Each stage must complete successfully for any following stages to be initiated.
 
 ![The Experimental Pipeline](00_05_the_experimental_pipeline.png)
 
