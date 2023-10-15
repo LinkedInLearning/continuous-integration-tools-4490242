@@ -4,7 +4,7 @@ Exercise files are available to help you following along with this course.  Use 
 
 The directory structure follows the course structure, with directories for each chapter and section.
 
-## Prequisites
+## Prerequisites
 1. A [GitHub account](https://github.com/join) is needed to host the code for the sample application.
 2. An [Amazon Web Services account](https://aws.amazon.com/free) is needed to deploy and host the sample application.
 
@@ -14,7 +14,7 @@ A sample application is included to use as a deployment target. The goal is to m
 Use the provided [CloudFormation template](./sample-application.yml) and the following instructions to manually deploy the sample application in AWS.
 
 ### 1. Get the exercise files in place on your local system
-1. Open the GitHub repo for this course and download the exercise files by selecting **Code -> Local -> Download ZIP**.  
+1. Open the GitHub repo for this course and download the exercise files by selecting **Code -> Local -> Download ZIP**.
 2. Open the ZIP file and confirm the contents of the file are accessible.
 
 ### 2. Deploy the Sample Application

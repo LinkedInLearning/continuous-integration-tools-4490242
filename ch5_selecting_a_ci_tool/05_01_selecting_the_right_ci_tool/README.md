@@ -1,5 +1,5 @@
 05_01 Selecting the Right CI Tool
-This summary provides an overview of the CI/CD tool categories and guidance on choosing the right tool based on individual, team, or enterprise needs. 
+This summary provides an overview of the CI/CD tool categories and guidance on choosing the right tool based on individual, team, or enterprise needs.
 
 ## Tool Categories
 Start by considering tools from four categories:

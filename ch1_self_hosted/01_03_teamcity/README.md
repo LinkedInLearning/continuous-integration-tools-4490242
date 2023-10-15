@@ -5,7 +5,7 @@
 - [TeamCity On-Premises Documentation Home](https://www.jetbrains.com/help/teamcity/teamcity-documentation.html)
 - [Learn TeamCity](https://www.jetbrains.com/teamcity/learn/)
 
-## Prequisites
+## Prerequisites
 Having the following items in place before starting this lab will help you have a smooth experience.
 
 1. A [GitHub account](https://github.com/join) is required to host the code for the sample application.
@@ -42,7 +42,7 @@ You'll start by creating the project that implements the pipeline.  After that, 
 
 And finally, you'll trigger the pipeline to deploy the sample applicaiton.
 
-Before starting these steps, open the Output tab of the Clouformation stack for the sameple application. You'll be referencing values displayed on that tab.
+Before starting these steps, open the Output tab of the Cloudformation stack for the sample application. You'll be referencing values displayed on that tab.
 
 ### 1. Create a GitHub repo for the sample application code
 Because this course covers multiple tools, a dedicated repo is need for each tool to prevent unexpected deployments to the sample-application.

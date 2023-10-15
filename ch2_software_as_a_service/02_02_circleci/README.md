@@ -3,7 +3,7 @@
 ## Recommended Resources
 - [CircleCI Quickstart guide](https://circleci.com/docs/getting-started/)
 
-## Prequisites
+## Prerequisites
 Having the following items in place before starting this lab will help you have a smooth experience.
 
 1. A [GitHub account](https://github.com/join) is required to host the code for the sample application. *NOTE: You may need to be an admin for any repositories you want to integrate with CircleCI.*
