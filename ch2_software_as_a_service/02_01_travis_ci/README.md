@@ -64,7 +64,7 @@ Travis will automaticlly trigger a new build for every change in the repository.
 6. If any errors are encountered, review the logs and make corrections as needed.  Consider reviewing the configuration steps for the parameters.  If you are not able to resolve the errors, please post a question on LinkinedIn Learning in the course Q&A section.
 7. Open the URLs for the sample application's staging and production environments.  For both environments, confirm that the deployment platform is "Travis CI" and the build number matches the last successful build number.
 
-## Random Information
+## Additional Information
 - Beta support is in place for repos hosted in Bitbucket, GitLab, and Assembla
 - Python versions don't include recent versions (ie, 3.11+)
   - Take a look at [Specifying Python versions](https://docs.travis-ci.com/user/languages/python/#specifying-python-versions)

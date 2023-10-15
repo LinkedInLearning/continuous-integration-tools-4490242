@@ -1,7 +1,7 @@
 # 03_01 AWS CodePipeline and CodeBuild
-CodePipeline and CodeBuild are tools for implementing CI/CD in Amazon Web Services.  
+CodePipeline and CodeBuild are tools for implementing CI/CD in Amazon Web Services.
 
-- With [CodePipeline](https://aws.amazon.com/codepipeline), developers can model the stages of their pipeline and the actions that need to be taken in each stage.  
+- With [CodePipeline](https://aws.amazon.com/codepipeline), developers can model the stages of their pipeline and the actions that need to be taken in each stage.
 - [CodeBuild](https://aws.amazon.com/codebuild) provides an on-demand build service that can be used with CodePipeline to implement the steps needed to build, deliver, and deploy code.
 
 ## Recommended Resources
@@ -43,7 +43,7 @@ Because this course covers multiple tools, a dedicated repo is need for each too
 
     - **New service role**
     - **Allow AWS CodePipeline to create a service role so it can be used with this new pipeline**
- 
+
     Select **Next**.
 
 5. Under "Source provider", select **GitHub (Version 2)**.  Select **Connect to GitHub**.
@@ -58,7 +58,7 @@ Because this course covers multiple tools, a dedicated repo is need for each too
 11. Back in the CodePipeline configuration, under "Repository name", search for the repository you created for this lesson.  Under "Branch name", enter **main**.  Confirm **Start the pipeline on source code change** and **CodePipeline default** are selected.  Then select **Next**.
 12. Add a build stage - Under "Build provider", select **AWS CodeBuild**.  Confirm "Region" is the same as the region where your sample application is deployed.  Select **Create project**.
 13. In the new window that opens, enter **sample-application** for the project name.
-    
+
     Select the checkbox next to **Restrict number of concurrent builds this project can start**.
 
     Under "Environment", confirm "Managed image" is selected.  For "Operating System", select **Amazon Linux**.  For "Runtime(s)", select **Standard** and for "Image" select the most recent image for **aws/codebuild/amazonlinux2-x86_64-standard:X.Y**.
@@ -113,7 +113,7 @@ Once the pipeline is created, it will start to run.  The "Source" stage will lik
 8. Wait for the pipeline to complete.  Confirm that the run completed successfully.  If you encounter any errors, review the configuration for the CodeBuild project and confirm the policy has been correctly attached to the role in use by CodeBuild.
 
 
-## Random Information
+## Additional Information
 - [Build specification reference for CodeBuild](https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html)
 - [CodeBuild environment variables](https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-env-vars.html)
 - [CodeBuild pricing](https://aws.amazon.com/codebuild/pricing/)

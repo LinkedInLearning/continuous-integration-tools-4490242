@@ -79,7 +79,7 @@ With your CircleCI account in place, set up a connection to the repo where the e
     ![CircleCI Build Numbers](./CircleCI-Build-Numbers-SCR-20230917-phnu.png)
 
 
-## Random Information
+## Additional Information
 - [Starter workflows and sample configurations](https://circleci.com/docs/sample-config/)
 - [AWS CLI orb](https://circleci.com/developer/orbs/orb/circleci/aws-cli#usage-install_aws_cli)
 - ZODO: Linkable reference is needed for 'Error messages can be checked via AI ("no code or proprietary data shared")'
