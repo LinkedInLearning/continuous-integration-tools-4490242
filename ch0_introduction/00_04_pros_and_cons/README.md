@@ -1,7 +1,7 @@
 # 00_04 Pros and Cons
 Each CI/CD tool category has benefits and drawbacks.  Consider these factors when choosing a CI/CD tool category for your projects.
 
-Regarding concerns abour security vulnerabilites and vendor lockin, expect these to be the same for all categories.
+Regarding concerns about security vulnerabilities and vendor lock-in, expect these to be the same for all categories.
 
 - **Self-Hosted CI/CD Tools**
   - Pros:
