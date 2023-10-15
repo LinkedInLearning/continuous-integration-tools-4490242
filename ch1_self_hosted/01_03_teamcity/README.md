@@ -96,7 +96,7 @@ Follow these steps to create the directory and get the files in place.
 
     ![TeamCity Build Parameters](./TeamCity-Build-Parameters-SCR-20230916-naii.png)
 
-TODOZ: Double check the installation for `make` on the agent
+ZODO: Double check the installation for `make` on the agent
 ### 3. Run the pipeline
 1. At the top right of the page, select **Run**.
 2. Select **Go to build configuration page** to see the build in progress.

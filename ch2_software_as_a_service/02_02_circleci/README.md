@@ -82,6 +82,6 @@ With your CircleCI account in place, set up a connection to the repo where the e
 ## Random Information
 - [Starter workflows and sample configurations](https://circleci.com/docs/sample-config/)
 - [AWS CLI orb](https://circleci.com/developer/orbs/orb/circleci/aws-cli#usage-install_aws_cli)
-- TODOZ: Linkable reference is needed for 'Error messages can be checked via AI ("no code or proprietary data shared")'
+- ZODO: Linkable reference is needed for 'Error messages can be checked via AI ("no code or proprietary data shared")'
 
 [[Next: 02_03 SaaS Tool Summary](../02_03_saas_tool_summary/README.md)]
