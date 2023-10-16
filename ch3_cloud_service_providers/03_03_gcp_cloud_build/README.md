@@ -15,7 +15,7 @@ TODO: create a billing account as a prereq to the lab
 - select billing account
 - select cloud build -> dashboard
 - select set upnbuild triggers
-- add name and description
+- add name  and description
 - select create host connection
 - under event, select "Repository event that invokes trigger Push to a branch"
 - select repository -> connect new respository

@@ -5,7 +5,7 @@ CodePipeline and CodeBuild are tools for implementing CI/CD in Amazon Web Servic
 - [CodeBuild](https://aws.amazon.com/codebuild) provides an on-demand build service that can be used with CodePipeline to implement the steps needed to build, deliver, and deploy code.
 
 ## Recommended Resources
-- [DevOps with AWS](https://www.linkedin.com/learning/devops-with-aws): Covers AWS automation services including CodeBuild and CodePipeline.
+- [DevOps with AWS on LinkedIn Learning](https://www.linkedin.com/learning/devops-with-aws): Covers AWS automation services including CodeBuild and CodePipeline.
 
 ## Prerequisites
 Having the following items in place before starting this lab will help you have a smooth experience.
@@ -18,7 +18,7 @@ Having the following items in place before starting this lab will help you have 
 ## Implement the Experimental Pipeline
 To implement the experimental pipeline in AWS CodePipeline and CodeBuild, you will need to create a GitHub repo, add the exercise files, and modify the files for your project if needed.
 
-Then you'll add the service account credentials.  Next, you'll create the project that implements the pipeline.
+Next, you'll create the project that implements the pipeline.
 
 And finally, you'll trigger the pipeline to deploy the sample application.
 
