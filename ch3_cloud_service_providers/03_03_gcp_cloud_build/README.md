@@ -1,5 +1,4 @@
 # 03_03 GCP Cloud Build
-One sentence description.
 [Cloud Build](https://cloud.google.com/build) is an automation service from the Google Cloud Platform suite of tools. 
 
 ## Recommended Resources
