@@ -15,7 +15,7 @@ Having the following items in place before starting this lab will help you have 
 4. The exercise files for the course should be downloaded and accessible on your local system.
 
 ## Implement the Experimental Pipeline
-To implement the experimental pipeline in GitHub Actions, you will need to create a GitHub repo, add the exercise files, configure the repostitory settings.
+To implement the experimental pipeline in GitHub Actions, you will need to create a GitHub repo, add the exercise files, and configure the repostitory settings.
 
 Before starting these steps, open the Output tab of the Cloudformation stack for the sample application. You'll be referencing values displayed on that tab.
 
