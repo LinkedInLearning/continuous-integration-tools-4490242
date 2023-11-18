@@ -44,7 +44,7 @@ Before starting these steps, open the Output tab of the Cloudformation stack for
 
     ![Rename pipeline file - After](./3-gitlabci-rename-pipeline-file-after.png)
 
-11. Select the Git icon with the badge showing the number of files added. Enter a ommmit message and select **Commit to 'main'**.  If pormpted, confirm committing files to the default branch.
+11. Select the Git icon with the badge showing the number of files added. Enter a commit message and select **Commit to 'main'**.  If pormpted, confirm committing files to the default branch.
 12. Go back to the **Repository** tab in your browser.
 
 ### 2. Update the Environment URLs
@@ -59,7 +59,7 @@ Before starting these steps, open the Output tab of the Cloudformation stack for
 3. Select **Add variable**.
 4. Under "Environment", select **Production**.  Under "Flags", uncheck **Protect variable**. Under "Key", enter **`FUNCTION_NAME`**.  Under "Value", enter the value for the `ProductionFunctionName` output from the sample application Cloudformation stack.  Select **Add variable**.
 5. Repeat the steps to add a **`FUNCTION_NAME`** for the **Staging** environment, using the `StagingFunctionName` value from the Cloudformation stack output.
-6. Next, add the AWS Credentials, starting with `AWS_DEFAULT_REGION`.  Select **Add variable**.  Under "Environments", confirm that **"All (default)"** is selected.  Uncheck **Protect variable**.  Under "Key", enter **`AWS_DEFAULT_REGION`**.  Under "Value", enter the value for the `AwsDefaultRegion	` output from the sample application Cloudformation stack.  Select **Add variable**.
+6. Next, add the AWS Credentials, starting with `AWS_DEFAULT_REGION`.  Select **Add variable**.  Under "Environments", confirm that **"All (default)"** is selected.  Uncheck **Protect variable**.  Under "Key", enter **`AWS_DEFAULT_REGION`**.  Under "Value", enter the value for the `AwsDefaultRegion` output from the sample application Cloudformation stack.  Select **Add variable**.
 7. Now create variables for **`AWS_SECRET_ACCESS_KEY`** and **`AWS_ACCESS_KEY_ID`**.  Repeat the following for each these variables:
    1. Confirm that **"All (default)"** is selected under "Environments.  
    2. Uncheck **Protect variable**.
