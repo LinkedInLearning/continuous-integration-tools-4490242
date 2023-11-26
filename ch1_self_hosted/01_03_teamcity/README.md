@@ -32,8 +32,8 @@ Having the following items in place before starting this lab will help you have 
 4. On the "Create Administrator Account" page, select a username and password for your admin account and select **Create Account**.
 5. At the top left of the TeamCity home page, select **Agents**.
 6. In the menu on the left under "Overivew", select **Unathorized** to expose the two agents that were deployed with the server.
-7. Select **agent-1**.  On the configuration page for agent-1, select **Authorize**.  Enter a comment for the authorization (perhaps, "Adding a new agent") and select **Authorize**.
-8. Report the authorization steps for "agent-2".
+7. Select **agent-1**.  On the configuration page for agent-1, select **Authorize**.  Enter a comment for the authorization (perhaps, "Add new agent") and select **Authorize**.
+8. Repeat the authorization steps for "agent-2".
 
 ## Implement the Experimental Pipeline
 To implement the experimental pipeline in TeamCity, you will need to create a GitHub repo and add the exercise files.
@@ -92,11 +92,10 @@ Follow these steps to create the directory and get the files in place.
 6. From the menu on the left-hand side of the page, select **Parameters**.
 7. For each of the values under "Environment Variables (env.)", select **Edit** and update the parameter with the corresponding value for your project.  *Note: Take care when copying values from the "Outputs" tab of the Cloudformation console as the values may contain tabs at the very end of the text.*
 
-    After all 7 parameters are in place, your configuration should apprear as follows:
+    After all 7 parameters are in place, your configuration should appear as follows:
 
     ![TeamCity Build Parameters](./TeamCity-Build-Parameters-SCR-20230916-naii.png)
 
-ZODO: Double check the installation for `make` on the agent
 ### 3. Run the pipeline
 1. At the top right of the page, select **Run**.
 2. Select **Go to build configuration page** to see the build in progress.
