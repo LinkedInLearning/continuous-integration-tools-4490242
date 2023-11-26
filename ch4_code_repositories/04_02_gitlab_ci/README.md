@@ -44,7 +44,7 @@ Before starting these steps, open the Output tab of the Cloudformation stack for
 
     ![Rename pipeline file - After](./3-gitlabci-rename-pipeline-file-after.png)
 
-11. Select the Git icon with the badge showing the number of files added. Enter a commit message and select **Commit to 'main'**.  If pormpted, confirm committing files to the default branch.
+11. Select the Git icon with the badge showing the number of files added. Enter a commit message and select **Commit to 'main'**.  If prompted, confirm committing files to the default branch.
 12. Go back to the **Repository** tab in your browser.
 
 ### 2. Update the Environment URLs
@@ -79,4 +79,4 @@ Before starting these steps, open the Output tab of the Cloudformation stack for
     ![Pipeline view](./5-gitlabci-pipeline.png)
 
 5. Open the URLs for the sample application's staging and production environments. For both environments, confirm that the deployment platform is "**GitLab CI**" and the build number matches the last successful pipeline number.
-6. If any errors are encountered, review the logs and make corrections as needed. Consider reviewing the configuration steps for the environment variables and the repository secrets. If you are not able to resolve the errors, please post a question on LinkinedIn Learning in the course Q&A section.
+6. If any errors are encountered, review the logs and make corrections as needed. Consider reviewing the configuration steps for the environment variables and the repository secrets. If you are not able to resolve the errors, please post a question on LinkedIn Learning in the course Q&A section.

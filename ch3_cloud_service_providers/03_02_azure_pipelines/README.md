@@ -36,14 +36,14 @@ For this exercise, we'll use the repo service included with an Azure DevOps proj
 4. At the bottom of the page, under "Initialize 
 main branch with a README or gitignore", select the option to add a `README` and choose `Python` for the `.gitignore`.  Select **Initialize**.
 1. On the new repo page, select the three-dot menu on the upper right and then select **Upload files**.
-2. Select **Browse** and navigate to the location where you downloaded the files for thhis lesson.  Select all of the files  and then select **Open**.
+2. Select **Browse** and navigate to the location where you downloaded the files for this lesson.  Select all of the files  and then select **Open**.
 3. Select **Commit**.
 
 
 ### 2. Configure and run the pipeline
 1. Select **Set Up Build**
-1. Select **Sariables** -> **New variable**
-1. Add the name and value for each of the following parameters. Select the "+" for each additional varaible.  *Note: For AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY select the option for "Keep this value secret".*
+1. Select **Variables** -> **New variable**
+1. Add the name and value for each of the following parameters. Select the "+" for each additional variable.  *Note: For AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY select the option for "Keep this value secret".*
    
      -   AWS_ACCESS_KEY_ID
      -   AWS_SECRET_ACCESS_KEY
@@ -61,7 +61,7 @@ main branch with a README or gitignore", select the option to add a `README` and
 1. Run the pipeline by selecting **Run**.
 1. Allow the build to complete.
 1. Open the URLs for the sample application's staging and production environments.  For both environments, confirm that the deployment platform is "Azure DevOps" and the build number matches the last successful pipeline number.
-1. If any errors are encountered, review the logs and make corrections as needed.  Consider reviewing the configuration steps for the parameters.  If you are not able to resolve the errors, please post a question on LinkinedIn Learning in the course Q&A section.
+1. If any errors are encountered, review the logs and make corrections as needed.  Consider reviewing the configuration steps for the parameters.  If you are not able to resolve the errors, please post a question on LinkedIn Learning in the course Q&A section.
 
 
 ## Additional Information

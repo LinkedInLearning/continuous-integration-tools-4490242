@@ -28,7 +28,7 @@ Before starting these steps, open the Output tab of the Cloudformation stack for
 Because this course covers multiple tools, a dedicated repo is need for each tool to prevent unexpected deployments to the sample-application.
 
 1. Create a new GitHub repo. Give the repo a name and description.  Please select **Public** for the repo visibility to simplify access.  Select the option to add a README file and select **Python** when adding a `.gitignore` file.
-2. From ther repo home page, select **Add file -> Upload files**.
+2. From the repo home page, select **Add file -> Upload files**.
 3. Select **choose your files** and browse to the exercise files for this lesson on your local system.
 4. Select all of the files and then select **Open**.
 5. After the files have been uploaded, enter a commit message and select **Commit changes**.
@@ -69,7 +69,7 @@ Because this course covers multiple tools, a dedicated repo is need for each too
 
     Scroll to the bottom of the form and select **Continue to CodePipeline**.
 
-14. Under "Environment variables", select **Add environment variable**.  Add values for the staging environemnt's function name and url.  For example:
+14. Under "Environment variables", select **Add environment variable**.  Add values for the staging environment's function name and URL.  For example:
 
         - Name=FUNCTION_NAME, Value=sample-application-staging
         - Name=URL, Value=<URL for your sample application staging environment>
@@ -101,7 +101,7 @@ Once the pipeline is created, it will start to run.  The "Source" stage will lik
 
     Under "Project name", select the same CodeBuild project created during the staging configuration.
 
-    Under "Environment variables", select **Add environment variable**.  Add values for the staging environemnt's function name and url.  For example:
+    Under "Environment variables", select **Add environment variable**.  Add values for the staging environment's function name and URL.  For example:
 
         - Name=FUNCTION_NAME, Value=sample-application-staging
         - Name=URL, Value=<URL for your sample application staging environment>

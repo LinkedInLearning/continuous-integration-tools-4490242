@@ -12,7 +12,7 @@ Start by considering tools from four categories:
   - Easy onboarding modern features without installation or maintenance.
 
 - **Cloud Service Providers:**
-  - Provide integrations with cloud-based products and services, offering convenience.
+  - Provide interactions with cloud-based products and services, offering convenience.
 
 - **Code Repositories:**
   - Simplifies collaboration by managing CI/CD and code on the same platform.

@@ -33,7 +33,7 @@ Having the following items in place before starting this lab will help you have 
 1.  On the stack homepage, select the "Outputs" column.  Open the value for the key "URL" in a new tab.
 
 ### 2. Configure the Bamboo server
-To configure the Bamboo server, you need to create and enter an evalutation license, disable the embedded database check, and add a local agent.
+To configure the Bamboo server, you need to create and enter an evaluation license, disable the embedded database check, and add a local agent.
 
 #### 2.1 Create and enter an evaluation license
 1. On the "Welcome to Bamboo Data Center", select **Generate a Bamboo Data Center license**. *Note that the text for this link is very small and located under the "License key" form.
@@ -47,7 +47,7 @@ To configure the Bamboo server, you need to create and enter an evalutation lice
 9. On the "Create admin" page, enter the details for your admin account and select **Finish**.  Stand by for the installation to complete.
 
 #### 2.2 Disable notifications
-This step prevents Bamboo from creating notificaitons about the server running with an embedded database or agents running on the primary server.
+This step prevents Bamboo from creating notifications about the server running with an embedded database or agents running on the primary server.
 
 1. Once the installation is complete, select the cog on the top, far right of the page.  Select **Overview**.
 2. Scroll to the bottom of that page and select **Troubleshooting and support tools** from the menu on the left.
@@ -79,7 +79,7 @@ To implement the experimental pipeline in Bamboo, you will need to create a GitH
 
 Then you'll create a project and build plan in the Bamboo web interface. You'll add tasks to the build plan and create variables to hold the service account credentials and values for the staging and production environments.
 
-And finally, you'll trigger the pipeline to deploy the sample applicaiton.
+And finally, you'll trigger the pipeline to deploy the sample application.
 
 Before starting these steps, open the Output tab of the Cloudformation stack for the sample application. You'll be referencing values displayed on that tab.
 
@@ -87,7 +87,7 @@ Before starting these steps, open the Output tab of the Cloudformation stack for
 Because this course covers multiple tools, a dedicated repo is need for each tool to prevent unexpected deployments to the sample-application.
 
 1. Create a new GitHub repo. Give the repo a name and description.  Please select **Public** for the repo visibility to simplify access.  Select the option to add a README file and select **Python** when adding a `.gitignore` file.
-1. From ther repo home page, select **Add file -> Upload files**.
+1. From the repo home page, select **Add file -> Upload files**.
 1. Select **choose your files** and browse to the exercise files for this lesson on your local system.
 1. Select all of the files and then select **Open**.
 1. After the files have been uploaded, enter a commit message and select **Commit changes**.
@@ -123,7 +123,7 @@ Use the following table to create the remaining task for each stage of the pipel
 
 For the first "Command" task type, you'll need to add a configuration for the `make` command.  Under "executable", select **Add new executable**.  For the "Label", enter **Make**.  For the "Path", enter **`/usr/bin/make`**.
 
-| Task Type | Task Description  | Script Body / Command                                                  | Argument (entered as one line, seperated by spaces)                                                                                                                                   | Environment Variables (entered as one line, seperated by spaces)                                                                                               |
+| Task Type | Task Description  | Script Body / Command                                                  | Argument (entered as one line, separated by spaces)                                                                                                                                   | Environment Variables (entered as one line, separated by spaces)                                                                                               |
 |:-----------|:-------------------|:------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Script    | Check-Lint-Test   | <pre>. ./local/bin/activate</br>make check lint test</pre> |                                                                                                                                                                                       |                                                                                                                                                                |
 | Command   | Build             | <pre>make</pre>                                                        | <pre>clean build</pre>                                                                                                                                                                |                                                                                                                                                                |
@@ -132,7 +132,7 @@ For the first "Command" task type, you'll need to add a configuration for the `m
 | Command   | Deploy Production | <pre>make</pre>                                                      | <pre>deploy PLATFORM="Bamboo" FUNCTION=${bamboo.PRODUCTION_FUNCTION_NAME} VERSION=${bamboo.planRepository.revision} BUILD_NUMBER=${bamboo.buildNumber}</pre> | <pre>AWS_ACCESS_KEY_ID=${bamboo.AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${bamboo.AWS_SECRET_ACCESS_KEY} AWS_DEFAULT_REGION=${bamboo.AWS_DEFAULT_REGION}</pre> |
 | Command   | Test Production      | <pre>make</pre>                                                      | <pre>testdeployment URL=${bamboo.PRODUCTION_URL} VERSION=${bamboo.planRepository.revision}</pre>                                                                                                                                |                                                                                                                                                                |
 
-After all 7 pipeline stages are in place (for a total of 8, including the "Source Code Checkout"), your configuration should apprear as follows:
+After all 7 pipeline stages are in place (for a total of 8, including the "Source Code Checkout"), your configuration should appear as follows:
 
 ![Bamboo Plan Tasks Configuration](./Bamboo-Plan-Tasks-SCR-20230916-mare.png)
 
@@ -152,7 +152,7 @@ Select **Save and continue**.
 
    *Note: Take care when copying values from the "Outputs" tab of the Cloudformation console as the values may contain tabs at the very end of the text.*
 
-   After all 7 parameters are in place, your configuration should apprear as follows:
+   After all 7 parameters are in place, your configuration should appear as follows:
 
 ![Bamboo Plan Variables](Bamboo-Plan-Variables-SCR-20230916-mezc.png)
 
@@ -161,7 +161,7 @@ Select **Save and continue**.
 ### 3. Run the pipeline
 1. On the far right of the page, select **Run -> Run plan**.
 2. Allow the build to complete.
-3. If any errors are encountered, review the logs for errors and make corrections as needed.  Consider reviewing the configuration steps for the tasks and the values for the variables.  If you are not able to resolve the errors, please post a question on LinkinedIn Learning in the course Q&A section.
+3. If any errors are encountered, review the logs for errors and make corrections as needed.  Consider reviewing the configuration steps for the tasks and the values for the variables.  If you are not able to resolve the errors, please post a question on LinkedIn Learning in the course Q&A section.
 4. Open the URLs for the sample application's staging and production environments.  For both environments, confirm that the deployment platform is "Bamboo" and the build number matches the last successful build number.
 
 [[Next: 01_03 TeamCity](../01_03_teamcity/README.md)]

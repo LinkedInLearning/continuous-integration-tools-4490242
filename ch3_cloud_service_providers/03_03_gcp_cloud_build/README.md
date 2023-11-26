@@ -4,7 +4,7 @@
 ## Recommended Resources
 - [Cloud Build](https://cloud.google.com/build)
 - [Substituting variable values](https://cloud.google.com/build/docs/configuring-builds/substitute-variable-values)
-- [Using user-defined variable substituions](https://cloud.google.com/build/docs/configuring-builds/substitute-variable-values#using_user-defined_substitutions)
+- [Using user-defined variable substitutions](https://cloud.google.com/build/docs/configuring-builds/substitute-variable-values#using_user-defined_substitutions)
 - [Google Cloud Build official builder images](https://github.com/GoogleCloudPlatform/cloud-builders#google-cloud-build-official-builder-images)
 
 
@@ -31,13 +31,13 @@ Because this course covers multiple tools, a dedicated repo is need for each too
 
 #### 1.1 Create a repo and upload the exercise files for this lesson
 1. Create a new GitHub repo. Give the repo a name and description.  Please select **Public** for the repo visibility to simplify access.  Select the option to add a README file and select **Python** when adding a `.gitignore` file.
-2. From ther repo home page, select **Add file -> Upload files**.
+2. From the repo home page, select **Add file -> Upload files**.
 3. Select **choose your files** and browse to the exercise files for this lesson on your local system.
 4. Select all of the files and then select **Open**.
 
 #### 1.2 Create a repo and upload the exercise files for this lesson
 1. After the files have been uploaded, enter a commit message and select **Commit changes**.
-2. Locate and edit the file `cloudbuild.yaml`.  Locate the `substitutions` section and update the following values the correseponding value from the Output tab of the sample application Cloudformation stack:
+2. Locate and edit the file `cloudbuild.yaml`.  Locate the `substitutions` section and update the following values the corresponding value from the Output tab of the sample application Cloudformation stack:
 
     ```
     substitutions:
@@ -61,11 +61,11 @@ Because this course covers multiple tools, a dedicated repo is need for each too
 5. On the Secret Manager home page, select **CREATE SECRET**.
 6. For "Name", enter `AWS_ACCESS_KEY_ID`.  For "Secret Value", enter the value for the AWS Access Key ID from the Output tab of the sample application Cloudformation stack.  Select **Create Secret**.
 7. Select the arrow to go back to the parent page.  
-8. Select **CREATE SECRET**.  Repeat the secret creation step for `AWS_SECRET_ACCESS_KEY`.  Be sure to check for any spaces or tabs at the end of the secret as you copy and paste from the Cloudfomation output into the Secret Value field.
+8. Select **CREATE SECRET**.  Repeat the secret creation step for `AWS_SECRET_ACCESS_KEY`.  Be sure to check for any spaces or tabs at the end of the secret as you copy and paste from the CloudFormation output into the Secret Value field.
 9.  Select the arrow to go back to the parent page.
 10. On the Secret Manager home page, select the checkbox next to both secret names.
 11. On the permissions panel, select **ADD PRINCIPAL**.
-12. In the New principals textbox, enter the email address of your Cloud Build service account using the form `PROJECT_NUMBER@cloudbuild.gserviceaccount.com` where PROJECT_NUMBER is the value noted in step 2.  If needed, you can find the project number in your Project settings page: selec three dots at top right of page, select project settings, locate project number.
+12. In the New principals textbox, enter the email address of your Cloud Build service account using the form `PROJECT_NUMBER@cloudbuild.gserviceaccount.com` where PROJECT_NUMBER is the value noted in step 2.  If needed, you can find the project number in your Project settings page: select three dots at top right of page, select project settings, locate project number.
 13. Under "Assign Roles", select **Secret Manager Secret Accessor**.  Select **Save**.
 
     ![Secret Manager Secret Accessor](./cloud-build-secret-manager-secret-accessor.png)
@@ -78,11 +78,11 @@ Because this course covers multiple tools, a dedicated repo is need for each too
 5. Under "Event", select **Push to a branch**.
 6. Under "Source", confirm "1st Gen" is selected. In the "Repository" field, select **CONNECT NEW REPOSITORY**.
 7. Under "Select source code management provider", confirm **GitHub (Cloud Build GitHub App)** is selected and select **Continue**.
-8.  Authtenticate with GitHub if needed.  Authorize and install **Google Cloud Build**.
+8.  Authenticate with GitHub if needed.  Authorize and install **Google Cloud Build**.
 9.  Select your username or organization and select **Only select repositories**.  Select the repo you created in step 1.  Select **Install**.
 10. Back in the GCP UI, select the repo you just installed.  Confirm permissions for GitHub and select **Connect**.
 11. Under "Configuration", confirm "Autodetected" is selected for "Type" and under "Location", confirm "Repository" is selected.  Then select **CREATE**.
 12. Next to the trigger you just created, select **RUN** -> **RUN TRIGGER**.
 13. Allow the build to complete.
 14. Open the URLs for the sample application's staging and production environments.  For both environments, confirm that the deployment platform is "Google Cloud Build" and the build number matches the last successful build number.
-15. If any errors are encountered, review the logs and make corrections as needed.  Consider reviewing the configuration steps for the parameters.  If you are not able to resolve the errors, please post a question on LinkinedIn Learning in the course Q&A section.
+15. If any errors are encountered, review the logs and make corrections as needed.  Consider reviewing the configuration steps for the parameters.  If you are not able to resolve the errors, please post a question on LinkedIn Learning in the course Q&A section.

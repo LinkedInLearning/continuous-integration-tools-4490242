@@ -31,7 +31,7 @@ Having the following items in place before starting this lab will help you have 
 3. On the "License Agreement" page, scroll to the bottom of the page, select the checkbox next to **Accept license agreement**.  Select **Continue**.
 4. On the "Create Administrator Account" page, select a username and password for your admin account and select **Create Account**.
 5. At the top left of the TeamCity home page, select **Agents**.
-6. In the menu on the left under "Overivew", select **Unathorized** to expose the two agents that were deployed with the server.
+6. In the menu on the left under "Overview", select **Unauthorized** to expose the two agents that were deployed with the server.
 7. Select **agent-1**.  On the configuration page for agent-1, select **Authorize**.  Enter a comment for the authorization (perhaps, "Add new agent") and select **Authorize**.
 8. Repeat the authorization steps for "agent-2".
 
@@ -40,7 +40,7 @@ To implement the experimental pipeline in TeamCity, you will need to create a Gi
 
 You'll start by creating the project that implements the pipeline.  After that, you'll update the project parameters.
 
-And finally, you'll trigger the pipeline to deploy the sample applicaiton.
+And finally, you'll trigger the pipeline to deploy the sample application.
 
 Before starting these steps, open the Output tab of the Cloudformation stack for the sample application. You'll be referencing values displayed on that tab.
 
@@ -49,7 +49,7 @@ Because this course covers multiple tools, a dedicated repo is need for each too
 
 #### 1.1 Create the repo
 1. Create a new GitHub repo. Give the repo a name and description.  Please select **Public** for the repo visibility to simplify access.  Select the option to add a README file and select **Python** when adding a `.gitignore` file.
-1. From ther repo home page, select **Add file -> Upload files**.
+1. From the repo home page, select **Add file -> Upload files**.
 1. Select **choose your files** and browse to the exercise files for this lesson on your local system.
 1. Select all of the files and then select **Open**.
 1. After the files have been uploaded, enter a commit message and select **Commit changes**.
@@ -57,7 +57,7 @@ Because this course covers multiple tools, a dedicated repo is need for each too
 
 
 #### 1.2 Relocate the `pom.xml` and `settings.kts` files into `.teamcity`
-*NOTE: THIS IS A KEY STEP TO GET THE TEAMCITTY CONFIGURATION WORKING.*
+*NOTE: THIS IS A KEY STEP TO GET THE TEAMCITY CONFIGURATION WORKING.*
 
 Before importing the repo into a TeamCity project, the configuration files -- [pom.xml](./pom.xml) and [settings.kts](./settings.kts) -- need to be located inside the repo in a hidden directory named `.teamcity`.
 
@@ -100,7 +100,7 @@ Follow these steps to create the directory and get the files in place.
 1. At the top right of the page, select **Run**.
 2. Select **Go to build configuration page** to see the build in progress.
 3. Allow the build to complete.
-4. If any errors are encountered, review the logs for errors and make corrections as needed.  Consider reviewing the configuration steps for the tasks and the values for the variables.  If you are not able to resolve the errors, please post a question on LinkinedIn Learning in the course Q&A section.
+4. If any errors are encountered, review the logs for errors and make corrections as needed.  Consider reviewing the configuration steps for the tasks and the values for the variables.  If you are not able to resolve the errors, please post a question on LinkedIn Learning in the course Q&A section.
 5. Open the URLs for the sample application's staging and production environments.  For both environments, confirm that the deployment platform is "TeamCity" and the build number matches the last successful build number.
 
 ## (OPTIONAL) Connect to a TeamCity Agent

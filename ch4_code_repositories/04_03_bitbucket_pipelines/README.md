@@ -2,7 +2,7 @@
 Bitbucket Pipelines is a continuous integration and continuous delivery (CI/CD) service built into Bitbucket.
 
 ## Recommended Resources
-- [Build, test, and deploy with Pipelines](https://support.atlassian.com/bitbucket-cloud/docs/build-test-and-deploy-with-pipelines/): The official Bitbucket Pipelines documenation.
+- [Build, test, and deploy with Pipelines](https://support.atlassian.com/bitbucket-cloud/docs/build-test-and-deploy-with-pipelines/): The official Bitbucket Pipelines documentation.
 - [Bitbucket Pipelines configuration reference](https://support.atlassian.com/bitbucket-cloud/docs/bitbucket-pipelines-configuration-reference/)
 - [Set up and monitor Bitbucket Deployments](https://support.atlassian.com/bitbucket-cloud/docs/set-up-and-monitor-bitbucket-deployments/)
 - [Clone a Git repository](https://support.atlassian.com/bitbucket-cloud/docs/clone-a-git-repository/)
@@ -27,7 +27,7 @@ Before starting these steps, open the Output tab of the Cloudformation stack for
 2. Next to **"Repository name"**, enter a name for the repo.
 3. Determine the desired access level and select or deselect the checkbox next to **"Private repository"**.
 4. For **"Default branch name"**, enter **`main`**.
-5. For **"Include .gitignore?"**, confirm that **"Yes (recommneded)"** is selected.
+5. For **"Include .gitignore?"**, confirm that **"Yes (recommended)"** is selected.
 6. Expand the "Advanced settings" menu and next to "Language", select **Python**.
 7. Select "Create repository"
 
@@ -77,7 +77,7 @@ Otherwise, follow these steps to [create a Repository Access Token](https://supp
 #### 2.2 Copy the Exercise Files to the Local Repo and Push Changes to the Remote Repo
 Once you have the repo cloned to your local system, copy the files into the local repo, commit the changes, and push the changes to the remote repo.
 
-1. Copy the exercise files into the local repo. You may use your system's file explorer or use a command line for this step.  Using the command line, the command would be simliar to the following:
+1. Copy the exercise files into the local repo. You may use your system's file explorer or use a command line for this step.  Using the command line, the command would be similar to the following:
 
     ```bash
     cp -r <path-to-exercise-files>/* <path-to-local-repo>
@@ -107,7 +107,7 @@ With the files in place, you need to configure the pipeline settings and add pro
     ![Pipeline settings](./pipeline-settings-00001.png)
 
 3. Select **Repository variables**.
-4. Using the values from the Cloudformation output, Enter the name and value for each of the following project parameters.  Uncheck the **Secured** option for all variables excepty `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
+4. Using the values from the Cloudformation output, Enter the name and value for each of the following project parameters.  Uncheck the **Secured** option for all variables except `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
 
         STAGING_FUNCTION_NAME
         STAGING_URL
@@ -134,4 +134,4 @@ Once the pipeline settings are configured, you can run the pipeline.
     ![Pipeline view](./run-pipeline-00002.png)
 
 5. Open the URLs for the sample application's staging and production environments. For both environments, confirm that the deployment platform is "**Bitbucket Pipelines**" and the build number matches the last successful pipeline number.
-6. If any errors are encountered, review the logs and make corrections as needed. Consider reviewing the configuration steps for the repository secrets. If you are not able to resolve the errors, please post a question on LinkinedIn Learning in the course Q&A section.
+6. If any errors are encountered, review the logs and make corrections as needed. Consider reviewing the configuration steps for the repository secrets. If you are not able to resolve the errors, please post a question on LinkedIn Learning in the course Q&A section.

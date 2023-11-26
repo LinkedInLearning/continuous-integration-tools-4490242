@@ -15,7 +15,7 @@ Having the following items in place before starting this lab will help you have 
 4. The exercise files for the course should be downloaded and accessible on your local system.
 
 ## Implement the Experimental Pipeline
-To implement the experimental pipeline in GitHub Actions, you will need to create a GitHub repo, add the exercise files, and configure the repostitory settings.
+To implement the experimental pipeline in GitHub Actions, you will need to create a GitHub repo, add the exercise files, and configure the repository settings.
 
 Before starting these steps, open the Output tab of the Cloudformation stack for the sample application. You'll be referencing values displayed on that tab.
 
@@ -23,7 +23,7 @@ Before starting these steps, open the Output tab of the Cloudformation stack for
 Because this course covers multiple tools, a dedicated repo is need for each tool to prevent unexpected deployments to the sample-application.
 
 1. Create a new GitHub repo. Give the repo a name and description. Please select **Public** for the repo visibility to simplify access. Select the option to add a README file and select **Python** when adding a `.gitignore` file.
-2. From ther repo home page, select **Add file -> Upload files**.
+2. From the repo home page, select **Add file -> Upload files**.
 3. Select **choose your files** and browse to the exercise files for this lesson on your local system.
 4. Select all of the files and then select **Open**.
 5. After the files have been uploaded, enter a commit message and select **Commit changes**.
@@ -47,7 +47,7 @@ GitHub Actions uses environments and secrets to store values that are used in th
 13. For name, enter **AWS_SECRET_ACCESS_KEY**. For "Value", enter the value for the URL from the Cloudformation stack output.  Select **Add secret**.
 14. Repeat the process to add a secret for **AWS_ACCESS_KEY_ID**.
 15. Select the "Variables" tab.  Select **"New repository variable"**.
-16. For name, enter **AWS_DEFAULT_REGION**. For "Value", and the correseponding value for your project from the Cloudformation stack output.  Select **Add variable**.
+16. For name, enter **AWS_DEFAULT_REGION**. For "Value", and the corresponding value for your project from the Cloudformation stack output.  Select **Add variable**.
 
 ### 3. Move the workflow file into the `.github/workflows` directory to trigger the pipeline
 The workflow file is the file that defines the pipeline.  In this step, you'll move the workflow file into the `.github/workflows` directory.
@@ -66,4 +66,4 @@ The workflow file is the file that defines the pipeline.  In this step, you'll m
 1. Select **Actions** from the repo home page.  You should see the workflow running.
 1. Select the actively running workflow to follow the pipeline's progress. Wait for the pipeline to complete.  
 1. Open the URLs for the sample application's staging and production environments. For both environments, confirm that the deployment platform is "GitHub Actions" and the build number matches the last successful build number.
-1. If any errors are encountered, review the logs and make corrections as needed. Consider reviewing the configuration steps for the environment variables and the repository secrets. If you are not able to resolve the errors, please post a question on LinkinedIn Learning in the course Q&A section.
+1. If any errors are encountered, review the logs and make corrections as needed. Consider reviewing the configuration steps for the environment variables and the repository secrets. If you are not able to resolve the errors, please post a question on LinkedIn Learning in the course Q&A section.

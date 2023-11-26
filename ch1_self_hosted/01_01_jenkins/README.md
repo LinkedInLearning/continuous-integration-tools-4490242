@@ -33,20 +33,20 @@ Having the following items in place before starting this lab will help you have 
     These values will be needed to configure the Jenkins server
 
 ### 2. Configure the Jenkins Server
-To configure the Jenkins server, you must connect to the server and retreive the initial admin password before logging into the web interface.
+To configure the Jenkins server, you must connect to the server and retrieve the initial admin password before logging into the web interface.
 
-#### 2.1 Retreive the initial admin password
+#### 2.1 Retrieve the initial admin password
 1.  On the stack homepage, select the "Resources" column.
 2.  Locate "Server" in the Logical ID column and select the link next to it in the "Physical ID" column. *The link will be similar to like `i-0b3d8738c405979c8`*.  This will open a new tab displaying EC2 instance where the Jenkins server process is running.
 3.  Open the instance summary page by selecting the linked ID under the "Instance ID" column.
 4.  On the instance summary page, select **Connect**.
 5.  On the "Connect to instance" page, select the **Session Manager** tab.  Select **Connect**.  This will open a new tab with a terminal session connected to the EC2 instance running the Jenkins server process.
 6.  Run the command `sudo docker logs jenkins`.
-7.  In the command output, locate the text "Please use the following password to proceed to installation:".  Copy the value beneath that line to your clipboard.  The intial admin password will be a string of numbers and letters similar to `3d4c1c14361a4526a8888bf527450b8a`.
+7.  In the command output, locate the text "Please use the following password to proceed to installation:".  Copy the value beneath that line to your clipboard.  The initial admin password will be a string of numbers and letters similar to `3d4c1c14361a4526a8888bf527450b8a`.
 
 #### 2.2 Login and complete the configuration
 1. Go back to the CloudFormation browser tab and select the "Outputs" tab for the stack.  Open the link next to the "URL" key, preferably in a new browser tab.
-2. On the "Unlock Jenkins" page, under "Administrator Password", paste the value that was retreived from the EC2 instance for the initial admin password.  Select **Continue**.
+2. On the "Unlock Jenkins" page, under "Administrator Password", paste the value that was retrieved from the EC2 instance for the initial admin password.  Select **Continue**.
 3. On the "Customize Jenkins" page, select **Install suggested plugins**.  Wait for the installation to complete.
 4. On the "create an admin account" page, create an admin account with a username, password, and email address.  *Note that the email address does not need to be valid but must have a name with `@` followed by a domain.*  Select **Next**.
 5. On the "Instance Configuration" page, keep the value for "Jenkins URL" and select **Save and Finish**.
@@ -75,7 +75,7 @@ To implement the experimental pipeline in Jenkins, you will need to create a Git
 
 Then you'll add the service account credentials to Jenkins.  Next, you'll create the project that implements the pipeline.
 
-And finally, you'll trigger the pipeline to deploy the sample applicaiton.
+And finally, you'll trigger the pipeline to deploy the sample application.
 
 Before starting these steps, open the Output tab of the Cloudformation stack for the sample application.  You'll be referencing values displayed on that tab.
 
@@ -84,7 +84,7 @@ Because this course covers multiple tools, a dedicated repo is need for each too
 
 #### 1.1 Create a repo and upload the exercise files for this lesson
 1. Create a new GitHub repo. Give the repo a name and description.  Please select **Public** for the repo visibility to simplify access.  Select the option to add a README file and select **Python** when adding a `.gitignore` file.
-2. From ther repo home page, select **Add file -> Upload files**.
+2. From the repo home page, select **Add file -> Upload files**.
 3. Select **choose your files** and browse to the exercise files for this lesson on your local system.
 4. Select all of the files and then select **Open**.
 5. After the files have been uploaded, enter a commit message and select **Commit changes**.
@@ -92,7 +92,7 @@ Because this course covers multiple tools, a dedicated repo is need for each too
 #### 1.2 Update the files for your project
 1. From the root of your GitHub repo, select `Jenkinsfile`.
 2. Select the pencil icon to edit the file.
-3. Find all occurrences of `UPDATE_THIS_VALUE` in the file and replace the text with the correct value for your project. All information can be found on the **Outputs** tab for the sample application stack in the CloudFormation console. Specfically, you'll need to update the following lines under `environment` and commit the updated file:
+3. Find all occurrences of `UPDATE_THIS_VALUE` in the file and replace the text with the correct value for your project. All information can be found on the **Outputs** tab for the sample application stack in the CloudFormation console. Specifically, you'll need to update the following lines under `environment` and commit the updated file:
 
         environment {
             ...
@@ -122,7 +122,7 @@ Because this course covers multiple tools, a dedicated repo is need for each too
 1. Select **Dashboard -> +New Item**.
 2. Under "Enter an item name", enter **Experimental Pipeline**.
 3. Select **Pipeline** and then select **OK**.
-4. Scroll down to the "Pipeline" section on the configuration papge.  Under "Definition", select **Pipeline script from SCM**.
+4. Scroll down to the "Pipeline" section on the configuration page.  Under "Definition", select **Pipeline script from SCM**.
 5. Under "SCM", select **Git**.
 6. Under "Repositories -> Repository URL", enter the URL for your GitHub repo.  Find this value from the home page of your repo by selecting **Code -> HTTPS** and then selecting the stacked squares icon to copy the URL to your system's clipboard.
 7. Under "Branches to build -> Branch Specifier", change "master" to **main**.
@@ -132,7 +132,7 @@ Because this course covers multiple tools, a dedicated repo is need for each too
 ### 3. Run the pipeline
 1. From the "Experimental Pipeline" home page, select **Build Now**.
 2. Allow the build to complete.
-3. If any errors are encountered, hover over the stage where the error was encoutered and select **Logs**.  Review the errors and make corrections as needed.  Consider reviewing the configuration steps for the credentials and the pipeline project.  If you are not able to resolve the errors, please post a question on LinkinedIn Learning in the course Q&A section.
+3. If any errors are encountered, hover over the stage where the error was encountered and select **Logs**.  Review the errors and make corrections as needed.  Consider reviewing the configuration steps for the credentials and the pipeline project.  If you are not able to resolve the errors, please post a question on LinkedIn Learning in the course Q&A section.
 4. Open the URLs for the sample application's staging and production environments.  For both environments, confirm that the deployment platform is "Jenkins" and the build number matches the last successful build number.
 
 [[Next: 01_02 Bamboo](../01_02_bamboo/README.md)]
