@@ -78,5 +78,5 @@ Before starting these steps, open the Output tab of the Cloudformation stack for
 
     ![Pipeline view](./5-gitlabci-pipeline.png)
 
-5. Open the URLs for the sample application's staging and production environments. For both environments, confirm that the deployment platform is "GitLab CI" and the build number matches the last successful pipeline number.
+5. Open the URLs for the sample application's staging and production environments. For both environments, confirm that the deployment platform is "**GitLab CI**" and the build number matches the last successful pipeline number.
 6. If any errors are encountered, review the logs and make corrections as needed. Consider reviewing the configuration steps for the environment variables and the repository secrets. If you are not able to resolve the errors, please post a question on LinkinedIn Learning in the course Q&A section.
