@@ -70,4 +70,4 @@ Travis will automatically trigger a new build for every change in the repository
   - Take a look at [Specifying Python versions](https://docs.travis-ci.com/user/languages/python/#specifying-python-versions)
   - From that webpage: *"3.6" current default Python on Travis CI*
 
-[[Next: 02_02 CircleCI](../02_02_circleci/README.md)]
+[Next: 02_02 CircleCI](../02_02_circleci/README.md)
