@@ -10,8 +10,8 @@ Azure DevOps includes a complete set of hosted tools for application development
 ## Prerequisites
 Having the following items in place before starting this lab will help you have a smooth experience.
 
-1. An [Azure DevOps account](https://learn.microsoft.com/en-us/azure/devops/pipelines/get-started/pipelines-sign-up?view=azure-devops) is needed to host the code for this exercise and create the pipeline.  
-    
+1. An [Azure DevOps account](https://learn.microsoft.com/en-us/azure/devops/pipelines/get-started/pipelines-sign-up?view=azure-devops) is needed to host the code for this exercise and create the pipeline.
+
     Follow the instructions on the linked page to create an account.
 
 2. An [Amazon Web Services account](https://aws.amazon.com/free) is needed to deploy the sample application used for the deployment target.
@@ -33,7 +33,7 @@ For this exercise, we'll use the repo service included with an Azure DevOps proj
 1. From the Azure DevOps homepage, select **+ New Project**.
 2. Enter a project name and description.  Under "Visibility", select **Public**.  Select **Create**.
 3. From the homepage of the new project, Select **Repos**.
-4. At the bottom of the page, under "Initialize 
+4. At the bottom of the page, under "Initialize
 main branch with a README or gitignore", select the option to add a `README` and choose `Python` for the `.gitignore`.  Select **Initialize**.
 1. On the new repo page, select the three-dot menu on the upper right and then select **Upload files**.
 2. Select **Browse** and navigate to the location where you downloaded the files for this lesson.  Select all of the files  and then select **Open**.
@@ -44,7 +44,7 @@ main branch with a README or gitignore", select the option to add a `README` and
 1. Select **Set Up Build**
 1. Select **Variables** -> **New variable**
 1. Add the name and value for each of the following parameters. Select the "+" for each additional variable.  *Note: For AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY select the option for "Keep this value secret".*
-   
+
      -   AWS_ACCESS_KEY_ID
      -   AWS_SECRET_ACCESS_KEY
      -   AWS_DEFAULT_REGION
@@ -68,4 +68,4 @@ main branch with a README or gitignore", select the option to add a `README` and
 - [Specify jobs in your pipeline](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/phases)
 - [Pricing for Azure DevOps](https://azure.microsoft.com/en-us/pricing/details/devops/azure-devops-services/)
 
-
+[Next: 03_03 GCP Cloud Build](../03_03_gcp_cloud_build/README.md)

@@ -1,5 +1,5 @@
-# 01_04 
-This summary covers the key points about self-hosted CI/CD tools and introduces Jenkins, Bamboo, and TeamCity with some highlights. 
+# 01_04 Self Hosted Tool Summary
+This summary covers the key points about self-hosted CI/CD tools and introduces Jenkins, Bamboo, and TeamCity with some highlights.
 
 ## Self-Hosted CI/CD Tools
   - Offer full control over hardware and software for testing, artifact creation, and application deployment.
@@ -19,3 +19,5 @@ This summary covers the key points about self-hosted CI/CD tools and introduces 
   - Seamlessly integrates with JetBrains IDEs and editors like Visual Studio Code.
   - Features project detection for faster configuration.
   - Uses Kotlin-based pipeline files, which are approachable for most developers.
+
+[Next: Ch2 Software as a Service](../../ch2_software_as_a_service/README.md)

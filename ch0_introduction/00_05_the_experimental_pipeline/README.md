@@ -23,3 +23,5 @@ The pipeline will have seven stages.  Each stage must complete successfully for 
 
 ## Your Pipeline Might Be Different
 As you’re viewing this course, you might already have a pipeline in mind that you’re looking to implement.  Just know that all the stages mentioned here might not apply to your project.  But at the least, they should give you an idea of the stages in a typical CI/CD pipeline.
+
+[Next: 00_06 About the Exercise Files](../00_06_about_the_exercise_files/README.md)

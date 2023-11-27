@@ -26,3 +26,6 @@ To get the most out of the exercise files, it will be helpful if you have some o
 - Experience in building, testing, and deploying applications.
 - Experience with scripting and using a command-line interface.
 - Familiarity with source code management tools like GitHub, Bitbucket, or Gitlab.
+
+[Next: 00_03 CI/CD Tool Categories](../00_03_ci-cd_tool_categories/README.md)
+

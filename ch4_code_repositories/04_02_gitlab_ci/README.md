@@ -61,7 +61,7 @@ Before starting these steps, open the Output tab of the Cloudformation stack for
 5. Repeat the steps to add a **`FUNCTION_NAME`** for the **Staging** environment, using the `StagingFunctionName` value from the Cloudformation stack output.
 6. Next, add the AWS Credentials, starting with `AWS_DEFAULT_REGION`.  Select **Add variable**.  Under "Environments", confirm that **"All (default)"** is selected.  Uncheck **Protect variable**.  Under "Key", enter **`AWS_DEFAULT_REGION`**.  Under "Value", enter the value for the `AwsDefaultRegion` output from the sample application Cloudformation stack.  Select **Add variable**.
 7. Now create variables for **`AWS_SECRET_ACCESS_KEY`** and **`AWS_ACCESS_KEY_ID`**.  Repeat the following for each these variables:
-   1. Confirm that **"All (default)"** is selected under "Environments.  
+   1. Confirm that **"All (default)"** is selected under "Environments.
    2. Uncheck **Protect variable**.
    3. Check **Mask variable**.
    4. For the key, enter **`AWS_SECRET_ACCESS_KEY`** or **`AWS_ACCESS_KEY_ID`**.
@@ -74,9 +74,11 @@ Before starting these steps, open the Output tab of the Cloudformation stack for
 1. From the sidebar menu, select **Build** -> **Pipelines**.
 2. Select **Run pipeline** -> **Run pipeline**.
 3. On the pipeline view, select **Show dependencies** to see the connections between the pipeline jobs.
-4. Wait for the pipeline to complete. 
+4. Wait for the pipeline to complete.
 
     ![Pipeline view](./5-gitlabci-pipeline.png)
 
 5. Open the URLs for the sample application's staging and production environments. For both environments, confirm that the deployment platform is "**GitLab CI**" and the build number matches the last successful pipeline number.
 6. If any errors are encountered, review the logs and make corrections as needed. Consider reviewing the configuration steps for the environment variables and the repository secrets. If you are not able to resolve the errors, please post a question on LinkedIn Learning in the course Q&A section.
+
+[Next: 04_03 Bitbucket Pipelines](../04_03_bitbucket_pipelines/README.md)

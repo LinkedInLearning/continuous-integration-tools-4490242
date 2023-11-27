@@ -15,3 +15,6 @@ Generally speaking, we can sort CI/CD tools into four categories.
 - **Code Repositories:**
   - Primarily known for storing and managing code.
   - Many modern repositories also offer CI/CD tools for transforming code into software.
+
+[Next: 00_04 Pros and Cons](../00_04_pros_and_cons/README.md)
+

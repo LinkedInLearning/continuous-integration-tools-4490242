@@ -14,7 +14,8 @@ This summary highlights the advantages of using CI/CD tools from cloud service p
   - Integrates well with the project management features of the Azure DevOps platform.
   - Includes features for release management.
 
-- **Google Cloud Platform (GCP) Cloud Build**: 
+- **Google Cloud Platform (GCP) Cloud Build**:
   - Known for its fast run times and simple configuration.
   - Ideal for projects based on containers, with native functionality for creating container images.
 
+[Next: Ch4 Code Repositories](../../ch4_code_repositories/README.md)

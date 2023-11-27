@@ -103,7 +103,7 @@ With the files in place, you need to configure the pipeline settings and add pro
 
 1. In the web UI, select **Repository settings**.  Under "Pipeline", select **Settings**.
 2. Toggle the switch next to **"Enable Pipelines"**.
-   
+
     ![Pipeline settings](./pipeline-settings-00001.png)
 
 3. Select **Repository variables**.
@@ -112,11 +112,11 @@ With the files in place, you need to configure the pipeline settings and add pro
         STAGING_FUNCTION_NAME
         STAGING_URL
         PRODUCTION_FUNCTION_NAME
-        PRODUCTION_URL    
+        PRODUCTION_URL
         AWS_ACCESS_KEY_ID
         AWS_SECRET_ACCESS_KEY
         AWS_DEFAULT_REGION
-    
+
     ![Repository variables](./pipeline-settings-00002.png)
 
 
@@ -135,3 +135,5 @@ Once the pipeline settings are configured, you can run the pipeline.
 
 5. Open the URLs for the sample application's staging and production environments. For both environments, confirm that the deployment platform is "**Bitbucket Pipelines**" and the build number matches the last successful pipeline number.
 6. If any errors are encountered, review the logs and make corrections as needed. Consider reviewing the configuration steps for the repository secrets. If you are not able to resolve the errors, please post a question on LinkedIn Learning in the course Q&A section.
+
+[Next: 04_04 Code Repository Tool Summary](../04_04_code_repository_tool_summary/README.md)

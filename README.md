@@ -1,7 +1,7 @@
 # Continuous Integration: Tools
 This is the repository for the LinkedIn Learning course `Continuous Integration: Tools`.  The full course is available from [LinkedIn Learning][lil-course-url].
 
-![Continuous Integration: Tools][lil-thumbnail-url] 
+![Continuous Integration: Tools][lil-thumbnail-url]
 
 ## What You Should Know
 This course is intended for both beginners and experienced developers.
@@ -20,7 +20,7 @@ It will be helpful if you have some experience with:
 2. Building, testing, and deploying applications.
 3. Scripting and using a command-line interface.
 4. Source code management tools like GitHub, Bitbucket, or Gitlab.
- 
+
 ## Instructions
 This repository has folders for each of the videos in the course.
 
@@ -34,7 +34,7 @@ The folders are structured to correspond to the videos in the course. The naming
 3. Follow any additional instructions in the `README` files in each folder.
 
 ## About the Instructor
-Michael Jenkins      
+Michael Jenkins
 Lead Software Engineer, Systems Reliability Engineer
 
 Check out Michael's other courses on [LinkedIn Learning](https://www.linkedin.com/learning/instructors/michael-jenkins).
@@ -44,5 +44,4 @@ Check out Michael's other courses on [LinkedIn Learning](https://www.linkedin.co
 [lil-course-url]: https://www.linkedin.com/learning/
 [lil-thumbnail-url]: https://placehold.co/600x400/EEE/31343C
 
-:)
-
+[Next: Ch0 Introduction](./ch0_introduction/README.md)

@@ -1,5 +1,5 @@
 # 04_04 Code Repository Tool Summary
-This summary highlights the advantages of using CI tools provided by code repositories and introduces GitHub Actions, GitLab CI, and Bitbucket CI along with their respective strengths. 
+This summary highlights the advantages of using CI tools provided by code repositories and introduces GitHub Actions, GitLab CI, and Bitbucket CI along with their respective strengths.
 
 The CI tools within code repositories offer a streamlined development experience, advanced analytics, and flexibility in workflow management.
 
@@ -25,3 +25,4 @@ The CI tools within code repositories offer a streamlined development experience
   - Strong features for observing pipeline execution and deployments to different environments.
   - Integrates seamlessly with Atlassian project management applications.
 
+[Next: Ch5 Selecting a CI Tool](../../ch5_selecting_a_ci_tool/README.md)

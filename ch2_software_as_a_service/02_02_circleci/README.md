@@ -1,4 +1,4 @@
-# 02_03 CircleCI
+# 02_02 CircleCI
 
 ## Recommended Resources
 - [CircleCI Quickstart guide](https://circleci.com/docs/getting-started/)
@@ -84,4 +84,4 @@ With your CircleCI account in place, set up a connection to the repo where the e
 - [AWS CLI orb](https://circleci.com/developer/orbs/orb/circleci/aws-cli#usage-install_aws_cli)
 - TODO: Linkable reference is needed for 'Error messages can be checked via AI ("no code or proprietary data shared")'
 
-[[Next: 02_03 SaaS Tool Summary](../02_03_saas_tool_summary/README.md)]
+[Next: 02_03 SaaS Tool Summary](../02_03_saas_tool_summary/README.md)

@@ -1,5 +1,5 @@
 # 03_03 GCP Cloud Build
-[Cloud Build](https://cloud.google.com/build) is an automation service from the Google Cloud Platform suite of tools. 
+[Cloud Build](https://cloud.google.com/build) is an automation service from the Google Cloud Platform suite of tools.
 
 ## Recommended Resources
 - [Cloud Build](https://cloud.google.com/build)
@@ -42,9 +42,9 @@ Because this course covers multiple tools, a dedicated repo is need for each too
     ```
     substitutions:
       _AWS_DEFAULT_REGION: UPDATE_THIS_VALUE
-      _STAGING_FUNCTION_NAME: UPDATE_THIS_VALUE    
+      _STAGING_FUNCTION_NAME: UPDATE_THIS_VALUE
       _STAGING_URL: UPDATE_THIS_VALUE
-      _PRODUCTION_FUNCTION_NAME: UPDATE_THIS_VALUE   
+      _PRODUCTION_FUNCTION_NAME: UPDATE_THIS_VALUE
       _PRODUCTION_URL: UPDATE_THIS_VALUE
     ```
 
@@ -60,7 +60,7 @@ Because this course covers multiple tools, a dedicated repo is need for each too
 4. If needed, select **ENABLE** under "Secret Manager API".
 5. On the Secret Manager home page, select **CREATE SECRET**.
 6. For "Name", enter `AWS_ACCESS_KEY_ID`.  For "Secret Value", enter the value for the AWS Access Key ID from the Output tab of the sample application Cloudformation stack.  Select **Create Secret**.
-7. Select the arrow to go back to the parent page.  
+7. Select the arrow to go back to the parent page.
 8. Select **CREATE SECRET**.  Repeat the secret creation step for `AWS_SECRET_ACCESS_KEY`.  Be sure to check for any spaces or tabs at the end of the secret as you copy and paste from the CloudFormation output into the Secret Value field.
 9.  Select the arrow to go back to the parent page.
 10. On the Secret Manager home page, select the checkbox next to both secret names.
@@ -86,3 +86,5 @@ Because this course covers multiple tools, a dedicated repo is need for each too
 13. Allow the build to complete.
 14. Open the URLs for the sample application's staging and production environments.  For both environments, confirm that the deployment platform is "Google Cloud Build" and the build number matches the last successful build number.
 15. If any errors are encountered, review the logs and make corrections as needed.  Consider reviewing the configuration steps for the parameters.  If you are not able to resolve the errors, please post a question on LinkedIn Learning in the course Q&A section.
+
+[Next: 03_04 Cloud Service Provider Tool Summary](../03_04_cloud_service_provider_tool_summary/README.md)

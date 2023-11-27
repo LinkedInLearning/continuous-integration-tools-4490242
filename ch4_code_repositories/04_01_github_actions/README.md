@@ -1,5 +1,5 @@
 # 04_01 GitHub Actions
-GitHub Actions is a CI/CD tool that is built into GitHub. 
+GitHub Actions is a CI/CD tool that is built into GitHub.
 
 ## Recommended Resources
 - [GitHub Actions Documentation](https://docs.github.com/en/actions): The official documentation for GitHub Actions.
@@ -64,6 +64,8 @@ The workflow file is the file that defines the pipeline.  In this step, you'll m
 
 1. Select **Commit changes** -> **Commit changes**.
 1. Select **Actions** from the repo home page.  You should see the workflow running.
-1. Select the actively running workflow to follow the pipeline's progress. Wait for the pipeline to complete.  
+1. Select the actively running workflow to follow the pipeline's progress. Wait for the pipeline to complete.
 1. Open the URLs for the sample application's staging and production environments. For both environments, confirm that the deployment platform is "GitHub Actions" and the build number matches the last successful build number.
 1. If any errors are encountered, review the logs and make corrections as needed. Consider reviewing the configuration steps for the environment variables and the repository secrets. If you are not able to resolve the errors, please post a question on LinkedIn Learning in the course Q&A section.
+
+[Next: 04_02 GitLab CI](../04_02_gitlab_ci/README.md)
