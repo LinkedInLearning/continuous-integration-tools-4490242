@@ -164,4 +164,4 @@ Select **Save and continue**.
 3. If any errors are encountered, review the logs for errors and make corrections as needed.  Consider reviewing the configuration steps for the tasks and the values for the variables.  If you are not able to resolve the errors, please post a question on LinkedIn Learning in the course Q&A section.
 4. Open the URLs for the sample application's staging and production environments.  For both environments, confirm that the deployment platform is "Bamboo" and the build number matches the last successful build number.
 
-[[Next: 01_03 TeamCity](../01_03_teamcity/README.md)]
+[Next: 01_03 TeamCity](../01_03_teamcity/README.md)
