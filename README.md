@@ -12,7 +12,7 @@ If you are just getting started with continuous integration, consider auditing t
 Use the exercise files as a reference for these implementations.
 
 ### Intermediate level
-If you are already familiar with continuous integration, use these exercise files to explore each tool.  The `README` file in each lesson will help to guide and expedite your exploration.
+If you are already familiar with continuous integration, use these exercise files to explore each tool.  The `README` file in each lesson will help guide and expedite your exploration.
 
 It will be helpful if you have some experience with:
 
@@ -34,8 +34,7 @@ The folders are structured to correspond to the videos in the course. The naming
 3. Follow any additional instructions in the `README` files in each folder.
 
 ## About the Instructor
-Michael Jenkins
-Lead Software Engineer, Systems Reliability Engineer
+Michael Jenkins - Software Engineer, Reliability Engineer
 
 Check out Michael's other courses on [LinkedIn Learning](https://www.linkedin.com/learning/instructors/michael-jenkins).
 
