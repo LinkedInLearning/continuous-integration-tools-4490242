@@ -3,6 +3,8 @@ This is the repository for the LinkedIn Learning course `Continuous Integration:
 
 ![Continuous Integration: Tools][lil-thumbnail-url]
 
+Continuous integration and continuous delivery (CI/CD) practices enable developers to reliably and quickly produce applications at scale—enhancing overall team collaboration in the process. As CI/CD has grown to become one of the most prominent subfields of DevOps, new CI/CD tools have emerged and proliferated across the entire industry. Curious about which tools are right for your team? This course was designed for you. Join instructor Michael Jenkins as he digs into a variety of CI/CD tools and explores several different use case categories, highlighting the pros and cons of each tool, how each tool fits into the wider development landscape, and how to select the tool that will work best for you. Along the way, Michael covers self-hosted options such as Jenkins, Bamboo, and TeamCity; SaaS tools like Travis CI and CircleCI; cloud service providers such as AWS, Azure, and GCP; and code repositories like GitHub, GitLab, and Atlassian Bitbucket.
+
 ## What You Should Know
 This course is intended for both beginners and experienced developers.
 
@@ -41,6 +43,6 @@ Check out Michael's other courses on [LinkedIn Learning](https://www.linkedin.co
 [0]: # (Replace these placeholder URLs with actual course URLs)
 
 [lil-course-url]: https://www.linkedin.com/learning/
-[lil-thumbnail-url]: https://placehold.co/600x400/EEE/31343C
+[lil-thumbnail-url]: https://media.licdn.com/dms/image/D4D0DAQF_XV39CwrXiw/learning-public-crop_675_1200/0/1702073152131?e=2147483647&v=beta&t=8XvqzqvYCEOI47pNrJGwVbSzoQM582hCOx-de2bmM4E
 
 [Next: Ch0 Introduction](./ch0_introduction/README.md)
