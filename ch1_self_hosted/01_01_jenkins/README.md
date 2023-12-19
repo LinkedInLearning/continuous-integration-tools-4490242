@@ -135,4 +135,4 @@ Because this course covers multiple tools, a dedicated repo is need for each too
 3. If any errors are encountered, hover over the stage where the error was encountered and select **Logs**.  Review the errors and make corrections as needed.  Consider reviewing the configuration steps for the credentials and the pipeline project.  If you are not able to resolve the errors, please post a question on LinkedIn Learning in the course Q&A section.
 4. Open the URLs for the sample application's staging and production environments.  For both environments, confirm that the deployment platform is "Jenkins" and the build number matches the last successful build number.
 
-[[Next: 01_02 Bamboo](../01_02_bamboo/README.md)]
+[Next: 01_02 Bamboo](../01_02_bamboo/README.md)

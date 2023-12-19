@@ -4,7 +4,7 @@ This is the repository for the LinkedIn Learning course `Continuous Integration:
 ![Continuous Integration: Tools][lil-thumbnail-url]
 
 ## What You Should Know
-This course is intended for both beginners and experienced developers.
+This course is intended for both **beginners** and **experienced** developers.
 
 ### Beginner level
 If you are just getting started with continuous integration, consider auditing this course to learn the basics of CI and how the process is implemented in various tools.
