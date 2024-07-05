@@ -7,14 +7,14 @@ Description: >
     3) IAM group with the managed policy AWSLambda_FullAccess attached.
     4) IAM user as a member of the group to be used as a service account.
     5) IAM access key for the service account
-  
+
   The following outputs are created for your reference:
     1) Region where the stack is deployed.
     2) Account ID where the stack is deployed.
     3) URLs for the staging and production environments.
     4) AccessKeyId and SecretAccessKey for the service account.
 
-  Be sure to protect the credentials that are created and 
+  Be sure to protect the credentials that are created and
   delete this stack when you are finished with the course.
 
 Resources:
@@ -85,7 +85,7 @@ Resources:
                   <h1>Welcome!</h1>
                   <h2>This is the <bold>{environment}<bold> environment.</h2>
                   <p>Get ready to learn more about CI/CD and several amazing tools that simplify testing, building, and deploying software.</p>
-                  <p>This welcome page is just the beginning.  Take the next step by deploying the code for the applicaiton.</p>
+                  <p>This welcome page is just the beginning.  Take the next step by deploying the code for the application.</p>
               </body>
               </html>
               """
@@ -141,7 +141,7 @@ Resources:
                   <h1>Welcome!</h1>
                   <h2>This is the <bold>{environment}<bold> environment.</h2>
                   <p>Get ready to learn more about CI/CD and several amazing tools that simplify testing, building, and deploying software.</p>
-                  <p>This welcome page is just the beginning.  Take the next step by deploying the code for the applicaiton.</p>
+                  <p>This welcome page is just the beginning.  Take the next step by deploying the code for the application.</p>
               </body>
               </html>
               """
@@ -183,7 +183,7 @@ Resources:
 
   LambdaPolicy:
     Type: AWS::IAM::ManagedPolicy
-    Properties: 
+    Properties:
       Path: "/"
       Description: "Policy to manage the Lambda functions for the sample application."
       PolicyDocument:
@@ -229,18 +229,18 @@ Outputs:
     Description: The URL for the production environment. Use this value for the PRODUCTION_URL parameter.
     Value:
       Fn::GetAtt: LambdaUrlProduction.FunctionUrl
-  
+
   AwsAccessKeyId:
     Description: The AWS_ACCESS_KEY_ID for the service account. Please keep this value secure.
-    Value: 
+    Value:
       !Ref Keys
-  
+
   AwsSecretAccessKey:
     Description: The AWS_SECRET_ACCESS_KEY for the service account. Please keep this value secure.
-    Value: 
+    Value:
       !GetAtt Keys.SecretAccessKey
-  
+
   AwsDefaultRegion:
     Description: The AWS_DEFAULT_REGION where the stack is deployed.
-    Value: 
+    Value:
       !Sub ${AWS::Region}
